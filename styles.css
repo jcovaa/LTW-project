@@ -121,11 +121,118 @@ li, a {
    background: #333;
 }
 
-body > nav {
+/* nav filter */
+nav#filter_section {
+   display: flex;
+   justify-content: flex-start;
+   gap: 1em;
 
+   margin: 2em 0;
+}
+
+nav#filter_section button {
+   padding: 8px 12px;
+
+   font-size: 18px;
+
+   cursor: pointer;
 }
 
 /* featured services */
 #featured_services {
-   background-color: rgb(247, 236, 223);
+   background-color: #fdf6ee;
+   margin: 0 auto;
+
+   padding: 20px;
+   border-radius: 12px;
+
+   display: flex;
+   flex-wrap: wrap;
+   gap: 20px;
 }
+
+#featured_services header {
+   margin-bottom: 30px;
+}
+
+#featured_services header h2 {
+   font-size: 24px;
+   font-weight: bold;
+   color: #333;
+}
+
+/* service card */
+.service_card {
+   display: flex;
+   flex-direction: column;
+   
+   border-radius: 5px;
+   
+   overflow: hidden;
+
+   width: 300px;
+   transition: 0.3s ease-in-out;
+}
+
+.service_card a img {
+   width: 100%;
+   height: auto;
+
+   object-fit: cover;
+}
+
+.service_card .service_info {
+   padding: 10px 0 10px 0;
+}
+
+.service_card .profile {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.service_card .profile img {
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+}
+
+.service_card .profile p {
+   font-weight: bold;
+   margin: 0;
+}
+
+.service_card .service_info a {
+   text-decoration: none;
+   color: black;
+   
+   display: block;
+   margin-top: 5px;
+   cursor: pointer;
+}
+
+.service_card .service_info a:hover {
+   text-decoration: underline;
+}
+
+.service_card .service_info p:nth-child(3) {
+   font-size: 14px;
+
+   position: relative;
+   display: inline-block;
+}
+
+.service_card .service_info p:nth-child(3)::before {
+   content: "★ ";
+   left: 0;
+   top: 0;
+
+   font-size: 14;
+   color: #ffb400;
+}
+
+.service_card .service_info p:nth-child(4){
+   font-size: 14px;
+   margin-top: 5px;
+}
+

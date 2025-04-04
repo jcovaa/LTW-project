@@ -44,43 +44,91 @@
             <h2>Featured services</h2>
          </header>
          <article class="service_card">
-            <a href="index.php"><img src="https://picsum.photos/600/300?business" alt=""></a>
-            <p>Example service</p>
-            <img src="images/default_profile.png" alt="Profile Picture">
-            <a id ="profile_name" href="index.php">Example name</a>
-         </article>
-         <article class="service_card">
-            <a href="index.php"><img src="https://picsum.photos/600/300?business" alt=""></a>
-            <p>Example service</p>
-            <img src="images/default_profile.png" alt="Profile Picture">
-            <a id ="profile_name" href="index.php">Example name</a>
-         </article>
-         <article class="service_card">
-            <a href="index.php"><img src="https://picsum.photos/600/300?business" alt=""></a>
-            <p>Example service</p>
-            <img src="images/default_profile.png" alt="Profile Picture">
-            <a id ="profile_name" href="index.php">Example name</a>
-         </article>
+         <a href="index.php">
+            <img src="https://picsum.photos/600/300?business" alt="">
+         </a>
+         <div class="service_info">
+            <div class="profile">
+               <img src="images/default_profile.png" alt="Profile Picture"> 
+               <p>Freelancer name</p>
+            </div>
+            <a href="service.php">Title of the service</a>
+            <p>Rating</p>
+            <p>Price</p>
+         </div>
+      </article>
+      <article class="service_card">
+         <a href="index.php">
+            <img src="https://picsum.photos/600/300?business" alt="">
+         </a>
+         <div class="service_info">
+            <div class="profile">
+               <img src="images/default_profile.png" alt="Profile Picture"> 
+               <p>Freelancer name</p>
+            </div>
+            <a href="service.php">Title of the service</a>
+            <p>Rating</p>
+            <p>Price</p>
+         </div>
+      </article>
+      <article class="service_card">
+         <a href="index.php">
+            <img src="https://picsum.photos/600/300?business" alt="">
+         </a>
+         <div class="service_info">
+            <div class="profile">
+               <img src="images/default_profile.png" alt="Profile Picture"> 
+               <p>Freelancer name</p>
+            </div>
+            <a href="service.php">Title of the service</a>
+            <p>Rating</p>
+            <p>Price</p>
+         </div>
+      </article>
       </section>
       <section id="services">
       <article class="service_card">
-            <a href="index.php"><img src="https://picsum.photos/600/300?business" alt=""></a>
-            <p>Example service</p>
-            <img src="images/default_profile.png" alt="Profile Picture">
-            <a id ="profile_name" href="index.php">Example name</a>
-         </article>
-         <article class="service_card">
-            <a href="index.php"><img src="https://picsum.photos/600/300?business" alt=""></a>
-            <p>Example service</p>
-            <img src="images/default_profile.png" alt="Profile Picture">
-            <a id ="profile_name" href="index.php">Example name</a>
-         </article>
-         <article class="service_card">
-            <a href="index.php"><img src="https://picsum.photos/600/300?business" alt=""></a>
-            <p>Example service</p>
-            <img src="images/default_profile.png" alt="Profile Picture">
-            <a id ="profile_name" href="index.php">Example name</a>
-         </article>
+         <a href="index.php">
+            <img src="https://picsum.photos/600/300?business" alt="">
+         </a>
+         <div class="service_info">
+            <div class="profile">
+               <img src="images/default_profile.png" alt="Profile Picture"> 
+               <p>Freelancer name</p>
+            </div>
+            <a href="service.php">Title of the service</a>
+            <p>Rating</p>
+            <p>Price</p>
+         </div>
+      </article>
+      <article class="service_card">
+         <a href="index.php">
+            <img src="https://picsum.photos/600/300?business" alt="">
+         </a>
+         <div class="service_info">
+            <div class="profile">
+               <img src="images/default_profile.png" alt="Profile Picture"> 
+               <p>Freelancer name</p>
+            </div>
+            <a href="service.php">Title of the service</a>
+            <p>Rating</p>
+            <p>Price</p>
+         </div>
+      </article>
+      <article class="service_card">
+         <a href="index.php">
+            <img src="https://picsum.photos/600/300?business" alt="">
+         </a>
+         <div class="service_info">
+            <div class="profile">
+               <img src="images/default_profile.png" alt="Profile Picture"> 
+               <p>Freelancer name</p>
+            </div>
+            <a href="service.php">Title of the service</a>
+            <p>Rating</p>
+            <p>Price</p>
+         </div>
+      </article>
       </section>
       <footer>
          <p>Name of the app</p>
