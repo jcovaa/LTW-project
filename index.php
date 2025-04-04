@@ -17,9 +17,14 @@
          </form>
          <nav id="nav_menu">
             <ul>
+               <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
+               <li><button onclick="window.location.href='login.php'">Login</button></li>
+               <li><button onclick="window.location.href='register.php'">SIGNUP</button></li>
+               <!--
                <li><a href="add_service.php">Add a service</a></li>
                <li><a href="login.php">Login</a></li>
                <li><a href="register.php">SIGNUP</a></li>
+-->
             </ul>
          </nav>
          <!--

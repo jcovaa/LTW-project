@@ -80,14 +80,52 @@ li, a {
    cursor: pointer;
 }
 
-/* nav menu */
 #nav_menu ul {
    list-style: none;
 }
 
 #nav_menu li {
    display: inline-block;
+}
+
+#nav_menu button {
+   cursor: pointer;
+
+   background: none;
    padding: 8px 12px;
+
+   border: 1px solid #ddd;
+   border-radius: var(--nav-border-radius);
+
+   font-size: 14px;
+}
+
+#nav_menu li:first-child {
+   margin: 0 2em;
+}
+
+#nav_menu button:hover {
+   background: #f0f0f0;
+}
+
+/* sign up button */ 
+#nav_menu li:last-child button {
+   background-color: black;
+   color: white;
+   border: none;
+}  
+
+#nav_menu li:last-child button:hover {
+   background: #333;
+}
+
+/* nav menu 
+#nav_menu ul {
+   list-style: none;
+}
+
+#nav_menu li {
+   display: inline-block;
 
    background: none;
 
@@ -102,15 +140,11 @@ li, a {
    margin: 0 2em;
 }
 
-#nav_menu li a {
-   transition: all 0.3s ease 0s;
-}
-
 #nav_menu li:hover {
    background: #f0f0f0;
 }
 
-/* sign up button */
+/* sign up button 
 #nav_menu li:last-child {
    background: black;
    color: white;

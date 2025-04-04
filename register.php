@@ -14,6 +14,9 @@
             <input type="text" placeholder="username" required>
          </div>
          <div class="input_box">
+            <input type="text" placeholder="Name" required>
+         </div>
+         <div class="input_box">
             <input type="text" placeholder="Email" required>
             <i class='bx bxs-user'></i>
          </div>
@@ -23,7 +26,7 @@
          </div>
          <button type="submit">Register</button>
          <div class="link">
-            <p>Already have an account?<a href="login.php">Login</a></p>
+            <p>Already have an account? <a href="login.php">Login</a></p>
          </div>
       </form>
    </body>
