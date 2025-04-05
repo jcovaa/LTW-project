@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="css/styles.css">
       <title>My Web Page</title>
    </head>
    <body>
@@ -20,24 +20,8 @@
                <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
                <li><button onclick="window.location.href='login.php'">Login</button></li>
                <li><button onclick="window.location.href='register.php'">SIGNUP</button></li>
-               <!--
-               <li><a href="add_service.php">Add a service</a></li>
-               <li><a href="login.php">Login</a></li>
-               <li><a href="register.php">SIGNUP</a></li>
--->
             </ul>
          </nav>
-         <!--
-         <div id="nav_menu">
-            <form class="add_service" action="add_service.php" method="pos">
-               <input type="button" value="Add a Service" onclick="window.location.href='add_service.php'">
-            </form>
-            <div id="user_links">
-               <input type="button" value="Login" onclick="window.location.href='login.php'">
-               <input type="button" value="Sign Up" onclick="window.location.href='register.php'">
-            </div>
-         </div>
-         -->
       </header>
       <nav id="filter_section">
          <button id="category">category</button>

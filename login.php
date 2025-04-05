@@ -4,9 +4,12 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-      <link rel="stylesheet" href="login.css">
+      <link rel="stylesheet" href="css/login.css">
       <title>Login</title>
    </head>
+   <!--
+   Create an header to make the page look more complete
+-->
    <body>
       <form action="">
          <h1>Login</h1>
@@ -23,5 +26,8 @@
             <p>Don't have an account? <a href="register.php">Register</a></p>
          </div>
       </form>
+      <!--
+      create a footer to make the page look more complete
+-->
    </body>
 </html>
