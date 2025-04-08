@@ -147,6 +147,7 @@ nav#filter_section button {
    display: flex;
    flex-wrap: wrap;
    gap: 20px;
+   align-items: center;
 }
 
 #featured_services header {
@@ -180,7 +181,7 @@ nav#filter_section button {
 }
 
 #featured_services .service_card .service_info, #services .service_card .service_info {
-   padding: 10px 0 10px 0;
+   padding: 5px 0 5px 0;
 }
 
 #featured_services .service_card .profile, #services .service_card .profile {
@@ -234,3 +235,25 @@ nav#filter_section button {
    margin-top: 5px;
 }
 
+#featured_services .service_card .service_info p, #services .service_card .service_info p {
+   margin: 3px 0px;
+   padding: 0; 
+}
+
+#featured_services .service_card .service_info a, #services .service_card .service_info a {
+   margin-bottom: 3px;
+}
+
+/* footer */
+body > footer {
+   border-top: 1px solid #ddd;
+
+   margin-top: 2em;
+   padding: 5px 0;
+   display: flex;
+   align-items: center;
+}
+
+body > footer :last-child {
+   padding-left: 1em;
+}
