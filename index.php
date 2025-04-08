@@ -24,9 +24,9 @@
          </nav>
       </header>
       <nav id="filter_section">
-         <button id="category">category</button>
-         <button id="price">price</button>
-         <button id="rating">rating</button>
+         <button id="category">category<i class="fa fa-angle-down"></i></button>
+         <button id="price">price<i class="fa fa-angle-down"></i></button>
+         <button id="rating">rating<i class="fa fa-angle-down"></i></button>
       </nav>
       <section id="featured_services">
          <header>
