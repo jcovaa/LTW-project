@@ -119,42 +119,6 @@ li, a {
    background: #333;
 }
 
-/* nav menu 
-#nav_menu ul {
-   list-style: none;
-}
-
-#nav_menu li {
-   display: inline-block;
-
-   background: none;
-
-   border: 1px solid #ddd;
-   border-radius: var(--nav-border-radius);
-
-   cursor: pointer;
-   font-size: 14px;
-}
-
-#nav_menu li:first-child {
-   margin: 0 2em;
-}
-
-#nav_menu li:hover {
-   background: #f0f0f0;
-}
-
-/* sign up button 
-#nav_menu li:last-child {
-   background: black;
-   color: white;
-   border: none;
-}
-
-#nav_menu li:last-child:hover {
-   background: #333;
-}
-
 /* nav filter */
 nav#filter_section {
    display: flex;
@@ -196,7 +160,7 @@ nav#filter_section button {
 }
 
 /* service card */
-.service_card {
+#featured_services .service_card, #services .service_card {
    display: flex;
    flex-direction: column;
    
@@ -208,35 +172,35 @@ nav#filter_section button {
    transition: 0.3s ease-in-out;
 }
 
-.service_card a img {
+#featured_services .service_card a img, #services .service_card a img {
    width: 100%;
    height: auto;
 
    object-fit: cover;
 }
 
-.service_card .service_info {
+#featured_services .service_card .service_info, #services .service_card .service_info {
    padding: 10px 0 10px 0;
 }
 
-.service_card .profile {
+#featured_services .service_card .profile, #services .service_card .profile {
    display: flex;
    align-items: center;
    gap: 10px;
 }
 
-.service_card .profile img {
+#featured_services .service_card .profile img, #services .service_card .profile img {
    width: 30px;
    height: 30px;
    border-radius: 50%;
 }
 
-.service_card .profile p {
+#featured_services .service_card .profile p, #services .service_card .profile p {
    font-weight: bold;
    margin: 0;
 }
 
-.service_card .service_info a {
+#featured_services .service_card .service_info a, #services .service_card .service_info a {
    text-decoration: none;
    color: black;
    
@@ -245,18 +209,18 @@ nav#filter_section button {
    cursor: pointer;
 }
 
-.service_card .service_info a:hover {
+#featured_services .service_card .service_info a:hover, #services .service_card .service_info a:hover {
    text-decoration: underline;
 }
 
-.service_card .service_info p:nth-child(3) {
+#featured_services .service_card .service_info p:nth-child(3), #services .service_card .service_info p:nth-child(3) {
    font-size: 14px;
 
    position: relative;
    display: inline-block;
 }
 
-.service_card .service_info p:nth-child(3)::before {
+#featured_services .service_card .service_info p:nth-child(3)::before, #services .service_card .service_info p:nth-child(3)::before {
    content: "★ ";
    left: 0;
    top: 0;
@@ -265,7 +229,7 @@ nav#filter_section button {
    color: #ffb400;
 }
 
-.service_card .service_info p:nth-child(4){
+#featured_services .service_card .service_info p:nth-child(4), #services .service_card .service_info p:nth-child(4) {
    font-size: 14px;
    margin-top: 5px;
 }
