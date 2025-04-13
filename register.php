@@ -1,30 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-      <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="css/login.css">
-      <link rel="stylesheet" href="css/styles.css">
-      <title>Join us</title>
-   </head>
-   <body>
-   <header>
-         <h1 id="logo"><a href="index.php">Title</a></h1>
-         <form class="search_bar" action="search.php" method="get">
-            <input type="text" name="query" placeholder="Search...">
-            <button class="fa fa-search" type="submit"></button>
-         </form>
-         <nav id="nav_menu">
-            <ul>
-               <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
-               <li><button onclick="window.location.href='login.php'">Login</button></li>
-               <li><button onclick="window.location.href='register.php'">SIGNUP</button></li>
-            </ul>
-         </nav>
-      </header>
+<?php 
+
+declare(strict_types=1);
+require_once 'templates/common_login_pages.php';
+
+output_header("Register");
+
+?>
+
       <main>
       <form action="">
          <h1>Create an account</h1>
