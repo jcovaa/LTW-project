@@ -16,7 +16,7 @@ output_header("Home");
             <h2>Featured services</h2>
          </header>
          <article class="service_card">
-         <a href="index.php">
+         <a href="service.php">
             <img src="https://picsum.photos/600/300?business" alt="">
          </a>
          <div class="service_info">
@@ -30,7 +30,7 @@ output_header("Home");
          </div>
       </article>
       <article class="service_card">
-         <a href="index.php">
+         <a href="service.php">
             <img src="https://picsum.photos/600/300?business" alt="">
          </a>
          <div class="service_info">
@@ -44,7 +44,7 @@ output_header("Home");
          </div>
       </article>
       <article class="service_card">
-         <a href="index.php">
+         <a href="service.php">
             <img src="https://picsum.photos/600/300?business" alt="">
          </a>
          <div class="service_info">
@@ -60,7 +60,7 @@ output_header("Home");
       </section>
       <section id="services">
       <article class="service_card">
-         <a href="index.php">
+         <a href="service.php">
             <img src="https://picsum.photos/600/300?business" alt="">
          </a>
          <div class="service_info">
@@ -74,7 +74,7 @@ output_header("Home");
          </div>
       </article>
       <article class="service_card">
-         <a href="index.php">
+         <a href="service.php">
             <img src="https://picsum.photos/600/300?business" alt="">
          </a>
          <div class="service_info">
@@ -88,7 +88,7 @@ output_header("Home");
          </div>
       </article>
       <article class="service_card">
-         <a href="index.php">
+         <a href="service.php">
             <img src="https://picsum.photos/600/300?business" alt="">
          </a>
          <div class="service_info">
@@ -102,10 +102,5 @@ output_header("Home");
          </div>
       </article>
       </section>
-      <footer>
-         <p>Name of the app</p>
-         <p>name, date</p>
-      </footer>
-   </body>
-</html>
+<?php output_footer(); ?>
 

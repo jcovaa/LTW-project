@@ -30,9 +30,4 @@ output_header("Register");
          </div>
       </form>
       </main>
-      <footer>
-         <p>Name of the app</p>
-         <p>name, date</p>
-      </footer>
-   </body>
-</html>
+<?php output_footer(); ?>

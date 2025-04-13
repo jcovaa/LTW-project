@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 <?php function output_service_card() { ?>
    <article class="service_card">
-      <a href="index.php">
+      <a href="service.php">
          <img src="https://picsum.photos/600/300?business" alt="">
       </a>
       <div class="service_info">
