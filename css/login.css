@@ -9,14 +9,20 @@
 /* general styles */
 body {
    display: flex;
-   justify-content: center;
-   align-items: center;
+   flex-direction: column;
 
    min-height: 100vh;
 }
 
 /* form general styles */
-body > form {
+body > main {
+   margin: auto 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+main > form {
    width: 420px;
 
    background-color: #fdf6ee;

@@ -280,6 +280,10 @@ body > footer {
    align-items: center;
 }
 
+body > footer > p {
+   margin-top: 1em;
+}
+
 body > footer :last-child {
    padding-left: 1em;
 }
