@@ -483,6 +483,49 @@ main#service_page {
    }
 }
 
+#comment_form .star_rating {
+   display: flex;
+   align-items: center;
+   margin-bottom: 10px;
+}
+
+#comment_form .star_rating p {
+   margin-right: 10px;
+   font-weight: bold;
+}
+
+/*
+The most clever part is using the CSS sibling selector (~) combined with flex-direction: row-reverse. 
+When you hover on the third star:
+
+That star gets highlighted by label.star:hover
+All stars to its DOM right (which appear visually 
+to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
+*/
+
+#comment_form .stars {
+   display: flex;
+   flex-direction: row-reverse;
+}
+
+#comment_form .stars input {
+   display: none; 
+}
+
+#comment_form .stars label.star {
+   color: #ddd;
+   font-size: 24px;
+   padding: 0 2px;
+   cursor: pointer;
+   transition: all 0.2s;
+}
+
+#comment_form .stars input:checked ~ label.star,
+#comment_form .stars label.star:hover,
+#comment_form .stars label.star:hover ~ label.star {
+   color: var(--star-color);
+}
+
 /* reviews */
 .reviews_count {
    display: flex;

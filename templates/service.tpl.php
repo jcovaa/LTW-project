@@ -134,9 +134,23 @@ declare(strict_types=1);
          <h3>Comments</h3>
       </header>
       <article id="comment_form">
+         <div class="star_rating">
+            <p>Your Rating:</p>
+            <div class="stars">
+               <input type="radio" id="star5" name="rating" value="5">
+               <label for="star5" class="star">★</label>
+               <input type="radio" id="star4" name="rating" value="4">
+               <label for="star4" class="star">★</label>
+               <input type="radio" id="star3" name="rating" value="3">
+               <label for="star3" class="star">★</label>
+               <input type="radio" id="star2" name="rating" value="2">
+               <label for="star2" class="star">★</label>
+               <input type="radio" id="star1" name="rating" value="1">
+               <label for="star1" class="star">★</label>
+            </div>
+         </div>
          <textarea placeholder="Write your review here..."></textarea>
-            <button class="submit_comment">Submit Review</button>
-         </textarea>
+         <button class="submit_comment">Submit Review</button>
       </article>
    </section>
    <section id="comments_list">
