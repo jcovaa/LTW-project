@@ -157,7 +157,7 @@ declare(strict_types=1);
       <article class="comment">
          <header>
             <img src="images/default_profile.png" alt="Profile Picture"> 
-            <p>Freelancer name</p>
+            <p>client name</p>
          </header>
          <p class="number_of_stars">5</p>
          <p class="comment_text">Samridh has done an absolutely amazing job! I can't believe how quickly they delivered my work—within just 2-3 hours! It made my task so much easier and saved me a lot of time. On top of their incredible efficiency, Samridh's polite and professional behavior truly stood out. Thank you so, so much for your excellent service! Highly recommend!</p>

@@ -462,13 +462,14 @@ main#service_page {
 }
 
 .comment {
-   padding: 20px 0;
-   border-top: 1px solid var(--border-color);
+   padding: 20px;
+   border: 1px solid var(--border-color);
+   border-radius: 15px;
    
    header {
       display: flex;
       align-items: center;
-      margin-bottom: 5px;
+      border-bottom: 1px solid var(--border-color);
       
       img {
          width: 40px;
