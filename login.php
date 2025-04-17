@@ -7,7 +7,7 @@ output_header("Login");
 
 ?>
 
-      <main>
+      <main id="authentication_page">
       <form action="">
          <h1>Login</h1>
          <div class="input_box">

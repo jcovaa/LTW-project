@@ -7,7 +7,7 @@ output_header("Register");
 
 ?>
 
-      <main>
+      <main id="authentication_page">
       <form action="">
          <h1>Create an account</h1>
          <div class="input_box">

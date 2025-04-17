@@ -294,7 +294,7 @@ body > footer :last-child {
 /* service page */
 
 /* main content */
-main {
+main#service_page {
    max-width: 1200px;
    margin: 0 auto;
    padding: 10px;

@@ -15,14 +15,14 @@ body {
 }
 
 /* form general styles */
-body > main {
+body > main#authentication_page {
    margin: auto 0;
    display: flex;
    justify-content: center;
    align-items: center;
 }
 
-main > form {
+main#authentication_page > form {
    width: 420px;
 
    background-color: #fdf6ee;

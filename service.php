@@ -13,7 +13,7 @@ output_header("Service");
    <li>Writing and translation</li>
    <li>Sales and marketing</li>
 </ul>
-<main>
+<main id="service_page">
    <section id="service_details">
       <header>
          <h2>I will code python applications, programs and scripts for you</h2>
