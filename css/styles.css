@@ -171,12 +171,14 @@ nav#filter_section button i {
 
    display: flex;
    flex-wrap: wrap;
+   justify-content: space-between;
    gap: 20px;
    align-items: center;
 }
 
 #featured_services header {
-   margin-bottom: 30px;
+   margin-bottom: 10px;
+   width: 100%;
 }
 
 #featured_services header h2 {
@@ -561,8 +563,11 @@ main#service_page {
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
    padding: 10px 20px;
-   position: sticky;
-   top: 20px;
+   position: fixed;
+   top: 20%;
+   right: 15%;
+   width: 300px;
+   margin: 0;
 }
 
 #purchase_section .price_container {

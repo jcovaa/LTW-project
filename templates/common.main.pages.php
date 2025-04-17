@@ -32,6 +32,14 @@ declare(strict_types=1);
          </header>
 <?php } ?>
 
+<?php function draw_filter_section(): void { ?>
+   <nav id="filter_section">
+      <button id="category">category<i class="fa fa-angle-down"></i></button>
+      <button id="price">price<i class="fa fa-angle-down"></i></button>
+      <button id="rating">rating<i class="fa fa-angle-down"></i></button>
+   </nav>
+<?php } ?>
+
 <?php function output_footer(): void { ?>
    <footer>
          <p>Name of the app</p>
