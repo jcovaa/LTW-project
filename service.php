@@ -72,7 +72,7 @@ output_header("Service");
             </div>
             <p class="rating_count">0</p>
          </div>
-         <div>
+         <div class="rating_bar">
             <p class="star_level">1 Star</p>
             <div class="progress_container"> 
                <div class="progress-fill" style="width: 0%;"></div>
@@ -91,7 +91,7 @@ output_header("Service");
          </textarea>
       </article>
    </section>
-   <section id="comments_lis">
+   <section id="comments_list">
       <article class="comment">
          <header>
             <img src="images/default_profile.png" alt="Profile Picture"> 
@@ -109,3 +109,5 @@ output_header("Service");
       <button class="purchase_button">Purchase Now</button>
    </section>
 </main>
+
+<?php output_footer() ?>

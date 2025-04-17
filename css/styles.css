@@ -1,3 +1,10 @@
+:root {
+   --border-color: #ddd;
+   --primary-box-color: #002b9f;
+   --secondary-box-color: #00195d;
+   --star-color: #ffb400;  
+}
+
 /* all elements */
 * {
    box-sizing: border-box;
@@ -20,7 +27,7 @@ body > header {
 
    margin: 0 0 1em 0;
    
-   border-bottom: 1px solid #ddd;
+   border-bottom: 1px solid var(--border-color);
 }
 
 /* nav links */
@@ -49,7 +56,7 @@ li, a {
    display: flex;
    margin: 0 2em;
 
-   border: 1px solid #ddd;
+   border: 1px solid var(--border-color);
    border-radius: 20px;
 
    padding: 5px;
@@ -70,7 +77,7 @@ li, a {
 
 .search_bar button {
    border: none;
-   border-left: 1px solid #ddd;
+   border-left: 1px solid var(--border-color);
 
    color: #5d5d5d;
 
@@ -95,7 +102,7 @@ li, a {
    background: none;
    padding: 8px 12px;
 
-   border: 1px solid #ddd;
+   border: 1px solid var(--border-color);
    border-radius: var(--nav-border-radius);
 
    font-size: var(--text-size);
@@ -137,7 +144,7 @@ nav#filter_section button {
    cursor: pointer;
 
    background-color: white;
-   border: 1px solid #ddd;
+   border: 1px solid var(--border-color);
    border-radius: var(--nav-border-radius);
 }
 
@@ -178,6 +185,7 @@ nav#filter_section button i {
    color: #333;
 }
 
+
 /* service card */
 #featured_services .service_card, #services .service_card {
    display: flex;
@@ -189,77 +197,72 @@ nav#filter_section button i {
 
    width: 300px;
    transition: 0.3s ease-in-out;
-}
 
-#featured_services .service_card a img, #services .service_card a img {
-   width: 100%;
-   height: auto;
+   a img {
+      width: 100%;
+      height: auto;
 
-   object-fit: cover;
-}
+      object-fit: cover;
+   }
 
-#featured_services .service_card .service_info, #services .service_card .service_info {
-   padding: 5px 0 5px 0;
-}
+   .service_info {
+      padding: 5px 0 5px 0;
 
-#featured_services .service_card .profile, #services .service_card .profile {
-   display: flex;
-   align-items: center;
-   gap: 10px;
-}
+      a {
+         text-decoration: none;
+         color: black;
+         display: block;
+         margin-top: 5px;
+         margin-bottom: 3px;
+         cursor: pointer;
+         
+         &:hover {
+            text-decoration: underline;
+         }
+      }
 
-#featured_services .service_card .profile img, #services .service_card .profile img {
-   width: 30px;
-   height: 30px;
-   border-radius: 50%;
-}
+      p {
+         margin: 3px 0px;
+         padding: 0; 
+      }
 
-#featured_services .service_card .profile p, #services .service_card .profile p {
-   font-weight: bold;
-   margin: 0;
-}
+      p:nth-child(3) {
+         font-size: var(--text-size);
+         position: relative;
+         display: inline-block;
 
-#featured_services .service_card .service_info a, #services .service_card .service_info a {
-   text-decoration: none;
-   color: black;
-   
-   display: block;
-   margin-top: 5px;
-   cursor: pointer;
-}
+         &::before {
+            content: "★ ";
+            left: 0;
+            top: 0;
 
-#featured_services .service_card .service_info a:hover, #services .service_card .service_info a:hover {
-   text-decoration: underline;
-}
+            font-size: 14;
+            color: var(--star-color);
+         }
+      }
 
-#featured_services .service_card .service_info p:nth-child(3), #services .service_card .service_info p:nth-child(3) {
-   font-size: var(--text-size);
+      p:nth-child(4) {
+         font-size: var(--text-size);
+         margin-top: 5px;
+      }
+   }
 
-   position: relative;
-   display: inline-block;
-}
+   .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-#featured_services .service_card .service_info p:nth-child(3)::before, #services .service_card .service_info p:nth-child(3)::before {
-   content: "★ ";
-   left: 0;
-   top: 0;
+      img {
+         width: 30px;
+         height: 30px;
+         border-radius: 50%;
+      }
 
-   font-size: 14;
-   color: #ffb400;
-}
-
-#featured_services .service_card .service_info p:nth-child(4), #services .service_card .service_info p:nth-child(4) {
-   font-size: var(--text-size);
-   margin-top: 5px;
-}
-
-#featured_services .service_card .service_info p, #services .service_card .service_info p {
-   margin: 3px 0px;
-   padding: 0; 
-}
-
-#featured_services .service_card .service_info a, #services .service_card .service_info a {
-   margin-bottom: 3px;
+      p {
+         font-weight: bold;
+         margin: 0;
+      }
+   }
 }
 
 /* services */
@@ -273,7 +276,7 @@ nav#filter_section button i {
 
 /* footer */
 body > footer {
-   border-top: 1px solid #ddd;
+   border-top: 1px solid var(--border-color);
 
    padding: 5px 0;
    display: flex;
@@ -286,4 +289,322 @@ body > footer > p {
 
 body > footer :last-child {
    padding-left: 1em;
+}
+
+/* service page */
+
+/* main content */
+main {
+   max-width: 1200px;
+   margin: 0 auto;
+   padding: 10px;
+
+   display: grid;
+   grid-template-columns: 1fr 350px;
+   grid-gap: 15px;
+}
+
+/* categories list */
+#service_categories {
+   display: flex;
+   list-style: none;
+   
+   padding: 15px 0;
+   margin-bottom: 10px;
+}
+
+#service_categories li {
+   margin-right: 15px;
+
+   padding: 5px;
+   background-color: #cde0ff;
+   border-radius: 10px;
+
+   color: var(--primary-box-color);
+}
+
+/* details of the service */
+#service_details {
+   grid-column: 1;
+   margin-bottom: 15px;
+
+   border-bottom: 1px solid var(--border-color);
+}
+
+#service_details header h2 {
+   font-size: 28px;
+   font-weight: bold;
+   margin-bottom: 10px;
+}
+
+/* freelancer profile */
+#service_details .seller_info {
+   display: flex;
+   font-weight: bold;
+   margin-bottom: 10px;
+
+   border-bottom: 1px solid var(--border-color);
+}
+
+#service_details .seller_info img {
+   width: 50px;
+   height: 50px;
+
+   border-radius: 50%;
+
+   margin-right: 10px;
+}
+
+#service_details .seller_info p {
+   font-weight: bold;
+}
+
+/* service description */
+#service_details .service_description img {
+   width: 100%;
+   height: 400px;
+   object-fit: cover;
+
+   border-radius: 4px;
+   margin-bottom: 5px;
+}
+
+/* chat button */
+.contact_freelancer,
+.submit_comment,
+#purchase_section .purchase_button {
+   background-color: var(--primary-box-color);
+   color: white;
+   border: none;
+   border-radius: 4px;
+   font-weight: bold;
+   cursor: pointer;
+   
+   &:hover {
+      background-color: var(--secondary-box-color);
+   }
+}
+
+/* Button specific styles */
+.contact_freelancer {
+   padding: 12px 24px;
+   grid-column: 1;
+   margin-bottom: 10px;
+   width: fit-content;
+}
+
+.submit_comment {
+   padding: 10px 20px;
+   float: right;
+}
+
+#purchase_section .purchase_button {
+   display: block;
+   width: 100%;
+   padding: 12px;
+   text-align: center;
+   text-decoration: none;
+   font-size: 16px;
+}
+
+/* ratings section */
+#ratings, 
+#comments {
+   grid-column: 1;
+   margin-bottom: 10px;
+   
+   header h3 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 5px;
+   }
+}
+
+/* Comments specific styles */
+#comments {
+   margin-bottom: 15px;
+   
+   header h3 {
+      font-size: 20px;
+   }
+}
+
+#comment_form {
+   margin-bottom: 10px;
+   
+   textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      resize: vertical;
+      min-height: 100px;
+      margin-bottom: 5px;
+   }
+}
+
+#comments_list {
+   grid-column: 1;
+   
+   .number_of_stars {
+      margin-bottom: 5px;
+      
+      &::before {
+         content: "★ ";
+      }
+   }
+   
+   .comment_text {
+      line-height: 1.6;
+   }
+}
+
+.comment {
+   padding: 20px 0;
+   border-top: 1px solid var(--border-color);
+   
+   header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+      
+      img {
+         width: 40px;
+         height: 40px;
+         border-radius: 50%;
+         margin-right: 10px;
+      }
+      
+      p {
+         font-weight: bold;
+      }
+   }
+}
+
+/* reviews */
+.reviews_count {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   margin-bottom: 10px;
+}
+
+.overall_rating {
+   display: flex;
+   align-items: center;
+}
+
+.star {
+   color: var(--star-color);
+   margin-right: 2px;
+
+   font-size: 18px;
+}
+
+.overall_rating p {
+   font-weight: bold;
+   margin-left: 5px;
+}
+
+
+/* rating bars */
+.rating_bars {
+   margin-bottom: 10px;
+}
+
+.rating_bar {
+   display: flex;
+   align-items: center;
+   
+   margin-bottom: 5px;
+}
+
+.rating_bar .star_level {
+   width: 65px;
+
+   font-size: 14px;
+   font-weight: bold;
+}
+
+.rating_bar .progress_container {
+   flex: 1;
+   height: 8px;
+
+   background-color: #eee;
+   border-radius: 2px;
+
+   margin: 0 5px;
+   overflow: hidden;
+}
+
+.rating_bar .progress-fill {
+   height: 100%;
+   background-color: #404145;
+}
+
+.rating_bar .rating_count {
+   width: 35px;
+
+   font-size: 14px;
+   color: #52545a;
+}
+
+/* purchase_section */
+#purchase_section {
+   grid-column: 2;
+   grid-row: 1 / span 5;
+   align-self: start;
+
+   background-color: white;
+   border-radius: 4px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+   padding: 10px 20px;
+   position: sticky;
+   top: 20px;
+}
+
+#purchase_section .price_container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   margin-bottom: 10px;
+}
+
+#purchase_section .price_container p:first-child {
+   font-size: 16px;
+   font-weight: bold;
+   color: #404145;
+}
+
+#purchase_section .price_container p:last-child {
+   font-size: 24px;
+   font-weight: bold;
+   color: #404145;
+}
+
+#purchase_section .purchase_button {
+   display: block;
+   width: 100%;
+
+   background-color: var(--primary-box-color);
+   color: white;
+
+   padding: 12px;
+   text-align: center;
+   border-radius: 4px;
+   border: none;
+
+   font-weight: bold;
+   text-decoration: none;
+
+   cursor: pointer;
+   
+   font-size: 16px;
+}
+
+#purchase_section .purchase_button:hover {
+   background-color: var(--secondary-box-color);
 }
