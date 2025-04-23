@@ -12,8 +12,9 @@ class Service
    public bool $isPromoted;
    public int $freelancerId;
    public string $freelancerName;
+   public float $avgRating;
 
-   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName)
+   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating)
    {
       $this->id = $id;
       $this->name = $name;
@@ -23,6 +24,7 @@ class Service
       $this->isPromoted = $isPromoted;
       $this->freelancerId = $freelancerId;
       $this->freelancerName = $freelancerName;
+      $this->avgRating = $avgRating;
    }
 
 
@@ -57,6 +59,7 @@ class Service
          boolval($service['IsPromoted']),
          $service['FreelancerId'],
          $service['FreelancerName'],
+         self::getAverageRatingForService($db, $id),
       );
    }
 
@@ -128,8 +131,9 @@ class Service
       $services = [];
     
       while ($row = $stmt->fetch()) {
-        $services[] = new Service(
-          $row['ServiceId'],
+         $id = $row['ServiceId'];
+         $services[] = new Service(
+          $id,
           $row['Name'],
           $row['Description'],
           floatval($row['Price']),
@@ -137,10 +141,25 @@ class Service
           boolval($row['IsPromoted']),
           $row['FreelancerId'],
           $row['FreelancerName'],
+          self::getAverageRatingForService($db, $id),
         );
       }
     
       return $services;
+    }
+
+
+    private static function getAverageRatingForService(PDO $db, int $id)
+    {
+        $stmt = $db->prepare('
+            SELECT AVG(Rating) as AvgRating
+            FROM Review
+            WHERE ServiceId = ?
+        ');
+        $stmt->execute([$id]);
+        $result = $stmt->fetch();
+
+        return $result && $result['AvgRating'] !== null ? round(floatval($result['AvgRating']), 1) : 0.0;   // result may be false or there may not exist any review
     }
 }
 

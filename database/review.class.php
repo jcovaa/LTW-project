@@ -64,18 +64,6 @@ class Review
     }
     
 
-    private static function getAverageRatingForService(PDO $db, int $serviceId)
-    {
-        $stmt = $db->prepare('
-            SELECT AVG(Rating) as AvgRating
-            FROM Review
-            WHERE ServiceId = ?
-        ');
-        $stmt->execute([$serviceId]);
-        $result = $stmt->fetch();
-
-        return $result && $result['AvgRating'] !== null ? round(floatval($result['AvgRating']), 1) : 0.0;   // result may be false or there may not exist any review
-    }
 }
 
 ?>
