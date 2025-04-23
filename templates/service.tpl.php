@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// Change later to return the actual information from database
 ?>
 
 <?php function draw_service_card(Service $service) { ?>
@@ -16,7 +15,7 @@ declare(strict_types=1);
             <p><?=$service->freelancerName ?></p>
          </div>
          <a href="service.php"><?=$service->name ?></a>
-         <p>Rating</p>
+         <p><?=$service->avgRating ?></p>
          <p>Price: €<?=number_format($service->price, 2) ?></p>
       </div>
    </article>

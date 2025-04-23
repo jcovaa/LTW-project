@@ -499,7 +499,7 @@ main#service_page {
 }
 
 /*
-The most clever part is using the CSS sibling selector (~) combined with flex-direction: row-reverse. 
+using the CSS sibling selector (~) combined with flex-direction: row-reverse. 
 When you hover on the third star:
 
 That star gets highlighted by label.star:hover
