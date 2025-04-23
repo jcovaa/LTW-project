@@ -97,7 +97,7 @@ declare(strict_types=1);
     </section>
 <?php } ?>
 
-<?php function draw_comments_section(): void { ?>
+<?php function draw_comments_section(array $comments): void { ?>
    <section id="comments">
       <header>
          <h3>Comments</h3>
@@ -123,14 +123,16 @@ declare(strict_types=1);
       </article>
    </section>
    <section id="comments_list">
-      <article class="comment">
-         <header>
-            <img src="images/default_profile.png" alt="Profile Picture"> 
-            <p>client name</p>
-         </header>
-         <p class="number_of_stars">5</p>
-         <p class="comment_text">Samridh has done an absolutely amazing job! I can't believe how quickly they delivered my work—within just 2-3 hours! It made my task so much easier and saved me a lot of time. On top of their incredible efficiency, Samridh's polite and professional behavior truly stood out. Thank you so, so much for your excellent service! Highly recommend!</p>
-      </article>
+      <?php foreach($comments as $comment) { ?>
+         <article class="comment">
+            <header>
+               <img src="images/default_profile.png" alt="Profile Picture"> 
+               <p><?= $comment->clientName ?></p>
+            </header>
+            <p class="number_of_stars"><?= $comment->rating ?></p>
+            <p class="comment_text"><?= $comment->comment ?></p>
+         </article>
+      <?php } ?>
    </section>
 <?php } ?>
 
@@ -144,12 +146,12 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
-<?php function draw_service_page(Service $service, array $ratingsData) { ?>
+<?php function draw_service_page(Service $service, array $ratingsData, array $comments): void { ?>
    <main id="service_page">
       <?php 
          draw_service_details($service); 
          draw_ratings_section($ratingsData); 
-         draw_comments_section(); 
+         draw_comments_section($comments); 
          draw_purchase_section($service); 
       ?>
    </main>

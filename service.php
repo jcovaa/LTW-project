@@ -12,12 +12,11 @@ require_once __DIR__ . '/database/review.class.php';
 $db = getDatabaseConnection();
 
 $service = Service::getService($db, intval($_GET['id']));
-
 $categories = Category::getServiceCategories($db, $service->id);
-
 $ratingsData = Review::getRatingsData($db, $service->id);
+$comments = Review::getServiceReviews($db, $service->id);
 
 output_header("Service");
 draw_service_categories($categories);
-draw_service_page($service, $ratingsData);
+draw_service_page($service, $ratingsData, $comments);
 output_footer();

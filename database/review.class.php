@@ -5,91 +5,88 @@ class Review
     public int $id;
     public int $serviceId;
     public int $clientId;
+    public ?string $clientName;
     public int $rating;
     public string $comment;
 
 
-    public function __construct(int $id, int $serviceId, int $clientId, int $rating, string $comment)
+    public function __construct(int $id, int $serviceId, int $clientId, ?string $clientName = null ,int $rating, string $comment)
     {
         $this->id = $id;
         $this->serviceId = $serviceId;
         $this->clientId = $clientId;
+        $this->clientName = $clientName;
         $this->rating = $rating;
         $this->comment = $comment;
     }
 
-    public static function getReview(PDO $db, int $id)
-    {
+    public static function getReview(PDO $db, int $id): Review {
         $stmt = $db->prepare('
-            SELECT ReviewId, ServiceId, ClientId, Rating, Comment
+            SELECT 
+                Review.ReviewId, 
+                Review.ServiceId, 
+                Review.ClientId, 
+                Review.Rating, 
+                Review.Comment, 
+                User.Name as ClientName
             FROM Review
-            WHERE ReviewId = ?
+            JOIN User ON Review.ClientId = User.UserId
+            WHERE Review.ReviewId = ?
         ');
 
         $stmt->execute([$id]);
 
         $review = $stmt->fetch();
 
+        if (!$review) {
+            throw new Exception("Review not found.");
+        }
+
         return new Review(
             $review['ReviewId'],
             $review['ServiceId'],
             $review['ClientId'],
+            $review['ClientName'],
             intval($review['Rating']),
             $review['Comment']
         );
     }
 
-    public static function getServiceReviews(PDO $db, int $serviceId)
-    {
+    public static function getServiceReviews(PDO $db, int $serviceId): array {
         $stmt = $db->prepare('
-         SELECT ReviewId, ServiceId, ClientId, Rating, Comment 
-         FROM Review
-         WHERE ServiceId = ?
-      ');
-
+            SELECT 
+                Review.ReviewID, 
+                Review.ServiceId, 
+                Review.ClientId, 
+                Review.Rating, 
+                Review.Comment, 
+                User.Name as ClientName
+            FROM Review
+            JOIN User ON Review.ClientId = User.UserId
+            WHERE Review.ServiceId = ?
+        ');
+    
         $stmt->execute([$serviceId]);
-
+    
         $reviews = [];
         while ($row = $stmt->fetch()) {
+    
+            if (!isset($row['ReviewID'], $row['ServiceId'], $row['ClientId'], $row['Rating'], $row['Comment'])) {
+                continue; 
+            }
+    
             $reviews[] = new Review(
-                $row['ReviewId'],
-                $row['ServiceId'],
-                $row['ClientId'],
+                intval($row['ReviewID']),
+                intval($row['ServiceId']),
+                intval($row['ClientId']),
+                $row['ClientName'] ?? null,
                 intval($row['Rating']),
                 $row['Comment']
             );
         }
-
+    
         return $reviews;
     }
-    
-    /*
-    public static function getTotalNumberOfReviews(PDO $db, int $serviceId): int {
-        $stmt = $db->prepare('
-            SELECT COUNT(*) as Count
-            FROM Review
-            WHERE ServiceId = ?
-        ');
-
-        $stmt->execute([$serviceId]);
-        $result = $stmt->fetch();
-
-        return $result ? intval($result['Count']) : 0;
-    }
-
-    public static function getNumberOfReviews(PDO $db, int $serviceId, int $stars): int {
-        $stmt = $db->prepare('
-            SELECT COUNT(*) as Count
-            FROM Review
-            WHERE ServiceId = ? AND Rating = ?
-        ');
-
-        $stmt->execute([$serviceId, $stars]);
-        $result = $stmt->fetch();
-
-        return $result ? intval($result['Count']) : 0;
-    }
-    */
 
     public static function getReviewCountsByRating(PDO $db, int $serviceId): array {
         $stmt = $db->prepare('
