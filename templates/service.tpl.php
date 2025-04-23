@@ -5,43 +5,42 @@ declare(strict_types=1);
 // Change later to return the actual information from database
 ?>
 
-<?php function draw_service_card() { ?>
+<?php function draw_service_card(Service $service) { ?>
    <article class="service_card">
       <a href="service.php">
-         <img src="https://picsum.photos/600/300?business" alt="">
+         <img src="https://picsum.photos/200?<?=$service->id ?>" alt="service image">
       </a>
       <div class="service_info">
          <div class="profile">
             <img src="images/default_profile.png" alt="Profile Picture"> 
-            <p>Freelancer name</p>
+            <p><?=$service->freelancerName ?></p>
          </div>
-         <a href="service.php">Title of the service</a>
+         <a href="service.php"><?=$service->name ?></a>
          <p>Rating</p>
-         <p>Price</p>
+         <p>Price: €<?=number_format($service->price, 2) ?></p>
       </div>
    </article>
 <?php } ?>
 
-<?php function draw_featured_services(): void { ?>
+<?php function draw_featured_services(array $featureServices): void { ?>
    <section id="featured_services">
       <header>
-         <h2>Featured services</h2>
+         <h2>Featured Services</h2>
       </header>
       <?php 
-         draw_service_card(); 
-         draw_service_card();
-         draw_service_card(); 
-         draw_service_card(); 
+         foreach ($featureServices as $service) {
+            draw_service_card($service); 
+         }
       ?>
    </section>
 <?php } ?>
 
-<?php function draw_services(): void { ?>
+<?php function draw_services(array $services): void { ?>
    <section id="services">
-      <?php 
-         draw_service_card(); 
-         draw_service_card(); 
-         draw_service_card(); 
+      <?php
+         foreach ($services as $service) {
+            draw_service_card($service); 
+         }
       ?>
    </section>
 <?php } ?>

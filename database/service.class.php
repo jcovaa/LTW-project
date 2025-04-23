@@ -60,6 +60,47 @@ class Service
       );
    }
 
+   public static function getAllServices(PDO $db): array {
+      $stmt = $db->prepare('
+         SELECT 
+            Service.ServiceId,
+            Service.Name,
+            Service.Description,
+            Service.Price,
+            Service.DeliveryTime,
+            Service.IsPromoted,
+            User.UserId as FreelancerId,
+            User.Name as FreelancerName
+         FROM Service
+         JOIN User ON Service.FreelancerID = User.UserId
+      ');
+
+      $stmt->execute();
+
+      return self::buildServicesArray($db, $stmt);
+   }
+
+   public static function getNServices(PDO $db, int $count): array {
+      $stmt = $db->prepare('
+         SELECT 
+            Service.ServiceId,
+            Service.Name,
+            Service.Description,
+            Service.Price,
+            Service.DeliveryTime,
+            Service.IsPromoted,
+            User.UserId as FreelancerId,
+            User.Name as FreelancerName
+         FROM Service
+         JOIN User ON Service.FreelancerID = User.UserId
+         LIMIT ?
+      ');
+
+      $stmt->execute([$count]);
+
+      return self::buildServicesArray($db, $stmt);
+   }
+
    function getFreelancerServices(PDO $db, int $freelancerId)
    {
       // The User and Service table has some equal column names
@@ -83,9 +124,8 @@ class Service
       return self::buildServicesArray($db, $stmt);
    }
 
-
-   public static function getPromotedServices(PDO $db): array {
-      $stmt = $db->prepare('
+public static function getPromotedServices(PDO $db): array {
+    $stmt = $db->prepare('
         SELECT 
           Service.ServiceId, 
           Service.Name, 
@@ -98,12 +138,13 @@ class Service
         FROM Service
         JOIN User ON Service.FreelancerID = User.UserId
         WHERE Service.IsPromoted = ?
-      ');
-      
-      $stmt->execute([1]);
+        LIMIT 4
+    ');
+    
+    $stmt->execute([1]);
 
-      return self::buildServicesArray($db, $stmt);
-   }
+    return self::buildServicesArray($db, $stmt);
+}
 
 
    public static function getServiceByCategoryId(PDO $db, int $categoryId): array {

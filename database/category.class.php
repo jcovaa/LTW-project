@@ -44,7 +44,7 @@ class Category {
     }
 
 
-   private static function getServiceCategories(PDO $db, int $serviceId)
+   public static function getServiceCategories(PDO $db, int $serviceId)
    {
       $stmt = $db->prepare('
       SELECT Category.CategoryId, Category.Name 
