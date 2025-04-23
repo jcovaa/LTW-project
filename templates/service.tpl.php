@@ -68,61 +68,33 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
-<?php function draw_ratings_section(): void { ?>
-   <button class="contact_freelancer">Chat with the Freelancer</button>
-   <section id="ratings">
-      <header>
-         <h3>Reviews</h3>
-      </header>
-      <div class="reviews_count">
-         <p>82 reviews for this Service</p>
-         <div class="overall_rating">
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-            <p>4.9</p>
-         </div>
-      </div>
-      <div class="rating_bars">
-         <div class="rating_bar">
-            <p class="star_level">5 Stars</p>
-            <div class="progress_container">
-               <div class="progress-fill" style="width: 95%;"></div>
+<?php function draw_ratings_section(array $ratingsData): void { ?>
+    <button class="contact_freelancer">Chat with the Freelancer</button>
+    <section id="ratings">
+        <header>
+            <h3>Reviews</h3>
+        </header>
+        <div class="reviews_count">
+            <p><?= $ratingsData['totalReviews'] ?> reviews for this Service</p>
+            <div class="overall_rating">
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <span class="star"><?= $i <= $ratingsData['overallRating'] ? '★' : '☆' ?></span>
+                <?php endfor; ?>
+                <p><?= $ratingsData['overallRating'] ?></p>
             </div>
-            <p class="rating_count">78</p>
-         </div>
-         <div class="rating_bar">
-            <p class="star_level">4 Stars</p>
-            <div class="progress_container"> 
-               <div class="progress-fill" style="width: 3%;"></div>
-            </div>
-            <p class="rating_count">3</p>
-         </div>
-         <div class="rating_bar">
-            <p class="star_level">3 Stars</p>
-            <div class="progress_container"> 
-               <div class="progress-fill" style="width: 2%;"></div>
-            </div>
-            <p class="rating_count">1</p>
-         </div>
-         <div class="rating_bar">
-            <p class="star_level">2 Stars</p>
-            <div class="progress_container"> 
-               <div class="progress-fill" style="width: 0%;"></div>
-            </div>
-            <p class="rating_count">0</p>
-         </div>
-         <div class="rating_bar">
-            <p class="star_level">1 Star</p>
-            <div class="progress_container"> 
-               <div class="progress-fill" style="width: 0%;"></div>
-            </div>
-            <p class="rating_count">0</p>
-         </div>
-      </div>
-   </section>
+        </div>
+        <div class="rating_bars">
+            <?php for ($i = 5; $i >= 1; $i--): ?>
+                <div class="rating_bar">
+                    <p class="star_level"><?= $i ?> Stars</p>
+                    <div class="progress_container">
+                        <div class="progress-fill" style="width: <?= $ratingsData['percentages'][$i] ?>%;"></div>
+                    </div>
+                    <p class="rating_count"><?= $ratingsData['ratingCounts'][$i] ?></p>
+                </div>
+            <?php endfor; ?>
+        </div>
+    </section>
 <?php } ?>
 
 <?php function draw_comments_section(): void { ?>
@@ -166,17 +138,17 @@ declare(strict_types=1);
    <section id="purchase_section">
       <div class="price_container">
          <p>Service Price</p>
-         <p><?=$service->price ?></p>
+         <p><?=$service->price ?>€</p>
       </div>
       <button class="purchase_button">Purchase Now</button>
    </section>
 <?php } ?>
 
-<?php function draw_service_page(Service $service) { ?>
+<?php function draw_service_page(Service $service, array $ratingsData) { ?>
    <main id="service_page">
       <?php 
          draw_service_details($service); 
-         draw_ratings_section(); 
+         draw_ratings_section($ratingsData); 
          draw_comments_section(); 
          draw_purchase_section($service); 
       ?>
