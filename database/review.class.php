@@ -39,7 +39,7 @@ class Review
         );
     }
 
-    private static function getServiceReviews(PDO $db, int $serviceId)
+    public static function getServiceReviews(PDO $db, int $serviceId)
     {
         $stmt = $db->prepare('
          SELECT ReviewId, ServiceId, ClientId, Rating, Comment 

@@ -29,7 +29,7 @@ class Service
 
 
 
-   function getService(PDO $db, int $id)
+   public static function getService(PDO $db, int $id)
    {
       // The User and Service table has some equal column names
       $stmt = $db->prepare('

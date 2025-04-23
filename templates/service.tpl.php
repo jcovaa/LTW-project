@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 <?php function draw_service_card(Service $service) { ?>
    <article class="service_card">
-      <a href="service.php">
+      <a href="service.php?id=<?=$service->id ?>">
          <img src="https://picsum.photos/200?<?=$service->id ?>" alt="service image">
       </a>
       <div class="service_info">
@@ -14,7 +14,7 @@ declare(strict_types=1);
             <img src="images/default_profile.png" alt="Profile Picture"> 
             <p><?=$service->freelancerName ?></p>
          </div>
-         <a href="service.php"><?=$service->name ?></a>
+         <a href="service.php?id=<?=$service->id ?>"><?=$service->name ?></a>
          <p><?=$service->avgRating ?></p>
          <p>Price: €<?=number_format($service->price, 2) ?></p>
       </div>
@@ -44,27 +44,26 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
-<?php function draw_service_categories(): void { ?>
+<?php function draw_service_categories(array $categories): void { ?>
    <ul id="service_categories">
-      <li>Programming and tech</li>
-      <li>Design and creative</li>
-      <li>Writing and translation</li>
-      <li>Sales and marketing</li>
+      <?php foreach ($categories as $category) { ?>
+         <li><?=$category->name ?></li>
+      <?php } ?>
    </ul>
 <?php } ?>
 
-<?php function draw_service_details(): void { ?>
+<?php function draw_service_details(Service $service): void { ?>
    <section id="service_details">
       <header>
-         <h2>I will code python applications, programs and scripts for you and explain how I did it</h2>
+         <h2><?=$service->name ?></h2>
       </header>
       <div class="seller_info">
          <img src="images/default_profile.png" alt="Profile Picture"> 
-         <p>Freelancer name</p>
+         <p><?=$service->freelancerName ?></p>
       </div>
       <div class="service_description">
-         <img src="https://picsum.photos/600/300?business" alt="">
-         <p>I specialize in creating custom Python applications, scripts and automation solutions tailored to your specific needs. With years of experience in Python development, I can help you with any Python-related project, from simple scripts to complex applications.</p>
+         <img src="https://picsum.photos/600/300?<?=$service->id ?>" alt="">
+         <p><?=$service->description ?></p>
       </div>
    </section>
 <?php } ?>
@@ -163,23 +162,23 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
-<?php function draw_purchase_section() { ?>
+<?php function draw_purchase_section(Service $service) { ?>
    <section id="purchase_section">
       <div class="price_container">
          <p>Service Price</p>
-         <p>€18.48</p>
+         <p><?=$service->price ?></p>
       </div>
       <button class="purchase_button">Purchase Now</button>
    </section>
 <?php } ?>
 
-<?php function draw_service_page() { ?>
+<?php function draw_service_page(Service $service) { ?>
    <main id="service_page">
       <?php 
-         draw_service_details(); 
+         draw_service_details($service); 
          draw_ratings_section(); 
          draw_comments_section(); 
-         draw_purchase_section(); 
+         draw_purchase_section($service); 
       ?>
    </main>
 <?php } ?>
