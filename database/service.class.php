@@ -202,6 +202,17 @@ public static function getPromotedServices(PDO $db): array {
 
         return $result && $result['AvgRating'] !== null ? round(floatval($result['AvgRating']), 1) : 0.0;   // result may be false or there may not exist any review
     }
+
+    public static function searchServices(PDO $db, string $query): array {
+      $stmt = $db->prepare('
+         SELECT * 
+         FROM Service 
+         WHERE name LIKE ?
+      ');
+
+      $stmt->execute(['%' . $query . '%']);
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
 }
 
 ?>

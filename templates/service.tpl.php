@@ -34,9 +34,16 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
-<?php function draw_services(array $services): void { ?>
+<?php function draw_services(array $services):void { ?>
    <section id="services">
       <?php
+         if (isset($_GET['query']) && !empty($_GET['query'])) {
+            $query = $_GET['query'];
+            $services = array_filter($services, function($service) use ($query) {
+               return stripos($service->name, $query) !== false;
+            });
+         }
+
          foreach ($services as $service) {
             draw_service_card($service); 
          }
@@ -62,7 +69,7 @@ declare(strict_types=1);
          <p><?=$service->freelancerName ?></p>
       </div>
       <div class="service_description">
-         <img src="https://picsum.photos/600/300?<?=$service->id ?>" alt="">
+         <img src="https://picsum.photos/200?<?=$service->id ?>" alt="service image">
          <p><?=$service->description ?></p>
       </div>
    </section>
@@ -75,7 +82,7 @@ declare(strict_types=1);
             <h3>Reviews</h3>
         </header>
         <div class="reviews_count">
-            <p><?= $ratingsData['totalReviews'] ?> reviews for this Service</p>
+            <p><?= $ratingsData['totalReviews'] ?> reviews</p>
             <div class="overall_rating">
                 <?php for ($i = 1; $i <= 5; $i++): ?>
                     <span class="star"><?= $i <= $ratingsData['overallRating'] ? '★' : '☆' ?></span>

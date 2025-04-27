@@ -20,10 +20,6 @@ declare(strict_types=1);
    <body>
       <header>
          <h1 id="logo"><a href="index.php">Title</a></h1>
-         <form class="search_bar" action="search.php" method="get">
-            <input type="text" name="query" placeholder="Search...">
-            <button class="fa fa-search" type="submit"></button>
-         </form>
          <nav id="nav_menu">
             <ul>
                <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>

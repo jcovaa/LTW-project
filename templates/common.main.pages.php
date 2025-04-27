@@ -13,13 +13,14 @@ declare(strict_types=1);
          <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
          <link rel="stylesheet" href="css/styles.css">
-         <title>My Web Page</title>
+         <script src="javascript/script.js" defer></script>
+         <title><?=$title ?></title>
       </head>
       <body>
          <header>
             <h1 id="logo"><a href="index.php">Title</a></h1>
             <form class="search_bar" action="search.php" method="get">
-               <input type="text" name="query" placeholder="Search...">
+               <input type="text" name="query" placeholder="Search..." value="<?= isset($_GET['query']) ? htmlspecialchars($_GET['query']) : '' ?>">
                <button class="fa fa-search" type="submit"></button>
             </form>
             <nav id="nav_menu">
