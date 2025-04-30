@@ -43,11 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
          item.querySelector('.selected_icon').style.display = 'inline';
       });
    });
-
-   const allCategoriesItem = document.querySelector('.dropdown_item[data-category-id="all"]');
-   if (allCategoriesItem) {
-      allCategoriesItem.querySelector('.selected_icon').style.display = 'inline';
-   }
 });
 
 
