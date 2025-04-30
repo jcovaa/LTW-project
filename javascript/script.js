@@ -5,6 +5,15 @@ document.querySelector('.search_bar').addEventListener('submit', function (event
    window.location.href = `index.php?query=${encodeURIComponent(query)}`;
 });
 
+/* when the page reloads after submitting the search, the input field retains the text in the search-bar*/
+document.addEventListener('DOMContentLoaded', () => {
+   const urlParams = new URLSearchParams(window.location.search);
+   const query = urlParams.get('query');
+   if (query) {
+      document.querySelector('input[name="query"]').value = query;
+   }
+});
+
 /* 
 The DOMContentLoaded event fires when the HTML document has been completely parsed, 
 and all deferred scripts have downloaded and executed.
