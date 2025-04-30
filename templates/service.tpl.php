@@ -4,6 +4,28 @@ declare(strict_types=1);
 
 ?>
 
+<?php function draw_filter_section(array $categories): void { ?>
+   <nav id="filter_section">
+      <div class="dropdown">
+         <button id="category" class="dropdown_button">Category<i class="fa fa-angle-down"></i></button>
+         <ul class="dropdown_menu">
+            <li class="dropdown_item" data-category-id="all">
+               <i class="fa fa-check selected_icon" style="display: inline; margin-right: 8px;"></i>
+               All categories
+            </li>
+            <?php foreach ($categories as $category) { ?>
+               <li class="dropdown_item" data-category-id="<?= $category->id ?>">
+                  <i class="fa fa-check selected_icon" style="display: none; margin-right: 8px;"></i>
+                  <?= $category->name ?>
+               </li>
+            <?php } ?>
+         </ul>
+      </div>
+      <button id="price">Price<i class="fa fa-angle-down"></i></button>
+      <button id="rating">Rating<i class="fa fa-angle-down"></i></button>
+   </nav>
+<?php } ?>
+
 <?php function draw_service_card(Service $service) { ?>
    <article class="service_card">
       <a href="service.php?id=<?=$service->id ?>">

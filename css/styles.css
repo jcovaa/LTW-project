@@ -161,6 +161,49 @@ nav#filter_section button i {
    color: black;
 }
 
+.dropdown {
+   position: relative;
+   display: inline-block;
+}
+
+.dropdown_button {
+   background-color: #f0f0f0;
+   border: none;
+   padding: 10px;
+   cursor: pointer;
+}
+
+.dropdown_menu {
+   display: none;
+   position: absolute;
+   background-color: white;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   z-index: 1000;
+}
+
+.dropdown_menu.visible {
+   display: block;
+}
+
+.dropdown_item {
+   display: flex;
+   align-items: center;
+   padding: 10px;
+   cursor: pointer;
+}
+
+.dropdown_item:hover {
+   background-color: #f0f0f0;
+}
+
+.selected_icon {
+   display: none; 
+   margin-right: 8px; 
+}
+
 /* featured services */
 #featured_services {
    background-color: #fdf6ee;
@@ -660,3 +703,4 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
 #purchase_section .purchase_button:hover {
    background-color: var(--secondary-box-color);
 }
+

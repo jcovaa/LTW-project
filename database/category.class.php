@@ -10,20 +10,24 @@ class Category {
         $this->name = $name;
     }
 
-    public static function getCategories(PDO $db) {
+    public static function getCategories(PDO $db): array {
+        $categories = [];
+
         $stmt = $db->prepare('
-            SELECT Category.CategoryId, Category.Name
+            SELECT 
+                Category.CategoryId,
+                Category.Name
             FROM Category
         ');
 
-
-        while ($category = $stmt->fetch()) {
-            $categories = new Category(
-                $category['CategoryId'],
+        $stmt->execute();
+        while ($category = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $categories[] = new Category(
+                $category['CategoryId'], 
                 $category['Name']
             );
         }
-
+        
         return $categories;
     }
 
@@ -42,7 +46,6 @@ class Category {
             $category['CategoryId'],
             $category['Name']);
     }
-
 
    public static function getServiceCategories(PDO $db, int $serviceId)
    {
