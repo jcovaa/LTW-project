@@ -8,21 +8,84 @@ declare(strict_types=1);
    <nav id="filter_section">
       <div class="dropdown">
          <button id="category" class="dropdown_button">Category<i class="fa fa-angle-down"></i></button>
-         <ul class="dropdown_menu">
+         <ul class="dropdown_menu category_menu">
             <li class="dropdown_item" data-category-id="all">
-               <i class="fa fa-check selected_icon" style="display: inline; margin-right: 8px;"></i>
+               <i class="fa fa-check selected_icon" style="display: inline;"></i>
                All categories
             </li>
             <?php foreach ($categories as $category) { ?>
                <li class="dropdown_item" data-category-id="<?= $category->id ?>">
-                  <i class="fa fa-check selected_icon" style="display: none; margin-right: 8px;"></i>
+                  <i class="fa fa-check selected_icon" style="display: none;"></i>
                   <?= $category->name ?>
                </li>
             <?php } ?>
          </ul>
       </div>
-      <button id="price">Price<i class="fa fa-angle-down"></i></button>
-      <button id="rating">Rating<i class="fa fa-angle-down"></i></button>
+      <div class="dropdown">
+         <button id="price" class="dropdown_button">Price<i class="fa fa-angle-down"></i></button>
+         <ul class="dropdown_menu price_menu">
+            <li>
+               <label>
+                  <input type="radio" name="price_range" value="0-50">
+                  0€ - 50€
+               </label>
+            </li>
+            <li>
+               <label>
+                  <input type="radio" name="price_range" value="50-100">
+                  50€ - 100€
+               </label>
+            </li>
+            <li>
+               <label>
+                  <input type="radio" name="price_range" value="100-200">
+                  100€ - 200€
+               </label>
+            </li>
+            <li>
+               <label>
+                  <input type="radio" name="price_range" value="200-500">
+                  200€ - 500€
+               </label>
+            </li>
+            <li>
+               <button class="clear_button" data-clear="price">Clear</button>
+            </li>
+         </ul>
+      </div>
+      <div class="dropdown">
+         <button id="rating">Rating<i class="fa fa-angle-down"></i></button>
+         <ul class="dropdown_menu rating_menu">
+            <li>
+               <label>
+                  <input type="radio" name="rating_range" value="0-1"> 0 - 1 Stars
+               </label>
+            </li>
+            <li>
+               <label>
+                  <input type="radio" name="rating_range" value="1-2"> 1 - 2 Stars
+               </label>
+            </li>
+            <li>
+               <label>
+                  <input type="radio" name="rating_range" value="2-3"> 2 - 3 Stars
+               </label>
+            </li>
+            <li>
+               <label>
+                  <input type="radio" name="rating_range" value="3-4"> 3 - 4 Stars
+               </label>
+            </li>
+            <li>
+               <label>
+                  <input type="radio" name="rating_range" value="4-5"> 4 - 5 Stars
+               </label>
+            </li>
+            <li>
+               <button class="clear_button" data-clear="rating">Clear</button>
+            </li>
+         </ul>
+      </div>
    </nav>
 <?php } ?>
 

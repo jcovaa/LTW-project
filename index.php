@@ -17,7 +17,6 @@ $session =  Session::getInstance();
 $categories = Category::getCategories($db);
 
 output_header("Home", $session);
-print_r($categories);
 draw_filter_section($categories);
 draw_featured_services($featuredServices);
 draw_services($services);
