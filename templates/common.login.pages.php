@@ -24,7 +24,7 @@ declare(strict_types=1);
             <ul>
                <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
                <li><button onclick="window.location.href='login.php'">Login</button></li>
-               <li><button onclick="window.location.href='register.php'">SIGNUP</button></li>
+               <li><button onclick="window.location.href='register.php'">Sign Up</button></li>
             </ul>
          </nav>
       </header>
@@ -32,14 +32,14 @@ declare(strict_types=1);
 
 <?php function draw_login_form(): void { ?>
    <main id="authentication_page">
-      <form action="">
+      <form action="../actions/action.login.php" method="POST">
          <h1>Login</h1>
          <div class="input_box">
-            <input type="text" placeholder="Email" required>
+            <input type="text" name="email" placeholder="Email" required>
             <i class='bx bxs-user'></i>
          </div>
          <div class="input_box">   
-            <input type="password" placeholder="Password" required>
+            <input type="password" name="password" placeholder="Password" required>
             <i class='bx bxs-lock-alt' ></i>
          </div>
          <button type="submit">Login</button>
@@ -52,20 +52,20 @@ declare(strict_types=1);
 
 <?php function draw_register_form(): void { ?>
    <main id="authentication_page">
-      <form action="">
+      <form action="../actions/action.register.php" method="POST">
          <h1>Create an account</h1>
          <div class="input_box">
-            <input type="text" placeholder="username" required>
+            <input type="text" name="username" placeholder="Username" required>
          </div>
          <div class="input_box">
-            <input type="text" placeholder="Name" required>
+            <input type="text" name="name" placeholder="Name" required>
          </div>
          <div class="input_box">
-            <input type="text" placeholder="Email" required>
+            <input type="text" name="email" placeholder="Email" required>
             <i class='bx bxs-user'></i>
          </div>
          <div class="input_box">   
-            <input type="password" placeholder="Password" required>
+            <input type="password" name="password" placeholder="Password" required>
             <i class='bx bxs-lock-alt' ></i>
          </div>
          <button type="submit">Register</button>

@@ -20,7 +20,7 @@ CREATE TABLE User (
     Name NVARCHAR(120),
     Username NVARCHAR(50) UNIQUE NOT NULL, -- no duplicates
     Email NVARCHAR(255) UNIQUE NOT NULL, -- no duplicates
-    Password NVARCHAR(255) NOT NULL
+    Password NVARCHAR(40) NOT NULL
 );
 
 CREATE TABLE Category (
