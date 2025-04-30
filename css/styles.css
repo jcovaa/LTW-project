@@ -199,6 +199,11 @@ nav#filter_section {
       input[type="radio"] {
          margin-right: 8px;
       }
+
+      button.clear_button {
+         background-color: white;
+         border: none;
+      }
    }
 }
 

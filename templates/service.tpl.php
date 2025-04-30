@@ -48,9 +48,7 @@ declare(strict_types=1);
                   200€ - 500€
                </label>
             </li>
-            <li>
-               <button class="clear_button" data-clear="price">Clear</button>
-            </li>
+            <button class="clear_button" data-clear="price">Clear</button>
          </ul>
       </div>
       <div class="dropdown">
@@ -81,9 +79,7 @@ declare(strict_types=1);
                   <input type="radio" name="rating_range" value="4-5"> 4 - 5 Stars
                </label>
             </li>
-            <li>
-               <button class="clear_button" data-clear="rating">Clear</button>
-            </li>
+            <button class="clear_button" data-clear="rating">Clear</button>
          </ul>
       </div>
    </nav>
