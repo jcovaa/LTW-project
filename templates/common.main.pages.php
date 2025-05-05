@@ -27,25 +27,29 @@ declare(strict_types=1);
          <nav id="nav_menu">
             <ul>
                <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
-               <?php if (Session::getInstance()->getUser()): ?>
-                  <?php drawLogoutForm(); ?>
-               <?php else: ?>
-                  <li><button onclick="window.location.href='login.php'">Login</button></li>
-                  <li><button onclick="window.location.href='register.php'">Sign Up</button></li>
-               <?php endif; ?>
+               <?php if (Session::getInstance()->getUser()) drawLogoutForm(); else drawLoginForm();?>
             </ul>
          </nav>
       </header>
    <?php } ?>
 
-   <!-- Feito para verificar se era possivel fazer logout -->
-   <?php function drawLogoutForm()
-   { ?>
-      <form action="../actions/action.logout.php" method="post" class="login">
-         <?= Session::getInstance()->getUser()->username ?>
+
+
+<?php function drawLogoutForm() { ?>
+   <li><a href="profile.php"><?= htmlspecialchars(Session::getInstance()->getUser()->username) ?></a></li>
+   <li>
+      <form action="../actions/action.logout.php" method="post" style="display: inline;">
          <button type="submit">Logout</button>
       </form>
-      <?php } ?>
+   </li>
+<?php } ?>
+
+<?php function drawLoginForm() { ?>
+   <li><button onclick="window.location.href='login.php'">Login</button></li>
+   <li><button onclick="window.location.href='register.php'">Sign Up</button></li>
+<?php } ?>
+
+
 
 <?php function output_footer(): void { ?>
          <footer>
