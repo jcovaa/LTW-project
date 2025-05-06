@@ -5,12 +5,24 @@ document.querySelector('.search_bar').addEventListener('submit', function (event
    window.location.href = `index.php?query=${encodeURIComponent(query)}`;
 });
 
-/* when the page reloads after submitting the search, the input field retains the text in the search-bar*/
+/* when the page reloads after submitting the search, the input field retains the text in the search-bar */
 document.addEventListener('DOMContentLoaded', () => {
    const urlParams = new URLSearchParams(window.location.search);
    const query = urlParams.get('query');
    if (query) {
       document.querySelector('input[name="query"]').value = query;
+   }
+});
+
+/* when the page reloads after submitting the rating range, the input field retains the selected range */
+document.addEventListener('DOMContentLoaded', () => {
+   const urlParams = new URLSearchParams(window.location.search);
+   const ratingRange = urlParams.get('rating_range');
+   if (ratingRange) {
+      const radio = document.querySelector(`input[name="rating_range"][value="${ratingRange}"]`);
+      if (radio) {
+         radio.checked = true;
+      }
    }
 });
 
@@ -89,3 +101,16 @@ document.querySelectorAll('.clear_button').forEach(button => {
          radios.forEach(radio => (radio.checked = false));
    });
 });
+
+function applyFilter() {
+   const selectedRating = document.querySelector('input[name="rating_range"]:checked').value;
+   const urlParams = new URLSearchParams(window.location.search);
+   urlParams.set('rating_range', selectedRating);
+   window.location.search = urlParams.toString();
+}
+
+function clearFilter() {
+   const urlParams = new URLSearchParams(window.location.search);
+   urlParams.delete('rating_range');
+   window.location.search = urlParams.toString();
+}

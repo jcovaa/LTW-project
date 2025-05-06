@@ -56,30 +56,30 @@ declare(strict_types=1);
          <ul class="dropdown_menu rating_menu">
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="0-1"> 0 - 1 Stars
+                  <input type="radio" name="rating_range" value="0-1" onchange="applyFilter()"> 0 - 1 Stars
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="1-2"> 1 - 2 Stars
+                  <input type="radio" name="rating_range" value="1-2" onchange="applyFilter()"> 1 - 2 Stars
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="2-3"> 2 - 3 Stars
+                  <input type="radio" name="rating_range" value="2-3" onchange="applyFilter()"> 2 - 3 Stars
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="3-4"> 3 - 4 Stars
+                  <input type="radio" name="rating_range" value="3-4" onchange="applyFilter()"> 3 - 4 Stars
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="4-5"> 4 - 5 Stars
+                  <input type="radio" name="rating_range" value="4-5" onchange="applyFilter()"> 4 - 5 Stars
                </label>
             </li>
-            <button class="clear_button" data-clear="rating">Clear</button>
+            <button class="clear_button" data-clear="rating" onclick="clearFilter()">Clear</button>
          </ul>
       </div>
    </nav>
@@ -115,13 +115,20 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
-<?php function draw_services(array $services):void { ?>
+<?php function draw_services(array $services): void { ?>
    <section id="services">
       <?php
          if (isset($_GET['query']) && !empty($_GET['query'])) {
             $query = $_GET['query'];
             $services = array_filter($services, function($service) use ($query) {
                return stripos($service->name, $query) !== false;
+            });
+         }
+
+         if (isset($_GET['rating_range']) && !empty($_GET['rating_range'])) {
+            [$minRating, $maxRating] = explode('-', $_GET['rating_range']);
+            $services = array_filter($services, function($service) use ($minRating, $maxRating) {
+               return $service->avgRating >= (float)$minRating && $service->avgRating <= (float)$maxRating;
             });
          }
 

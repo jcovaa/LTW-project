@@ -127,44 +127,44 @@ class Service
       return self::buildServicesArray($db, $stmt);
    }
 
-public static function getPromotedServices(PDO $db): array {
-    $stmt = $db->prepare('
-        SELECT 
-          Service.ServiceId, 
-          Service.Name, 
-          Service.Description, 
-          Service.Price, 
-          Service.DeliveryTime, 
-          Service.IsPromoted,
-          User.UserId as FreelancerId, 
-          User.Name as FreelancerName
-        FROM Service
-        JOIN User ON Service.FreelancerID = User.UserId
-        WHERE Service.IsPromoted = ?
-        LIMIT 4
-    ');
+   public static function getPromotedServices(PDO $db): array {
+      $stmt = $db->prepare('
+         SELECT 
+            Service.ServiceId, 
+            Service.Name, 
+            Service.Description, 
+            Service.Price, 
+            Service.DeliveryTime, 
+            Service.IsPromoted,
+            User.UserId as FreelancerId, 
+            User.Name as FreelancerName
+         FROM Service
+         JOIN User ON Service.FreelancerID = User.UserId
+         WHERE Service.IsPromoted = ?
+         LIMIT 4
+      ');
     
-    $stmt->execute([1]);
+   $stmt->execute([1]);
 
-    return self::buildServicesArray($db, $stmt);
-}
+   return self::buildServicesArray($db, $stmt);
+   }
 
 
    public static function getServiceByCategoryId(PDO $db, int $categoryId): array {
       $stmt = $db->prepare('
-        SELECT 
-          Service.ServiceId, Service.Name, Service.Description, Service.Price, 
-          Service.DeliveryTime, Service.IsPromoted,
-          User.UserId as FreelancerId, User.Name as FreelancerName
-        FROM Service
-        JOIN ServiceCategory ON Service.ServiceId = ServiceCategory.ServiceId
-        JOIN User ON Service.FreelancerID = User.UserId
-        WHERE ServiceCategory.CategoryId = ?
+         SELECT 
+            Service.ServiceId, Service.Name, Service.Description, Service.Price, 
+            Service.DeliveryTime, Service.IsPromoted,
+            User.UserId as FreelancerId, User.Name as FreelancerName
+         FROM Service
+         JOIN ServiceCategory ON Service.ServiceId = ServiceCategory.ServiceId
+         JOIN User ON Service.FreelancerID = User.UserId
+         WHERE ServiceCategory.CategoryId = ?
       ');
       $stmt->execute([$categoryId]);
     
       return self::buildServicesArray($db, $stmt);
-    }
+   }
 
 
 
@@ -174,36 +174,35 @@ public static function getPromotedServices(PDO $db): array {
       while ($row = $stmt->fetch()) {
          $id = $row['ServiceId'];
          $services[] = new Service(
-          $id,
-          $row['Name'],
-          $row['Description'],
-          floatval($row['Price']),
-          intval($row['DeliveryTime']),
-          boolval($row['IsPromoted']),
-          $row['FreelancerId'],
-          $row['FreelancerName'],
-          self::getAverageRatingForService($db, $id),
-        );
+         $id,
+         $row['Name'],
+         $row['Description'],
+         floatval($row['Price']),
+         intval($row['DeliveryTime']),
+         boolval($row['IsPromoted']),
+         $row['FreelancerId'],
+         $row['FreelancerName'],
+         self::getAverageRatingForService($db, $id),
+         );
       }
     
       return $services;
-    }
+   }
 
 
-    private static function getAverageRatingForService(PDO $db, int $id)
-    {
-        $stmt = $db->prepare('
-            SELECT AVG(Rating) as AvgRating
-            FROM Review
-            WHERE ServiceId = ?
-        ');
-        $stmt->execute([$id]);
-        $result = $stmt->fetch();
+   private static function getAverageRatingForService(PDO $db, int $id) {
+      $stmt = $db->prepare('
+         SELECT AVG(Rating) as AvgRating
+         FROM Review
+         WHERE ServiceId = ?
+      ');
+      $stmt->execute([$id]);
+      $result = $stmt->fetch();
 
-        return $result && $result['AvgRating'] !== null ? round(floatval($result['AvgRating']), 1) : 0.0;   // result may be false or there may not exist any review
-    }
+      return $result && $result['AvgRating'] !== null ? round(floatval($result['AvgRating']), 1) : 0.0;   // result may be false or there may not exist any review
+   }
 
-    public static function searchServices(PDO $db, string $query): array {
+   public static function searchServices(PDO $db, string $query): array {
       $stmt = $db->prepare('
          SELECT * 
          FROM Service 
@@ -212,7 +211,31 @@ public static function getPromotedServices(PDO $db): array {
 
       $stmt->execute(['%' . $query . '%']);
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
-  }
+   }
+
+   public static function filterServicesByRating(PDO $db, int $minRating, int $maxRating): array {
+      $stmt = $db->prepare('
+         SELECT
+            Service.ServiceId,
+            Service.Name,
+            Service.Description,
+            Service.Price,
+            Service.DeliveryTime,
+            Service.IsPromoted,
+            User.UserId as FreelancerId,
+            User.Name as FreelancerName,
+            AVG(Review.Rating) as AvgRating
+         FROM Service
+         JOIN User ON Service.FreelancerID = User.UserId
+         LEFT JOIN Review ON Service.ServiceId = Review.ServiceId
+         GROUP BY Service.ServiceId
+         HAVING AvgRating BETWEEN ? AND ?
+      ');
+
+      $stmt->execute([$minRating, $maxRating]);
+
+      return self::buildServicesArray($db, $stmt);
+   }
 }
 
 ?>

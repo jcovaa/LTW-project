@@ -8,7 +8,15 @@ require_once __DIR__ . '/../database/service.class.php';
 $db = getDatabaseConnection();
 
 $search = $_GET['query'] ?? '';
-$services = Service::searchServices($db, $search);
+$ratingRange = $_GET['rating_range'] ?? null;
+
+if ($ratingRange) {
+   [$minRating, $maxRating] = explode('-', $ratingRange);
+   $services = Service::filterServicesByRating($db, (int)$minRating, (int)$maxRating);
+}
+else {
+   $services = Service::searchServices($db, $search);
+}
 
 echo json_encode($services);
 
