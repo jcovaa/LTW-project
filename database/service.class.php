@@ -236,6 +236,83 @@ class Service
 
       return self::buildServicesArray($db, $stmt);
    }
+
+   public static function filterServicesByPrice(PDO $db, float $minPrice, float $maxPrice): array {
+      $stmt = $db->prepare('
+         SELECT
+            Service.ServiceId,
+            Service.Name,
+            Service.Description,
+            Service.Price,
+            Service.DeliveryTime,
+            Service.IsPromoted,
+            User.UserId as FreelancerId,
+            User.Name as FreelancerName,
+         FROM Service
+         JOIN User ON Service.FreelancerID = User.UserId
+         WHERE Service.Price BETWEEN ? AND ?
+      ');
+
+      $stmt->execute([$minPrice, $maxPrice]);
+
+      return self::buildServicesArray($db, $stmt);
+   }
+
+   public static function filterServices(PDO $db, array $filters): array {
+      $query = '
+         SELECT
+            Service.ServiceId,
+            Service.Name,
+            Service.Description,
+            Service.Price,
+            Service.DeliveryTime,
+            Service.IsPromoted,
+            User.UserId as FreelancerId,
+            User.Name as FreelancerName
+         FROM Service
+         JOIN User ON Service.FreelancerID = User.UserId
+         LEFT JOIN Review ON Service.ServiceId = Review.ServiceId
+      ';
+
+      $conditions = [];
+      $params = [];
+
+      if (!empty($filters['query'])) {
+         $conditions[] = 'Service.Name LIKE ?';
+         $params[] = '%' . $filters['query'] . '%';
+      }
+
+      if (!empty($filters['rating_range'])) {
+         [$minRating, $maxRating] = explode('-', $filters['rating_range']);
+         $conditions[] = 'AVG(Review.Rating) BETWEEN ? AND ?';
+         $params[] = (float)$minRating;
+         $params[] = (float)$maxRating;
+      }
+
+      if (!empty($filters['price_range'])) {
+         if ($filters['price_range'] === '>500') {
+            $conditions[] = 'Service.Price > ?';
+            $params[] = 500;
+         }
+         else {
+            [$minPrice, $maxPrice] = explode('-', $filters['price_range']);
+            $conditions[] = 'Service.Price BETWEEN ? AND ?';
+            $params[] = (float)$minPrice;
+            $params[] = (float)$maxPrice;
+         }
+      }
+
+      if (!empty($conditions)) {
+         $query .= 'WHERE ' . implode(' AND ', $conditions);
+      }
+
+      $query .= ' GROUP BY Service.ServiceId';
+
+      $stmt = $db->prepare($query);
+      $stmt->execute($params);
+
+      return self::buildServicesArray($db, $stmt);
+   }
 }
 
 ?>

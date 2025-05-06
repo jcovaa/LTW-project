@@ -26,29 +26,35 @@ declare(strict_types=1);
          <ul class="dropdown_menu price_menu">
             <li>
                <label>
-                  <input type="radio" name="price_range" value="0-50">
+                  <input type="radio" name="price_range" value="0-50" onchange="applyPriceFilter()">
                   0€ - 50€
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="price_range" value="50-100">
+                  <input type="radio" name="price_range" value="50-100" onchange="applyPriceFilter()">
                   50€ - 100€
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="price_range" value="100-200">
+                  <input type="radio" name="price_range" value="100-200" onchange="applyPriceFilter()">
                   100€ - 200€
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="price_range" value="200-500">
+                  <input type="radio" name="price_range" value="200-500" onchange="applyPriceFilter()">
                   200€ - 500€
                </label>
             </li>
-            <button class="clear_button" data-clear="price">Clear</button>
+            <li>
+               <label>
+                  <input type="radio" name="price_range" value=">500" onchange="applyPriceFilter()">
+                  > 500€
+               </label>
+            </li>
+            <button class="clear_button" data-clear="price" onclick="clearPriceFilter()">Clear</button>
          </ul>
       </div>
       <div class="dropdown">
@@ -56,30 +62,30 @@ declare(strict_types=1);
          <ul class="dropdown_menu rating_menu">
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="0-1" onchange="applyFilter()"> 0 - 1 Stars
+                  <input type="radio" name="rating_range" value="0-1" onchange="applyRatingFilter()"> 0 - 1 Stars
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="1-2" onchange="applyFilter()"> 1 - 2 Stars
+                  <input type="radio" name="rating_range" value="1-2" onchange="applyRatingFilter()"> 1 - 2 Stars
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="2-3" onchange="applyFilter()"> 2 - 3 Stars
+                  <input type="radio" name="rating_range" value="2-3" onchange="applyRatingFilter()"> 2 - 3 Stars
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="3-4" onchange="applyFilter()"> 3 - 4 Stars
+                  <input type="radio" name="rating_range" value="3-4" onchange="applyRatingFilter()"> 3 - 4 Stars
                </label>
             </li>
             <li>
                <label>
-                  <input type="radio" name="rating_range" value="4-5" onchange="applyFilter()"> 4 - 5 Stars
+                  <input type="radio" name="rating_range" value="4-5" onchange="applyRatingFilter()"> 4 - 5 Stars
                </label>
             </li>
-            <button class="clear_button" data-clear="rating" onclick="clearFilter()">Clear</button>
+            <button class="clear_button" data-clear="rating" onclick="clearRatingFilter()">Clear</button>
          </ul>
       </div>
    </nav>
@@ -132,13 +138,26 @@ declare(strict_types=1);
             });
          }
 
+         if (isset($_GET['price_range']) && !empty($_GET['price_range'])) {
+            $priceRange = $_GET['price_range'];
+            if ($priceRange === '>500') {
+               $services = array_filter($services, function($service) {
+                  return $service->price > 500;
+               });
+            } else {
+               [$minPrice, $maxPrice] = explode('-', $priceRange);
+               $services = array_filter($services, function($service) use ($minPrice, $maxPrice) {
+                  return $service->price >= (float)$minPrice && $service->price <= (float)$maxPrice;
+               });
+            }
+         }
+
          foreach ($services as $service) {
             draw_service_card($service); 
          }
       ?>
    </section>
 <?php } ?>
-
 <?php function draw_service_categories(array $categories): void { ?>
    <ul id="service_categories">
       <?php foreach ($categories as $category) { ?>

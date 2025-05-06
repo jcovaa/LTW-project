@@ -26,6 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 });
 
+/* when the page reloads after submitting the price range, the input field retains the selected range */
+document.addEventListener('DOMContentLoaded', () => {
+   const urlParams = new URLSearchParams(window.location.search);
+   const priceRange = urlParams.get('price_range');
+   if (priceRange) {
+      const radio = document.querySelector(`input[name="price_range"][value="${priceRange}"]`);
+      if (radio) {
+         radio.checked = true;
+      }
+   }
+});
+
 /* 
 The DOMContentLoaded event fires when the HTML document has been completely parsed, 
 and all deferred scripts have downloaded and executed.
@@ -102,15 +114,31 @@ document.querySelectorAll('.clear_button').forEach(button => {
    });
 });
 
-function applyFilter() {
+
+/* rating filter script */
+function applyRatingFilter() {
    const selectedRating = document.querySelector('input[name="rating_range"]:checked').value;
    const urlParams = new URLSearchParams(window.location.search);
    urlParams.set('rating_range', selectedRating);
    window.location.search = urlParams.toString();
 }
 
-function clearFilter() {
+function clearRatingFilter() {
    const urlParams = new URLSearchParams(window.location.search);
    urlParams.delete('rating_range');
+   window.location.search = urlParams.toString();
+}
+
+/* price filter script */
+function applyPriceFilter() {
+   const selectedPrice = document.querySelector('input[name="price_range"]:checked').value;
+   const urlParams = new URLSearchParams(window.location.search);
+   urlParams.set('price_range', selectedPrice);
+   window.location.search = urlParams.toString();
+}
+
+function clearPriceFilter() {
+   const urlParams = new URLSearchParams(window.location.search);
+   urlParams.delete('price_range');
    window.location.search = urlParams.toString();
 }
