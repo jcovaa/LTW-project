@@ -217,31 +217,49 @@ declare(strict_types=1);
     </section>
 <?php } ?>
 
-<?php function draw_comments_section(array $comments): void { ?>
+<?php function draw_comments_section(array $comments, int $serviceId): void { ?>
    <section id="comments">
       <header>
          <h3>Comments</h3>
       </header>
+      <?php if (Session::getInstance()->isLoggedIn()): ?>
       <article id="comment_form">
-         <div class="star_rating">
-            <p>Your Rating:</p>
-            <div class="stars">
-               <input type="radio" id="star5" name="rating" value="5">
-               <label for="star5" class="star">★</label>
-               <input type="radio" id="star4" name="rating" value="4">
-               <label for="star4" class="star">★</label>
-               <input type="radio" id="star3" name="rating" value="3">
-               <label for="star3" class="star">★</label>
-               <input type="radio" id="star2" name="rating" value="2">
-               <label for="star2" class="star">★</label>
-               <input type="radio" id="star1" name="rating" value="1">
-               <label for="star1" class="star">★</label>
+         <form action="actions/action.submit_review.php" method="post">
+            <input type="hidden" name="service_id" value="<?= $serviceId ?>">
+            <div class="star_rating">
+               <p>Your Rating:</p>
+               <div class="stars">
+                  <input type="radio" id="star5" name="rating" value="5" required>
+                  <label for="star5" class="star">★</label>
+                  <input type="radio" id="star4" name="rating" value="4">
+                  <label for="star4" class="star">★</label>
+                  <input type="radio" id="star3" name="rating" value="3">
+                  <label for="star3" class="star">★</label>
+                  <input type="radio" id="star2" name="rating" value="2">
+                  <label for="star2" class="star">★</label>
+                  <input type="radio" id="star1" name="rating" value="1">
+                  <label for="star1" class="star">★</label>
+               </div>
             </div>
-         </div>
-         <textarea placeholder="Write your review here..."></textarea>
-         <button class="submit_comment">Submit Review</button>
+            <textarea name="comment" placeholder="Write your review here..." required></textarea>
+            <button type="submit" class="submit_comment">Submit Review</button>
+         </form>
       </article>
+      <?php else: ?>
+      <p class="login_prompt">Please <a href="login.php">log in</a> to write a review.</p>
+      <?php endif; ?>
    </section>
+   
+   <?php if(isset($_SESSION['error'])): ?>
+     <div class="error_message"><?= $_SESSION['error'] ?></div>
+     <?php unset($_SESSION['error']); ?>
+   <?php endif; ?>
+   
+   <?php if(isset($_SESSION['success'])): ?>
+     <div class="success_message"><?= $_SESSION['success'] ?></div>
+     <?php unset($_SESSION['success']); ?>
+   <?php endif; ?>
+   
    <section id="comments_list">
       <?php foreach($comments as $comment) { ?>
          <article class="comment">
@@ -249,7 +267,11 @@ declare(strict_types=1);
                <img src="images/default_profile.png" alt="Profile Picture"> 
                <p><?= $comment->clientName ?></p>
             </header>
-            <p class="number_of_stars"><?= $comment->rating ?></p>
+            <div class="rating">
+               <?php for ($i = 1; $i <= 5; $i++): ?>
+                  <span class="star"><?= $i <= $comment->rating ? '★' : '☆' ?></span>
+               <?php endfor; ?>
+            </div>
             <p class="comment_text"><?= $comment->comment ?></p>
          </article>
       <?php } ?>
@@ -271,7 +293,7 @@ declare(strict_types=1);
       <?php 
          draw_service_details($service); 
          draw_ratings_section($ratingsData); 
-         draw_comments_section($comments); 
+         draw_comments_section($comments, $service->id); 
          draw_purchase_section($service); 
       ?>
    </main>

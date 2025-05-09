@@ -26,6 +26,15 @@ class Session {
         $_SESSION["user"] = $user;
     }
 
+    public function isLoggedIn(): bool {
+        return isset($_SESSION["user"]);
+    }
+
+    public function getUserId(): ?int {
+        $user = $this->getUser();
+        return $user ? $user->id : null;
+    }
+
     public function logout() {
         session_destroy();
     }

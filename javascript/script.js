@@ -133,3 +133,39 @@ function clearPriceFilter() {
    urlParams.delete('price_range');
    window.location.search = urlParams.toString();
 }
+
+/* Star rating system */
+document.addEventListener('DOMContentLoaded', () => {
+   const stars = document.querySelectorAll('.stars input');
+   
+   stars.forEach(star => {
+      star.addEventListener('change', () => {
+         const starValue = parseInt(star.value);
+       
+
+         stars.forEach(s => {
+            const label = s.nextElementSibling;
+            const val = parseInt(s.value);
+         
+            if (val <= starValue) {
+               label.classList.add('selected');
+            } 
+            else {
+               label.classList.remove('selected');
+            }
+         });
+      });
+   });
+ });
+
+document.addEventListener('DOMContentLoaded', () => {
+   const errorMessage = document.querySelector('.error_message');
+   const successMessage = document.querySelector('.success_message');
+   
+   if (errorMessage || successMessage) {
+      setTimeout(() => {
+         if (errorMessage) errorMessage.style.display = 'none';
+         if (successMessage) successMessage.style.display = 'none';
+      }, 5000);
+   }
+});
