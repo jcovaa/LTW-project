@@ -9,11 +9,6 @@ declare(strict_types=1);
       <div class="dropdown">
          <button id="category" class="dropdown_button">Category<i class="fa fa-angle-down"></i></button>
          <ul class="dropdown_menu category_menu">
-            <li>
-               <label>
-                  <input type="radio" name="category" value="all">All Categories
-               </label>
-            </li>
             <?php foreach ($categories as $category) { ?>
                <li>
                   <label>
@@ -21,6 +16,7 @@ declare(strict_types=1);
                   </label>
                </li>
             <?php } ?>
+            <button class="clear_button" data-clear="category" onclick="clearCategoryFilter()">Clear</button>
          </ul>
       </div>
       <div class="dropdown">
