@@ -9,14 +9,16 @@ declare(strict_types=1);
       <div class="dropdown">
          <button id="category" class="dropdown_button">Category<i class="fa fa-angle-down"></i></button>
          <ul class="dropdown_menu category_menu">
-            <li class="dropdown_item" data-category-id="all">
-               <i class="fa fa-check selected_icon" style="display: inline;"></i>
-               All categories
+            <li>
+               <label>
+                  <input type="radio" name="category" value="all">All Categories
+               </label>
             </li>
             <?php foreach ($categories as $category) { ?>
-               <li class="dropdown_item" data-category-id="<?= $category->id ?>">
-                  <i class="fa fa-check selected_icon" style="display: none;"></i>
-                  <?= $category->name ?>
+               <li>
+                  <label>
+                     <input type="radio" name="category" value="<?= $category->id ?>"> <?= $category->name ?>
+                  </label>
                </li>
             <?php } ?>
          </ul>
@@ -152,12 +154,20 @@ declare(strict_types=1);
             }
          }
 
+         if (isset($_GET['category']) && $_GET['category'] !== 'all') {
+            $categoryId = (int)$_GET['category'];
+            $services = array_filter($services, function($service) use ($categoryId) {
+               return $service->categoryId === $categoryId;
+            });
+         }
+
          foreach ($services as $service) {
             draw_service_card($service); 
          }
       ?>
    </section>
 <?php } ?>
+
 <?php function draw_service_categories(array $categories): void { ?>
    <ul id="service_categories">
       <?php foreach ($categories as $category) { ?>
