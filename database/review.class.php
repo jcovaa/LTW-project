@@ -144,6 +144,31 @@ class Review
             'percentages' => $percentages,
         ];
     }
+
+    public static function addReview(PDO $db, int $serviceId, int $clientId, int $rating, string $comment): bool {
+        $checkStmt = $db->prepare('
+            SELECT COUNT(*) as count
+            FROM Review
+            WHERE ServiceId = ? AND ClientId = ?
+        ');
+        $checkStmt->execute([$serviceId, $clientId]);
+        $result = $checkStmt->fetch();
+
+        if ($result['count'] > 0) {
+            $stmt = $db->prepare('
+                UPDATE Review
+                SET Rating = ?, Comment = ?
+                WHERE ServiceId = ? AND ClientId = ?
+            ');
+            return $stmt->execute([$rating, $comment, $serviceId, $clientId]);
+        } else {
+            $stmt = $db->prepare('
+                INSERT INTO Review (ServiceId, ClientId, Rating, Comment)
+                VALUES (?, ?, ?, ?)
+            ');
+            return $stmt->execute([$serviceId, $clientId, $rating, $comment]);
+        }
+    }
 }
 
 ?>

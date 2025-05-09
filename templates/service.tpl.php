@@ -222,6 +222,17 @@ declare(strict_types=1);
       <header>
          <h3>Comments</h3>
       </header>
+      
+      <?php if(isset($_SESSION['error'])): ?>
+        <div class="error_message"><?= $_SESSION['error'] ?></div>
+        <?php unset($_SESSION['error']); ?>
+      <?php endif; ?>
+      
+      <?php if(isset($_SESSION['success'])): ?>
+        <div class="success_message"><?= $_SESSION['success'] ?></div>
+        <?php unset($_SESSION['success']); ?>
+      <?php endif; ?>
+      
       <?php if (Session::getInstance()->isLoggedIn()): ?>
       <article id="comment_form">
          <form action="actions/action.submit_review.php" method="post">
@@ -249,17 +260,6 @@ declare(strict_types=1);
       <p class="login_prompt">Please <a href="login.php">log in</a> to write a review.</p>
       <?php endif; ?>
    </section>
-   
-   <?php if(isset($_SESSION['error'])): ?>
-     <div class="error_message"><?= $_SESSION['error'] ?></div>
-     <?php unset($_SESSION['error']); ?>
-   <?php endif; ?>
-   
-   <?php if(isset($_SESSION['success'])): ?>
-     <div class="success_message"><?= $_SESSION['success'] ?></div>
-     <?php unset($_SESSION['success']); ?>
-   <?php endif; ?>
-   
    <section id="comments_list">
       <?php foreach($comments as $comment) { ?>
          <article class="comment">
