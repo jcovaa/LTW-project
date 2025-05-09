@@ -47,7 +47,6 @@ and all deferred scripts have downloaded and executed.
 document.addEventListener('DOMContentLoaded', () => {
    const categoryButton = document.querySelector('#category');
    const dropdownMenu = document.querySelector('.category_menu');
-   const dropdownItems = document.querySelectorAll('.dropdown_item');
 
    categoryButton.addEventListener('click', () => {
       dropdownMenu.classList.toggle('visible');
@@ -58,14 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!categoryButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
          dropdownMenu.classList.remove('visible');
       }
-   });
-
-   dropdownItems.forEach(item => {
-      item.addEventListener('click', () => {
-         dropdownItems.forEach(i => i.querySelector('.selected_icon').style.display = 'none');
-
-         item.querySelector('.selected_icon').style.display = 'inline';
-      });
    });
 });
 
