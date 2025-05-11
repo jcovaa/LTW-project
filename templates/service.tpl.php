@@ -190,32 +190,32 @@ declare(strict_types=1);
 
 <?php function draw_ratings_section(array $ratingsData): void { ?>
 
-    <button class="contact_freelancer">Chat with the Freelancer</button>
-    <section id="ratings">
-        <header>
-            <h3>Reviews</h3>
-        </header>
-        <div class="reviews_count">
-            <p><?= $ratingsData['totalReviews'] ?> reviews</p>
-            <div class="overall_rating">
-                <?php for ($i = 1; $i <= 5; $i++) { ?>
-                    <span class="star"><?= $i <= $ratingsData['overallRating'] ? '★' : '☆' ?></span>
-                <?php } ?>
-                <p><?= $ratingsData['overallRating'] ?></p>
-            </div>
-        </div>
-        <div class="rating_bars">
-            <?php for ($i = 5; $i >= 1; $i--) { ?>
-                <div class="rating_bar">
-                    <p class="star_level"><?= $i ?> Stars</p>
-                    <div class="progress_container">
-                        <div class="progress-fill" style="width: <?= $ratingsData['percentages'][$i] ?>%;"></div>
-                    </div>
-                    <p class="rating_count"><?= $ratingsData['ratingCounts'][$i] ?></p>
-                </div>
+   <button class="contact_freelancer">Chat with the Freelancer</button>
+   <section id="ratings">
+      <header>
+         <h3>Reviews</h3>
+      </header>
+      <div class="reviews_count">
+         <p><?= $ratingsData['totalReviews'] ?> reviews</p>
+         <div class="overall_rating">
+            <?php for ($i = 1; $i <= 5; $i++) { ?>
+               <span class="star"><?= $i <= $ratingsData['overallRating'] ? '★' : '☆' ?></span>
             <?php } ?>
-        </div>
-    </section>
+            <p><?= $ratingsData['overallRating'] ?></p>
+         </div>
+      </div>
+      <div class="rating_bars">
+         <?php for ($i = 5; $i >= 1; $i--) { ?>
+            <div class="rating_bar">
+               <p class="star_level"><?= $i ?> Stars</p>
+               <div class="progress_container">
+                  <div class="progress-fill" style="width: <?= $ratingsData['percentages'][$i] ?>%;"></div>
+               </div>
+               <p class="rating_count"><?= $ratingsData['ratingCounts'][$i] ?></p>
+            </div>
+         <?php } ?>
+      </div>
+   </section>
 <?php } ?>
 
 <?php function draw_comments_section(array $comments, int $serviceId): void { ?>
