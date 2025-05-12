@@ -13,8 +13,9 @@ class Service
    public int $freelancerId;
    public string $freelancerName;
    public float $avgRating;
+   public string $imageUrl;
 
-   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating)
+   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating, string $imageUrl = '')
    {
       $this->id = $id;
       $this->name = $name;
@@ -25,6 +26,7 @@ class Service
       $this->freelancerId = $freelancerId;
       $this->freelancerName = $freelancerName;
       $this->avgRating = $avgRating;
+      $this->imageUrl = $imageUrl ?? '';
    }
 
 
@@ -40,6 +42,7 @@ class Service
          Service.Price, 
          Service.DeliveryTime, 
          Service.IsPromoted,
+         Service.ImageURL,
          User.UserId as FreelancerId,
          User.Name as FreelancerName
       FROM Service
@@ -60,6 +63,7 @@ class Service
          $service['FreelancerId'],
          $service['FreelancerName'],
          self::getAverageRatingForService($db, $id),
+         (string)($service['ImageURL'] ?? '')
       );
    }
 
@@ -72,6 +76,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
          FROM Service
@@ -92,6 +97,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
          FROM Service
@@ -115,6 +121,7 @@ class Service
             Service.Price, 
             Service.DeliveryTime, 
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
          FROM Service
@@ -136,6 +143,7 @@ class Service
             Service.Price, 
             Service.DeliveryTime, 
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId, 
             User.Name as FreelancerName
          FROM Service
@@ -154,7 +162,7 @@ class Service
       $stmt = $db->prepare('
          SELECT 
             Service.ServiceId, Service.Name, Service.Description, Service.Price, 
-            Service.DeliveryTime, Service.IsPromoted,
+            Service.DeliveryTime, Service.IsPromoted, Service.ImageURL,
             User.UserId as FreelancerId, User.Name as FreelancerName
          FROM Service
          JOIN ServiceCategory ON Service.ServiceId = ServiceCategory.ServiceId
@@ -183,7 +191,8 @@ class Service
          $row['FreelancerId'],
          $row['FreelancerName'],
          self::getAverageRatingForService($db, $id),
-         );
+         (string)($row['ImageURL'] ?? '')
+      );
       }
     
       return $services;
@@ -222,6 +231,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName,
             AVG(Review.Rating) as AvgRating
@@ -246,6 +256,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName,
          FROM Service
@@ -267,6 +278,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
          FROM Service

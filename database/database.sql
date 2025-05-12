@@ -6,9 +6,15 @@ DROP TABLE IF EXISTS Service;
 DROP TABLE IF EXISTS Category;
 DROP TABLE IF EXISTS Admin;
 DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Image;
 
 -- https://web.fe.up.pt/~arestivo/slides/?s=relationalmodel-uml#31
 -- https://web.fe.up.pt/~arestivo/page/
+
+
+CREATE TABLE Image (
+    ImageUrl NVARCHAR(80) PRIMARY KEY NOT NULL
+);
 
 CREATE TABLE Admin (
     UserId INTEGER PRIMARY KEY,
@@ -36,8 +42,11 @@ CREATE TABLE Service (
     DeliveryTime INTEGER,   -- in days
     Description NVARCHAR(2000),
     IsPromoted BOOLEAN DEFAULT 0,
+    ImageURL NVARCHAR(80),
+    FOREIGN KEY (ImageUrl) REFERENCES Image(ImageUrl),
     FOREIGN KEY (FreelancerID) REFERENCES User(UserId)
 );
+
 
 CREATE TABLE ServiceCategory (
     ServiceId INTEGER NOT NULL,
@@ -56,6 +65,7 @@ CREATE TABLE Order_ (      -- a.k.a UserService
     FOREIGN KEY (ServiceId) REFERENCES Service(ServiceId) ON DELETE CASCADE,
     FOREIGN KEY (ClientId) REFERENCES User(UserId) ON DELETE CASCADE
 );
+
 
 
 CREATE TABLE Review (
@@ -94,14 +104,14 @@ INSERT INTO Category (CategoryId, Name) VALUES (2, 'Programming');
 INSERT INTO Category (CategoryId, Name) VALUES (3, 'Marketing');
 
 -- Insert Services
-INSERT INTO Service (ServiceId, Name, FreelancerID, Price, DeliveryTime, Description, IsPromoted) 
-VALUES (1, 'Logo Design', 1, 50.0, 3, 'I will design a professional logo.', 1);
+INSERT INTO Service (ServiceId, Name, FreelancerID, Price, DeliveryTime, Description, IsPromoted, ImageURL) 
+VALUES (1, 'Logo Design', 1, 50.0, 3, 'I will design a professional logo.', 1, '../images/logo_designer.jpg');
 
-INSERT INTO Service (ServiceId, Name, FreelancerID, Price, DeliveryTime, Description, IsPromoted) 
-VALUES (2, 'Web Development', 2, 200.0, 7, 'Full-stack website using modern tech.', 0);
+INSERT INTO Service (ServiceId, Name, FreelancerID, Price, DeliveryTime, Description, IsPromoted, ImageURL) 
+VALUES (2, 'Web Development', 2, 200.0, 7, 'Full-stack website using modern tech.', 0, '../images/webdev.png');
 
-INSERT INTO Service (ServiceId, Name, FreelancerID, Price, DeliveryTime, Description, IsPromoted) 
-VALUES (3, 'Social Media Ads', 3, 75.0, 2, 'Instagram and Facebook ad design.', 0);
+INSERT INTO Service (ServiceId, Name, FreelancerID, Price, DeliveryTime, Description, IsPromoted, ImageURL) 
+VALUES (3, 'Social Media Ads', 3, 75.0, 2, 'Instagram and Facebook ad design.', 0, '../images/socialmedia.jpeg');
 
 -- ServiceCategory links
 INSERT INTO ServiceCategory (ServiceId, CategoryId) VALUES (1, 1);

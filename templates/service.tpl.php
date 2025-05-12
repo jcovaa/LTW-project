@@ -92,7 +92,7 @@ declare(strict_types=1);
 <?php function draw_service_card(Service $service) { ?>
    <article class="service_card">
       <a href="service.php?id=<?=$service->id ?>">
-         <img src="https://picsum.photos/200?<?=$service->id ?>" alt="service image">
+         <img src="<?= htmlspecialchars($service->imageUrl) ?>" alt="service image">
       </a>
       <div class="service_info">
          <div class="profile">
@@ -182,7 +182,7 @@ declare(strict_types=1);
          <p><?=$service->freelancerName ?></p>
       </div>
       <div class="service_description">
-         <img src="https://picsum.photos/200?<?=$service->id ?>" alt="service image">
+         <img src="<?= htmlspecialchars($service->imageUrl) ?>" alt="service image">
          <p><?=$service->description ?></p>
       </div>
    </section>

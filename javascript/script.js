@@ -106,6 +106,24 @@ document.querySelectorAll('.clear_button').forEach(button => {
 });
 
 
+/* category rating filter 
+
+function applyCategoryFilter() {
+   const selectedRating = document.querySelector('input[name="rating_range"]:checked').value;
+   const urlParams = new URLSearchParams(window.location.search);
+   urlParams.set('rating_range', selectedRating);
+   window.location.search = urlParams.toString();
+}
+
+function clearCategoryFilter() {
+   const urlParams = new URLSearchParams(window.location.search);
+   urlParams.delete('rating_range');
+   window.location.search = urlParams.toString();
+}
+
+*/
+
+
 /* rating filter script */
 function applyRatingFilter() {
    const selectedRating = document.querySelector('input[name="rating_range"]:checked').value;
