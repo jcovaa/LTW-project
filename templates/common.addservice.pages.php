@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 ?>
 
-<?php function output_header($title): void { ?>
+<?php function output_header($title): void
+{ ?>
    <!DOCTYPE html>
-<html lang="en">
+   <html lang="en">
+
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,8 +18,9 @@ declare(strict_types=1);
       <link rel="stylesheet" href="css/styles.css">
       <link rel="stylesheet" href="css/add_service.css">
 
-      <title><?=$title?></title>
+      <title><?= $title ?></title>
    </head>
+
    <body>
       <header>
          <h1 id="logo"><a href="index.php">Title</a></h1>
@@ -26,48 +29,53 @@ declare(strict_types=1);
             <button class="fa fa-search" type="submit"></button>
          </form>
       </header>
-<?php } ?>
+   <?php } ?>
 
-<?php function draw_service_form(): void { ?>
-   <main id="form_page">
-      <form action="">
-         <h1>Add your service</h1>
-         <div class="input_box">   
-            <input type="text" placeholder="Service Name" required>
-         </div>
-         <div class="input_box">
-            <textarea placeholder='Description (100-1000 characters)' maxlength='1000' minlength='100'></textarea>
-         </div>
-         <div class="input_box">  
-            <input type="text" placeholder="Category" required>
-            <i class="fa fa-angle-down"></i>
-         </div>
-         <div class="input_box">   
-            <input type="text" placeholder="Estimated Delivery Time" required>
-         </div>
-         <div class="input_box">   
-            <input type="text" placeholder="Price" required>
-         </div>
-         <div class="input_image">
-            <input type="file" id="miniature" name="miniature" accept=".jpeg,.jpg,.png">
-        </div>
-        <div class="input_image">
-            <input type="file" id="image" name="image" accept=".jpeg,.jpg,.png">
-        </div>
+   <?php function draw_service_form($categories): void
+   { ?>
+      <main id="form_page">
+         <form action="actions/action.create_service.php" method="POST" enctype="multipart/form-data">
+            <h1>Add your service</h1>
+            <div class="input_box">
+               <input type="text" placeholder="Service Name"  name="name" required>
+            </div>
+            <div class="input_box">
+               <textarea placeholder='Description (20-1000 characters)' name="description" maxlength='1000' minlength='20'></textarea>
+            </div>
+            <div class="input_box">
+               <select id="category" name="category" required>
+                  <?php foreach ($categories as $category) { ?>
+                     <option value="<?= $category->id ?>"><?= $category->name ?></option>
+                  <?php } ?>
+               </select>
+               <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="input_box">
+               <input type="text" placeholder="Estimated Delivery Time" name="delivery" required>
+            </div>
+            <div class="input_box">
+               <input type="text" placeholder="Price" name="price" required>
+            </div>
 
-         <button type="submit">List Service</button>
-         <button type="reset" value="Reset">Clear All</button>
+            <div class="input_image">
+               <input type="file" id="image" name="image" accept=".jpeg,.jpg,.png">
+            </div>
 
-      </form>
-   </main>
-<?php } ?>
+            <button type="submit">List Service</button>
+            <button type="reset" value="Reset">Clear All</button>
+
+         </form>
+      </main>
+   <?php } ?>
 
 
-<?php function output_footer(): void { ?>
-   <footer>
+   <?php function output_footer(): void
+   { ?>
+      <footer>
          <p>Name of the app</p>
          <p>name, date</p>
       </footer>
    </body>
-</html>
-<?php } ?>   
+
+   </html>
+<?php } ?>

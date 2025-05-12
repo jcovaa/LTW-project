@@ -13,10 +13,10 @@ class Service
    public int $freelancerId;
    public string $freelancerName;
    public float $avgRating;
-   public string $imageUrl;
    public $categoryIds = array();
+   public string $imageUrl;
 
-   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating, string $imageUrl = '', $categoryIds)
+   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating, string $imageUrl, $categoryIds)
    {
       $this->id = $id;
       $this->name = $name;
@@ -27,10 +27,19 @@ class Service
       $this->freelancerId = $freelancerId;
       $this->freelancerName = $freelancerName;
       $this->avgRating = $avgRating;
-      $this->imageUrl = $imageUrl ?? '';
       $this->categoryIds = $categoryIds;
+      $this->imageUrl = $imageUrl;
    }
 
+
+
+   public static function addService(PDO $db, $name, $clientId, $price, $deliveryTime, $description, $imageUrl) {
+      $stmt = $db->prepare('
+         INSERT INTO Service(Name, FreelancerId, Price, DeliveryTime, Description, IsPromoted, ImageUrl)
+         Values (?,?,?,?,?,0,?)
+      ');
+      return $stmt->execute([$name, $clientId, $price, $deliveryTime, $description, $imageUrl]);
+   }
 
 
    public static function getService(PDO $db, int $id)
@@ -65,7 +74,7 @@ class Service
          $service['FreelancerId'],
          $service['FreelancerName'],
          self::getAverageRatingForService($db, $id),
-         (string)($service['ImageURL'] ?? ''),
+         (string)($service['ImageURL']),
          self::getServiceCategories($db, $id)
       );
    }
@@ -194,7 +203,7 @@ class Service
          $row['FreelancerId'],
          $row['FreelancerName'],
          self::getAverageRatingForService($db, $id),
-         (string)($row['ImageURL'] ?? ''),
+         (string)($row['ImageURL']),
          self::getServiceCategories($db, $id)
       );
       }
