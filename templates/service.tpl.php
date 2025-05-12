@@ -12,7 +12,7 @@ declare(strict_types=1);
             <?php foreach ($categories as $category) { ?>
                <li>
                   <label>
-                     <input type="radio" name="category" value="<?= $category->id ?>"> <?= $category->name ?>
+                     <input type="radio" name="category" value="<?= $category->id ?>" onchange="applyCategoryFilter()"> <?= $category->name ?>
                   </label>
                </li>
             <?php } ?>
@@ -153,7 +153,7 @@ declare(strict_types=1);
          if (isset($_GET['category']) && $_GET['category'] !== 'all') {
             $categoryId = (int)$_GET['category'];
             $services = array_filter($services, function($service) use ($categoryId) {
-               return $service->categoryId === $categoryId;
+               return in_array($categoryId, $service->categoryIds);
             });
          }
 

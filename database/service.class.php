@@ -14,8 +14,9 @@ class Service
    public string $freelancerName;
    public float $avgRating;
    public string $imageUrl;
+   public $categoryIds = array();
 
-   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating, string $imageUrl = '')
+   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating, string $imageUrl = '', $categoryIds)
    {
       $this->id = $id;
       $this->name = $name;
@@ -27,6 +28,7 @@ class Service
       $this->freelancerName = $freelancerName;
       $this->avgRating = $avgRating;
       $this->imageUrl = $imageUrl ?? '';
+      $this->categoryIds = $categoryIds;
    }
 
 
@@ -63,7 +65,8 @@ class Service
          $service['FreelancerId'],
          $service['FreelancerName'],
          self::getAverageRatingForService($db, $id),
-         (string)($service['ImageURL'] ?? '')
+         (string)($service['ImageURL'] ?? ''),
+         self::getServiceCategories($db, $id)
       );
    }
 
@@ -191,11 +194,31 @@ class Service
          $row['FreelancerId'],
          $row['FreelancerName'],
          self::getAverageRatingForService($db, $id),
-         (string)($row['ImageURL'] ?? '')
+         (string)($row['ImageURL'] ?? ''),
+         self::getServiceCategories($db, $id)
       );
       }
     
       return $services;
+   }
+
+   public static function getServiceCategories(PDO $db, int $serviceId)
+   {
+      $stmt = $db->prepare('
+      SELECT Category.CategoryId
+      FROM Category
+      JOIN ServiceCategory ON Category.CategoryId = ServiceCategory.CategoryId
+      WHERE ServiceCategory.ServiceId = ?
+      ');
+
+      $stmt->execute([$serviceId]);
+
+      $categories = [];
+      while ($row = $stmt->fetch()) {
+         $categories[] = $row['CategoryId'];
+      }
+
+      return $categories;
    }
 
 
