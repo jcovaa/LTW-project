@@ -42,6 +42,26 @@ class Service
    }
 
 
+   public function updateService(PDO $db) {
+      $stmt = $db->prepare('
+         Update Service
+         SET Name = ?, Price = ?, DeliveryTime = ?, Description = ?, ImageUrl = ?
+         WHERE ServiceId = ?
+      ');
+      return $stmt->execute([$this->name, $this->price, $this->deliveryTime, $this->description, $this->imageUrl, $this->id]);
+   }
+
+   public function deleteService(PDO $db)
+   {
+      $stmt = $db->prepare('
+        DELETE FROM Service
+        WHERE ServiceId = ?
+    ');
+
+      return $stmt->execute([$this->id]);
+   }
+
+
    public static function getService(PDO $db, int $id)
    {
       // The User and Service table has some equal column names
@@ -122,7 +142,7 @@ class Service
       return self::buildServicesArray($db, $stmt);
    }
 
-   function getFreelancerServices(PDO $db, int $freelancerId)
+   public static function getFreelancerServices(PDO $db, int $freelancerId)
    {
       // The User and Service table has some equal column names
       $stmt = $db->prepare('

@@ -112,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
 document.querySelectorAll('.clear_button').forEach(button => {
    button.addEventListener('click', () => {
       const target = button.dataset.clear;
-         const radios = document.querySelectorAll(`input[name="${target}_range"]`);
-         radios.forEach(radio => (radio.checked = false));
+      const radios = document.querySelectorAll(`input[name="${target}_range"]`);
+      radios.forEach(radio => (radio.checked = false));
    });
 });
 
@@ -167,31 +167,31 @@ function clearPriceFilter() {
 /* Star rating system */
 document.addEventListener('DOMContentLoaded', () => {
    const stars = document.querySelectorAll('.stars input');
-   
+
    stars.forEach(star => {
       star.addEventListener('change', () => {
          const starValue = parseInt(star.value);
-       
+
 
          stars.forEach(s => {
             const label = s.nextElementSibling;
             const val = parseInt(s.value);
-         
+
             if (val <= starValue) {
                label.classList.add('selected');
-            } 
+            }
             else {
                label.classList.remove('selected');
             }
          });
       });
    });
- });
+});
 
 document.addEventListener('DOMContentLoaded', () => {
    const errorMessage = document.querySelector('.error_message');
    const successMessage = document.querySelector('.success_message');
-   
+
    if (errorMessage || successMessage) {
       setTimeout(() => {
          if (errorMessage) errorMessage.style.display = 'none';
@@ -199,3 +199,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 5000);
    }
 });
+
+
+
+// function for tab switching on Freelancer Dashboard
+function showTab(tabName) {
+   const tabs = document.querySelectorAll('.dashboard-tab-content');
+   tabs.forEach(tab => tab.style.display = 'none');
+
+   document.getElementById(tabName).style.display = 'block';
+}
+
+function toggleEdit(serviceId) {
+   const card = document.getElementById(`service-${serviceId}`);
+   const view = card.querySelector('.view-mode');
+   const edit = card.querySelector('.edit-mode');
+
+   view.style.display = view.style.display === 'none' ? 'block' : 'none';
+   edit.style.display = edit.style.display === 'block' ? 'none' : 'block';
+}
