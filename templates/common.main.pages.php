@@ -26,7 +26,9 @@ declare(strict_types=1);
          </form>
          <nav id="nav_menu">
             <ul>
+               <?php if (Session::getInstance()->getUser()) : ?>
                <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
+               <?php endif; ?>
                <?php if (Session::getInstance()->getUser()) drawLogoutForm(); else drawLoginForm();?>
             </ul>
          </nav>

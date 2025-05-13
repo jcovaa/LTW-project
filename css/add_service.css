@@ -1,85 +1,94 @@
-/* login and register pages */
 * {
-    box-sizing: border-box;
- 
-    margin: 0;
-    padding: 0;
- }
- 
- /* general styles */
- body {
-    display: flex;
-    flex-direction: column;
- 
-    min-height: 100vh;
- }
- 
- /* form general styles */
- body > main#authentication_page {
-    margin: auto 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
- }
- 
- main#authentication_page > form {
-    width: 420px;
- 
-    background-color: #fdf6ee;
-    color: black;
- 
-    border-radius: 10px;
-    padding: 30px 35px;
- }
- 
- /* form header */
- form h1 {
-    font-size: 36px;
-    text-align: center;
- }
- 
- /* input boxes */
- form .input_box {
-    position: relative;
- 
-    width: 100%;
-    height: 50px;
-    margin: 30px 0;
- }
- 
- .input_box input {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background: transparent;
- 
-    border: 2px solid rgba(163, 163, 163, 0.574);
-    border-radius: 40px;
-    padding: 20px 45px 20px 20px;
- 
-    font-size: 16px;
-    color: black;
- }
- 
- .input_box input::placeholder {
-    color: black;
- }
- 
- .input_box i {
-    position: absolute;
-    right: 20px;
-    top: 50%;
- 
-    transform: translateY(-50%);
-    font-size: 20px;
- }
- 
+   box-sizing: border-box;
+
+   margin: 0;
+   padding: 0;
+}
+
+/* general styles */
+body {
+   display: flex;
+   flex-direction: column;
+
+   min-height: 100vh;
+}
+
+/* form general styles */
+body>main#form_page {
+   margin: auto 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+main#form_page>form {
+   width: 820px;
+
+   background-color: #fdf6ee;
+   color: black;
+
+   border-radius: 10px;
+   padding: 30px 35px;
+}
+
+/* form header */
+form h1 {
+   font-size: 36px;
+   text-align: center;
+}
+
+/* input boxes */
+form .input_box {
+   position: relative;
+
+   width: 100%;
+
+   margin: 30px 0;
+}
+
+.input_box input {
+   width: 100%;
+   height: 100%;
+   position: relative;
+   background: transparent;
+
+   border: 2px solid rgba(163, 163, 163, 0.574);
+   border-radius: 40px;
+   padding: 20px 45px 20px 20px;
+
+   font-size: 16px;
+   color: black;
+}
+
+.input_box textarea {
+   height: auto;
+   /* Allows the textarea to adjust height based on content */
+   resize: vertical;
+   /* Enables vertical resizing */
+   border-radius: 20px;
+   /* Optional: Adjusts border radius for textarea */
+}
+
+
+.input_box input::placeholder {
+   color: grey;
+}
+
+.input_box i {
+   position: absolute;
+   right: 20px;
+   top: 50%;
+
+   transform: translateY(-50%);
+   font-size: 20px;
+}
+
 form button {
-   position:relative;
-   margin:10px;
+   position: relative;
+   margin: 10px;
    width: 100%;
    height: 45px;
- 
+
    background-color: rgb(107, 107, 107);
    color: rgb(255, 255, 255);
 
@@ -90,42 +99,75 @@ form button {
    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 
    cursor: pointer;
- 
+
    font-size: 16px;
    font-weight: 600;
 }
- 
+
 form button:hover {
-    background-color: #b4b4b4;
- }
- 
- .input_area textarea {
-   background-color: white;
+   background-color: #b4b4b4;
+}
+
+.input_box textarea {
    width: 100%;
-   color: black; 
-   padding: 20px 45px;
-   text-decoration: none;
-   margin: 4px 2px;
+   height: 100px;
+   padding: 20px;
    border: 2px solid rgba(163, 163, 163, 0.574);
-   border-radius: 50px;
-}
- 
-.input_area textarea::placeholder {
+   border-radius: 10px;
+   resize: vertical;
+   font-size: 16px;
    color: black;
+   background-color: white;
 }
+
 
 .input_image {
-   width: 10%;
-   height: 45px;
-   margin: 30px;
-   color: black;
-
-   border: none;
-   outline: none;
-   
-   cursor: pointer;
-
+   width: 100%;
+   margin: 30px 0;
+   color: grey;
    font-size: 16px;
-   font-weight: 600;
+   font-weight: 400;
+}
 
+.input_image input[type="file"] {
+   width: 100%;
+   padding: 10px;
+   border: 2px solid rgba(163, 163, 163, 0.574);
+   border-radius: 10px;
+   background-color: white;
+   cursor: pointer;
+}
+
+
+/* category */
+.custom-select {
+   position: relative;
+   width: 100%;
+   max-width: 400px;
+}
+
+.custom-select select {
+   appearance: none;
+   width: 100%;
+   padding: 0.75em 1em;
+   border: 1px solid #ccc;
+   border-radius: 0.5em;
+   background-color: #fff;
+   font-size: 1rem;
+   color: #333;
+   cursor: pointer;
+}
+
+/* Custom arrow using a pseudo-element */
+.custom-select::after {
+   content: '';
+   position: absolute;
+   top: 50%;
+   right: 1em;
+   width: 0.8em;
+   height: 0.5em;
+   background-color: #333;
+   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+   transform: translateY(-50%);
+   pointer-events: none;
 }

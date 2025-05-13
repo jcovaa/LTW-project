@@ -24,10 +24,6 @@ declare(strict_types=1);
    <body>
       <header>
          <h1 id="logo"><a href="index.php">Title</a></h1>
-         <form class="search_bar" action="search.php" method="get">
-            <input type="text" name="query" placeholder="Search...">
-            <button class="fa fa-search" type="submit"></button>
-         </form>
       </header>
    <?php } ?>
 
@@ -42,14 +38,15 @@ declare(strict_types=1);
             <div class="input_box">
                <textarea placeholder='Description (20-1000 characters)' name="description" maxlength='1000' minlength='20'></textarea>
             </div>
-            <div class="input_box">
+
+            <div class="custom-select">
                <select id="category" name="category" required>
                   <?php foreach ($categories as $category) { ?>
                      <option value="<?= $category->id ?>"><?= $category->name ?></option>
                   <?php } ?>
                </select>
-               <i class="fa fa-angle-down"></i>
             </div>
+
             <div class="input_box">
                <input type="text" placeholder="Estimated Delivery Time" name="delivery" required>
             </div>

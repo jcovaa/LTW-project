@@ -18,10 +18,6 @@ function redirectWithError(string $message, string $location): void
 $referer = $_SERVER['HTTP_REFERER'] ?? '../index.php';
 
 
-if (!$session->isLoggedIn()) {
-    redirectWithError('You must be logged in to create a service.', $referer);
-}
-
 if (!isset($_POST['name'], $_POST['description'], $_POST['category'], $_POST['delivery'], $_POST['price'])) {
     redirectWithError('All fields are required.', $referer);
 }
@@ -67,12 +63,18 @@ try {
 
     if ($success) {
         $_SESSION['success'] = 'Service created successfully!';
-        header('Location: ../index.php');
+
     } else {
         $_SESSION['error'] = 'Failed to create service.';
-        header('Location: ../index.php');
+        
     }
 } catch (Exception $e) {
     $_SESSION['error'] = 'Error: ' . $e->getMessage();
-    header('Location: ../index.php');
+    
 }
+
+
+header('Location: ../index.php');
+exit;
+
+?>
