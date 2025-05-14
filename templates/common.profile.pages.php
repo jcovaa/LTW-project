@@ -61,11 +61,7 @@ declare(strict_types=1);
             <img src="images/default_profile.png" alt="Profile Picture" class="profile-picture">
             <div class="profile-info">
                 <div class="profile-name">Joao M.</div>
-                <div class="profile-rating">4.97</div>
             </div>
-        </div>
-        <div class="profile-description">
-            <p>Teste teste teste teste teste teste teste Teste teste teste teste.</p>
         </div>
     </div>
 <?php } ?>
@@ -79,17 +75,13 @@ declare(strict_types=1);
          </div>
          <div class="input_box">  
             <input type="text" placeholder="Username" required>
-         </div>
-         <div class="input_box">
-            <textarea placeholder='Tell us about you' maxlength='1000'></textarea>
-         </div>
-         
+         </div>         
          <div class="input_image">
             <p>Avatar</p>
             <input type="file" id="miniature" name="miniature" accept=".jpeg,.jpg,.png">
         </div>
 
-         <button type="submit">Edit Profile</button>
+         <button type="submit">Save</button>
       </form>
    </main>
 <?php } ?>      
