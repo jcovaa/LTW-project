@@ -189,8 +189,9 @@ declare(strict_types=1);
 <?php } ?>
 
 <?php function draw_ratings_section(array $ratingsData): void { ?>
-
+   <?php if (Session::getInstance()->isLoggedIn()) { ?>
    <button class="contact_freelancer">Chat with the Freelancer</button>
+   <?php } ?>
    <section id="ratings">
       <header>
          <h3>Reviews</h3>
@@ -289,13 +290,33 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
+<?php function draw_chat_container(int $freelancerId): void { ?>
+   <?php if (Session::getInstance()->isLoggedIn()) { ?>
+   <section id="chat_container" class="hidden">
+      <header>
+         <h3>Chat</h3>
+         <button id="close_chat">×</button>
+      </header>
+      <div id="chat_messages">
+         <!-- Chat messages will be dynamically loaded here -->
+      </div>
+      <form id="message_form">
+         <input type="hidden" id="receiver_id" value="<?=$freelancerId ?>">
+         <textarea id="message_input" placeholder="Type your message..." required></textarea>
+         <button type="submit">Send</button>
+      </form>
+   </section>
+   <?php } ?>
+<?php } ?>
+
 <?php function draw_service_page(Service $service, array $ratingsData, array $comments): void { ?>
    <main id="service_page">
       <?php 
          draw_service_details($service); 
          draw_ratings_section($ratingsData); 
          draw_comments_section($comments, $service->id); 
-         draw_purchase_section($service); 
+         draw_purchase_section($service);
+         draw_chat_container($service->freelancerId);
       ?>
    </main>
 <?php } ?>
