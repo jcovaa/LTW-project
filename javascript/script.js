@@ -215,6 +215,6 @@ function toggleEdit(serviceId) {
    const view = card.querySelector('.view-mode');
    const edit = card.querySelector('.edit-mode');
 
-   view.style.display = view.style.display === 'none' ? 'block' : 'none';
+   view.style.display = view.style.display === 'none' ? 'flex' : 'none';
    edit.style.display = edit.style.display === 'block' ? 'none' : 'block';
 }

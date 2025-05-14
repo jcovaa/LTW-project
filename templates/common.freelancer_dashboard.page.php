@@ -82,20 +82,24 @@ declare(strict_types=1);
                             <div class="service-card" id="service-<?= $service->id ?>">
                                 <!-- View Mode -->
                                 <div class="view-mode">
-                                    <h3><?= htmlspecialchars($service->name) ?></h3>
-                                    <p><?= htmlspecialchars($service->description) ?></p>
-                                    <p><?= $service->avgRating ?></p>
-                                    <p><strong>Price:</strong> €<?= number_format($service->price, 2) ?></p>
-                                    <p><strong>Delivery Time:</strong> <?= $service->deliveryTime ?> days</p>
+                                    <div class="view-content">
+                                        <h3><?= htmlspecialchars($service->name) ?></h3>
+                                        <p><?= htmlspecialchars($service->description) ?></p>
+                                        <p><?= $service->avgRating ?></p>
+                                        <p><strong>Price:</strong> €<?= number_format($service->price, 2) ?></p>
+                                        <p><strong>Delivery Time:</strong> <?= $service->deliveryTime ?> days</p>
 
-                                    <div class="service-actions">
-                                        <button onclick="toggleEdit(<?= $service->id ?>)">Edit</button>
 
-                                        <form action="actions/action.delete_service.php" method="post" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
-                                            <input type="hidden" name="id" value="<?= $service->id ?>">
-                                            <button type="submit" class="button danger">Delete</button>
-                                        </form>
+                                        <div class="service-actions">
+                                            <button class="button edit" onclick="toggleEdit(<?= $service->id ?>)">Edit</button>
+
+                                            <form action="actions/action.delete_service.php" method="post" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                                                <input type="hidden" name="id" value="<?= $service->id ?>">
+                                                <button type="submit" class="button danger">Delete</button>
+                                            </form>
+                                        </div>
                                     </div>
+                                    <img src="<?= htmlspecialchars($service->imageUrl) ?>">
                                 </div>
 
                                 <!-- Edit Mode (hidden by default) -->

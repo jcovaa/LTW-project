@@ -31,7 +31,7 @@ $description = $_POST['description'];
 
 $imageUrl = null;
 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-    $imageTmpPath = $_FILES['image']['tmp_name'];
+    $tempFileName = $_FILES['image']['tmp_name'];
     $imageName = basename($_FILES['image']['name']);
     $imageExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
     $allowedExtensions = ['jpg', 'jpeg', 'png'];
@@ -44,7 +44,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $uploadDir = __DIR__ . '/../images/';
     $uploadPath = $uploadDir . $newImageName;
 
-    if (!move_uploaded_file($imageTmpPath, $uploadPath)) {
+    if (!move_uploaded_file($tempFileName, $uploadPath)) {
         redirectWithError('Failed to upload image.', $referer);
     }
 

@@ -27,25 +27,42 @@
     background-color: #e0e0e0;
 }
 
-.dashboard-tab.active {
-    font-weight: bold;
-    background-color: #d0e6f7;
-    border-left: 4px solid #3f87a6;
-}
-
 .dashboard-content {
     flex-grow: 1;
     padding: 1.5rem;
 }
 
-.service-card {
+.view-mode {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
     border: 1px solid #ccc;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
+    padding: 1.5rem;
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
     background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    width: 75%;
 }
+
+.view-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    flex-grow: 1;
+}
+
+.view-mode img {
+    margin-top: 2.5rem;
+    width: 300px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+/* rating */
 
 .service-card p:nth-child(3) {
     font-size: var(--text-size);
@@ -61,10 +78,12 @@
     color: var(--star-color);
 }
 
-.service-actions .button {
+
+/* edit button */
+.service-actions button {
     margin-right: 10px;
     padding: 5px 10px;
-    background-color: #3f87a6;
+    background-color: #aaa;
     color: white;
     text-decoration: none;
     border: none;
@@ -73,10 +92,12 @@
     transition: background-color 0.2s;
 }
 
-.service-actions .button:hover {
-    background-color: #336f89;
+.service-actions .button.edit:hover {
+    background-color: #888;
 }
 
+
+/* remove button */
 .service-actions .button.danger {
     background-color: #e74c3c;
 }
@@ -86,54 +107,83 @@
 }
 
 /* Edit form styles */
-.service-card form {
+/* Form container */
+.edit-mode {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
     margin-top: 1rem;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
-.service-card form label {
-    font-weight: bold;
+
+/* to remove the up/down arrows*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-.service-card form input[type="text"],
-.service-card form input[type="number"],
-.service-card form textarea {
+/* Only make labels slightly bold */
+.edit-mode label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+/* Inputs and textarea styling */
+.edit-mode input[type="text"],
+.edit-mode input[type="number"],
+.edit-mode textarea {
     width: 100%;
-    padding: 8px;
-    font-size: 1rem;
+    padding: 10px 12px;
+    font-size: 0.95rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: white;
+    box-sizing: border-box;
+    margin-bottom: 0.6rem;
+    /* add spacing between label+input sets */
+}
+
+/* Textarea adjustment */
+.edit-mode textarea {
+    min-height: 80px;
     resize: vertical;
 }
 
-.service-card form textarea {
-    min-height: 60px;
-}
-
-.service-card form button {
-    width: fit-content;
-    padding: 6px 12px;
+/* All buttons inside form */
+.edit-mode button {
+    padding: 8px 14px;
+    font-size: 0.95rem;
     border: none;
     border-radius: 4px;
-    background-color: #3f87a6;
-    color: white;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin-right: 10px;
 }
 
-.service-card form button:hover {
+/* Submit button */
+.edit-mode button[type="submit"] {
+    background-color: #3f87a6;
+    color: white;
+}
+
+.edit-mode button[type="submit"]:hover {
     background-color: #326d88;
 }
 
-.service-card form button[type="button"] {
+/* Cancel button */
+.edit-mode button[type="button"] {
     background-color: #aaa;
+    color: white;
 }
 
-.service-card form button[type="button"]:hover {
+.edit-mode button[type="button"]:hover {
     background-color: #888;
 }
-
-
-
