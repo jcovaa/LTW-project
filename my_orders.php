@@ -20,5 +20,5 @@ $orders = Order::getOrdersByClient($db, $clientId);
 
 output_header("Freelancer Dashboard", $session);
 draw_dashboard_sidebar();
-draw_orders_section();
+draw_orders_section($orders);
 output_footer();

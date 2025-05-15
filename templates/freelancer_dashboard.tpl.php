@@ -131,14 +131,26 @@ declare(strict_types=1);
 
 
 
-    <?php function draw_orders_section(): void
+    <?php function draw_orders_section($orders): void
     { ?>
         <section class="dashboard-content">
-            <div id="orders" class="dashboard-tab-content" style="display: block;">
-                <h2>Orders</h2>
-                <p>This section will display all orders made for your services.</p>
-                <!-- Future order display logic -->
-            </div>
+            <h2>My Orders</h2>
+
+            <?php if (empty($orders)): ?>
+                <p>No orders made yet.</p>
+            <?php else: ?>
+                <?php foreach ($orders as $order): ?>
+                    <div class="order-card">
+                        <div class="order-info">
+                            <h3><?= htmlspecialchars($order->serviceName) ?></h3>
+                            <p><strong>Freelancer:</strong> <?= $order->freelancerName ?></p>
+                            <p><strong>Ordered On:</strong> <?= htmlspecialchars($order->orderDate) ?></p>
+                            <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
+                        </div>
+
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </section>
         </main>
     <?php } ?>
@@ -159,7 +171,7 @@ declare(strict_types=1);
                 <?php foreach ($orders as $order): ?>
                     <div class="order-card">
                         <div class="order-info">
-                            <p><strong>Customer:</strong> <?= $order->clientId ?></p>
+                            <p><strong>Customer:</strong> <?= $order->clientName ?></p>
                             <p><strong>Ordered On:</strong> <?= htmlspecialchars($order->orderDate) ?></p>
                             <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
                         </div>
