@@ -189,32 +189,34 @@ declare(strict_types=1);
 <?php } ?>
 
 <?php function draw_ratings_section(array $ratingsData): void { ?>
-    <button class="contact_freelancer">Chat with the Freelancer</button>
-    <section id="ratings">
-        <header>
-            <h3>Reviews</h3>
-        </header>
-        <div class="reviews_count">
-            <p><?= $ratingsData['totalReviews'] ?> reviews</p>
-            <div class="overall_rating">
-                <?php for ($i = 1; $i <= 5; $i++): ?>
-                    <span class="star"><?= $i <= $ratingsData['overallRating'] ? '★' : '☆' ?></span>
-                <?php endfor; ?>
-                <p><?= $ratingsData['overallRating'] ?></p>
+   <?php if (Session::getInstance()->isLoggedIn()) { ?>
+   <button class="contact_freelancer">Chat with the Freelancer</button>
+   <?php } ?>
+   <section id="ratings">
+      <header>
+         <h3>Reviews</h3>
+      </header>
+      <div class="reviews_count">
+         <p><?= $ratingsData['totalReviews'] ?> reviews</p>
+         <div class="overall_rating">
+            <?php for ($i = 1; $i <= 5; $i++) { ?>
+               <span class="star"><?= $i <= $ratingsData['overallRating'] ? '★' : '☆' ?></span>
+            <?php } ?>
+            <p><?= $ratingsData['overallRating'] ?></p>
+         </div>
+      </div>
+      <div class="rating_bars">
+         <?php for ($i = 5; $i >= 1; $i--) { ?>
+            <div class="rating_bar">
+               <p class="star_level"><?= $i ?> Stars</p>
+               <div class="progress_container">
+                  <div class="progress-fill" style="width: <?= $ratingsData['percentages'][$i] ?>%;"></div>
+               </div>
+               <p class="rating_count"><?= $ratingsData['ratingCounts'][$i] ?></p>
             </div>
-        </div>
-        <div class="rating_bars">
-            <?php for ($i = 5; $i >= 1; $i--): ?>
-                <div class="rating_bar">
-                    <p class="star_level"><?= $i ?> Stars</p>
-                    <div class="progress_container">
-                        <div class="progress-fill" style="width: <?= $ratingsData['percentages'][$i] ?>%;"></div>
-                    </div>
-                    <p class="rating_count"><?= $ratingsData['ratingCounts'][$i] ?></p>
-                </div>
-            <?php endfor; ?>
-        </div>
-    </section>
+         <?php } ?>
+      </div>
+   </section>
 <?php } ?>
 
 <?php function draw_comments_section(array $comments, int $serviceId): void { ?>
@@ -288,13 +290,33 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
+<?php function draw_chat_container(int $freelancerId): void { ?>
+   <?php if (Session::getInstance()->isLoggedIn()) { ?>
+   <section id="chat_container" class="hidden">
+      <header>
+         <h3>Chat</h3>
+         <button id="close_chat">×</button>
+      </header>
+      <div id="chat_messages">
+         <!-- Chat messages will be dynamically loaded here -->
+      </div>
+      <form id="message_form">
+         <input type="hidden" id="receiver_id" value="<?=$freelancerId ?>">
+         <textarea id="message_input" placeholder="Type your message..." required></textarea>
+         <button type="submit">Send</button>
+      </form>
+   </section>
+   <?php } ?>
+<?php } ?>
+
 <?php function draw_service_page(Service $service, array $ratingsData, array $comments): void { ?>
    <main id="service_page">
       <?php 
          draw_service_details($service); 
          draw_ratings_section($ratingsData); 
          draw_comments_section($comments, $service->id); 
-         draw_purchase_section($service); 
+         draw_purchase_section($service);
+         draw_chat_container($service->freelancerId);
       ?>
    </main>
 <?php } ?>

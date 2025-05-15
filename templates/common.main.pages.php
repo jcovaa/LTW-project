@@ -15,11 +15,11 @@ declare(strict_types=1);
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="css/styles.css">
       <script src="javascript/script.js" defer></script>
-      <title>My Web Page</title>
+      <title><?=$title ?></title>
    </head>
    <body>
       <header>
-         <h1 id="logo"><a href="index.php">Title</a></h1>
+         <h1 id="logo"><a href="index.php">lancer</a></h1>
          <form class="search_bar" action="search.php" method="get">
             <input type="text" name="query" placeholder="Search...">
             <button class="fa fa-search" type="submit"></button>
@@ -56,8 +56,8 @@ declare(strict_types=1);
 
 <?php function output_footer(): void { ?>
          <footer>
-            <p>Name of the app</p>
-            <p>name, date</p>
+            <p>lancer</p>
+            <p>lancer ltd 2025</p>
          </footer>
       </body>
    </html>

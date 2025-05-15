@@ -201,6 +201,107 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/* chat script */
+document.addEventListener('DOMContentLoaded', () => {
+   const contactButton = document.querySelector('.contact_freelancer');
+   const chatContainer = document.querySelector('#chat_container');
+   const closeButton = document.querySelector('#close_chat');
+   const messageForm = document.querySelector('#message_form');
+   const messageInput = document.querySelector('#message_input');
+   const chatMessages = document.querySelector('#chat_messages');
+
+   if (!contactButton) return;
+
+   contactButton.addEventListener('click', () => {
+      chatContainer.classList.remove('hidden');
+      loadChatMessages();
+   });
+
+   closeButton.addEventListener('click', () => {
+      chatContainer.classList.add('hidden');
+   });
+
+   messageForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const message = messageInput.value.trim();
+      const receiverId = document.getElementById('receiver_id').value;
+
+      if (!message) return;
+
+      fetch('actions/action.send_message.php', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+         },
+         body: `receiver_id=${receiverId}&message=${encodeURIComponent(message)}`
+      })
+      .then(response => response.json())
+      .then(data => {
+         if (data.success) {
+            addMessageToChat('sent', message, new Date().toLocaleTimeString());
+            messageInput.value = '';
+         }
+         else {
+            alert('Error sending message. Please try again.');
+         }
+      })
+      .catch(error => {
+         console.error('Error:', error);
+      });
+   });
+
+   function loadChatMessages() {
+      const receiverId = document.querySelector('#receiver_id').value;
+
+      fetch(`actions/action.get_messages.php?receiver_id=${receiverId}`)
+         .then(response => response.json())
+         .then(data => {
+            chatMessages.innerHTML = '';
+
+            data.messages.forEach(msg => {
+               const type = msg.senderId == data.currentUserId ? 'sent' : 'received';
+               addMessageToChat(type, msg.content, formatDateTime(msg.sentAt));
+            });
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+         })
+         .catch(error => {
+            console.error('Error:', error);
+         });
+   }
+
+   function addMessageToChat(type, content, time) {
+      const messageElement = document.createElement('article');
+      messageElement.classList.add('message', type);
+
+      const messageContent = document.createElement('div');
+      messageContent.textContent = content;
+
+      const messageTime = document.createElement('div');
+      messageTime.classList.add('message_time');
+      messageTime.textContent = time;
+
+      messageElement.appendChild(messageContent);
+      messageElement.appendChild(messageTime);
+
+      chatMessages.appendChild(messageElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+   }
+
+   function formatDateTime(dateTimeStr) {
+      const date = new Date(dateTimeStr);
+      return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+   }
+
+   if (chatContainer) {
+      setInterval(() => {
+         if (!chatContainer.classList.contains('hidden')) {
+            loadChatMessages();
+         }
+      }, 5000);
+   }
+});
 
 // function for tab switching on Freelancer Dashboard
 function showTab(tabName) {
