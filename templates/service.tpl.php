@@ -12,7 +12,7 @@ declare(strict_types=1);
             <?php foreach ($categories as $category) { ?>
                <li>
                   <label>
-                     <input type="radio" name="category" value="<?= $category->id ?>"> <?= $category->name ?>
+                     <input type="radio" name="category" value="<?= $category->id ?>" onchange="applyCategoryFilter()"> <?= $category->name ?>
                   </label>
                </li>
             <?php } ?>
@@ -92,7 +92,7 @@ declare(strict_types=1);
 <?php function draw_service_card(Service $service) { ?>
    <article class="service_card">
       <a href="service.php?id=<?=$service->id ?>">
-         <img src="https://picsum.photos/200?<?=$service->id ?>" alt="service image">
+         <img src="<?= htmlspecialchars($service->imageUrl) ?>" alt="service image">
       </a>
       <div class="service_info">
          <div class="profile">
@@ -153,7 +153,7 @@ declare(strict_types=1);
          if (isset($_GET['category']) && $_GET['category'] !== 'all') {
             $categoryId = (int)$_GET['category'];
             $services = array_filter($services, function($service) use ($categoryId) {
-               return $service->categoryId === $categoryId;
+               return in_array($categoryId, $service->categoryIds);
             });
          }
 
@@ -182,7 +182,7 @@ declare(strict_types=1);
          <p><?=$service->freelancerName ?></p>
       </div>
       <div class="service_description">
-         <img src="https://picsum.photos/200?<?=$service->id ?>" alt="service image">
+         <img src="<?= htmlspecialchars($service->imageUrl) ?>" alt="service image">
          <p><?=$service->description ?></p>
       </div>
    </section>

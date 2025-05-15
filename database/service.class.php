@@ -13,8 +13,10 @@ class Service
    public int $freelancerId;
    public string $freelancerName;
    public float $avgRating;
+   public $categoryIds = array();
+   public string $imageUrl;
 
-   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating)
+   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating, string $imageUrl, $categoryIds)
    {
       $this->id = $id;
       $this->name = $name;
@@ -25,8 +27,19 @@ class Service
       $this->freelancerId = $freelancerId;
       $this->freelancerName = $freelancerName;
       $this->avgRating = $avgRating;
+      $this->categoryIds = $categoryIds;
+      $this->imageUrl = $imageUrl;
    }
 
+
+
+   public static function addService(PDO $db, $name, $clientId, $price, $deliveryTime, $description, $imageUrl) {
+      $stmt = $db->prepare('
+         INSERT INTO Service(Name, FreelancerId, Price, DeliveryTime, Description, IsPromoted, ImageUrl)
+         Values (?,?,?,?,?,0,?)
+      ');
+      return $stmt->execute([$name, $clientId, $price, $deliveryTime, $description, $imageUrl]);
+   }
 
 
    public static function getService(PDO $db, int $id)
@@ -40,6 +53,7 @@ class Service
          Service.Price, 
          Service.DeliveryTime, 
          Service.IsPromoted,
+         Service.ImageURL,
          User.UserId as FreelancerId,
          User.Name as FreelancerName
       FROM Service
@@ -60,6 +74,8 @@ class Service
          $service['FreelancerId'],
          $service['FreelancerName'],
          self::getAverageRatingForService($db, $id),
+         (string)($service['ImageURL']),
+         self::getServiceCategories($db, $id)
       );
    }
 
@@ -72,6 +88,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
          FROM Service
@@ -92,6 +109,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
          FROM Service
@@ -115,6 +133,7 @@ class Service
             Service.Price, 
             Service.DeliveryTime, 
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
          FROM Service
@@ -136,6 +155,7 @@ class Service
             Service.Price, 
             Service.DeliveryTime, 
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId, 
             User.Name as FreelancerName
          FROM Service
@@ -154,7 +174,7 @@ class Service
       $stmt = $db->prepare('
          SELECT 
             Service.ServiceId, Service.Name, Service.Description, Service.Price, 
-            Service.DeliveryTime, Service.IsPromoted,
+            Service.DeliveryTime, Service.IsPromoted, Service.ImageURL,
             User.UserId as FreelancerId, User.Name as FreelancerName
          FROM Service
          JOIN ServiceCategory ON Service.ServiceId = ServiceCategory.ServiceId
@@ -183,10 +203,31 @@ class Service
          $row['FreelancerId'],
          $row['FreelancerName'],
          self::getAverageRatingForService($db, $id),
-         );
+         (string)($row['ImageURL']),
+         self::getServiceCategories($db, $id)
+      );
       }
     
       return $services;
+   }
+
+   public static function getServiceCategories(PDO $db, int $serviceId)
+   {
+      $stmt = $db->prepare('
+      SELECT Category.CategoryId
+      FROM Category
+      JOIN ServiceCategory ON Category.CategoryId = ServiceCategory.CategoryId
+      WHERE ServiceCategory.ServiceId = ?
+      ');
+
+      $stmt->execute([$serviceId]);
+
+      $categories = [];
+      while ($row = $stmt->fetch()) {
+         $categories[] = $row['CategoryId'];
+      }
+
+      return $categories;
    }
 
 
@@ -222,6 +263,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName,
             AVG(Review.Rating) as AvgRating
@@ -246,6 +288,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName,
          FROM Service
@@ -267,6 +310,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
          FROM Service

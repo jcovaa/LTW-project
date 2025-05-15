@@ -14,6 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 });
 
+/* when the page reloads after selecting the category, the input field retains the selected category*/
+document.addEventListener('DOMContentLoaded', () => {
+   const urlParams = new URLSearchParams(window.location.search);
+   const category = urlParams.get('category');
+   if (category) {
+      const radio = document.querySelector(`input[name="category"][value="${category}"]`);
+      if (radio) {
+         radio.checked = true;
+      }
+   }
+});
+
 /* when the page reloads after submitting the rating range, the input field retains the selected range */
 document.addEventListener('DOMContentLoaded', () => {
    const urlParams = new URLSearchParams(window.location.search);
@@ -104,6 +116,24 @@ document.querySelectorAll('.clear_button').forEach(button => {
          radios.forEach(radio => (radio.checked = false));
    });
 });
+
+
+/* category rating filter */
+
+function applyCategoryFilter() {
+   const selectedCategory = document.querySelector('input[name="category"]:checked').value;
+   const urlParams = new URLSearchParams(window.location.search);
+   urlParams.set('category', selectedCategory);
+   window.location.search = urlParams.toString();
+}
+
+function clearCategoryFilter() {
+   const urlParams = new URLSearchParams(window.location.search);
+   urlParams.delete('category');
+   window.location.search = urlParams.toString();
+}
+
+
 
 
 /* rating filter script */
