@@ -176,6 +176,21 @@ declare(strict_types=1);
                             <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
                         </div>
 
+                        <?php if ($order->status === 'pending'): ?>
+                            <!-- Freelancer can mark as in progress -->
+                            <form method="POST" action="actions/action.change_order_status.php">
+                                <input type="hidden" name="order_id" value="<?= $order->orderId ?>">
+                                <input type="hidden" name="new_status" value="in_progress">
+                                <button type="submit">Start Order</button>
+                            </form>
+                        <?php elseif ($order->status === 'in_progress'): ?>
+                            <form method="POST" action="actions/action.change_order_status.php">
+                                <input type="hidden" name="order_id" value="<?= $order->orderId ?>">
+                                <input type="hidden" name="new_status" value="complete">
+                                <button type="submit">Mark as Complete</button>
+                            </form>
+                        <?php endif; ?>
+
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
