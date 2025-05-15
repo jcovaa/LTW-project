@@ -28,7 +28,7 @@ declare(strict_types=1);
             <ul>
                <?php if (Session::getInstance()->getUser()) : ?>
                <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
-               <li><button onclick="window.location.href='freelancer_dashboard.php'">Dashboard</button>
+               <li><button onclick="window.location.href='my_services.php'">Dashboard</button>
                <?php endif; ?>
                <?php if (Session::getInstance()->getUser()) drawLogoutForm(); else drawLoginForm();?>
             </ul>

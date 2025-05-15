@@ -218,3 +218,59 @@ function toggleEdit(serviceId) {
    view.style.display = view.style.display === 'none' ? 'flex' : 'none';
    edit.style.display = edit.style.display === 'block' ? 'none' : 'block';
 }
+
+function toggleCancel(serviceId) {
+   const card = document.getElementById(`service-${serviceId}`);
+   const view = card.querySelector('.view-mode');
+   const edit = card.querySelector('.edit-mode');
+
+   view.style.display = view.style.display === 'none' ? 'flex' : 'none';
+   edit.style.display = edit.style.display === 'block' ? 'none' : 'block';
+
+
+   if (edit.style.display === "none") {
+      const preview = document.getElementById("prevImage" + serviceId);
+      const fileInput = document.getElementById("image" + serviceId);
+
+      if (preview && preview.dataset.originalSrc) {
+         preview.src = preview.dataset.originalSrc;
+      }
+      if (fileInput) {
+         fileInput.value = "";
+      }
+   }
+}
+
+
+// this ables to preview the image when updating service
+document.addEventListener("DOMContentLoaded", () => {
+   const imageInputs = document.querySelectorAll('input[type="file"][name="image"]');
+
+   imageInputs.forEach(input => {
+      const id = input.id.replace('image', '');
+      const prev = document.getElementById('prevImage' + id);
+
+      if (prev) {
+         input.addEventListener("change", event => {
+            const file = event.target.files[0];
+            if (file) {
+               const reader = new FileReader();
+               reader.onload = function (e) {
+                  prev.src = e.target.result;
+               };
+               reader.readAsDataURL(file);
+            }
+         });
+      }
+   });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+   const hash = window.location.hash.substring(1);
+   if (hash === 'orders' || hash === 'services') {
+      showTab(hash);
+   }
+});

@@ -42,7 +42,7 @@ class Order {
 
     public static function getOrdersByService(PDO $db, int $serviceId): array {
         $stmt = $db->prepare('
-            SELECT * FROM "Order"
+            SELECT * FROM "Order_"
             WHERE ServiceId = ?
             ORDER BY OrderDate DESC
         ');

@@ -125,6 +125,7 @@ VALUES (1, 4, 1, 'completed', CURRENT_TIMESTAMP);
 INSERT INTO Order_ (OrderId, ClientId, ServiceId, Status, OrderDate)
 VALUES (2, 4, 2, 'pending', CURRENT_TIMESTAMP);
 
+
 -- Insert Reviews
 INSERT INTO Review (ReviewID, ServiceId, ClientId, Rating, Comment)
 VALUES (1, 1, 4, 5, 'Amazing work! Highly recommended.');
@@ -138,4 +139,7 @@ VALUES (1, 4, 1, 'Hi! Can you design a logo for my new brand?', CURRENT_TIMESTAM
 
 INSERT INTO Message (MessageId, SenderId, ReceiverId, Content, SentAt)
 VALUES (2, 1, 4, 'Sure! Do you have any ideas in mind?', CURRENT_TIMESTAMP);
+
+
+
 

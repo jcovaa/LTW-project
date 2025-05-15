@@ -60,75 +60,120 @@ declare(strict_types=1);
     <?php } ?>
 
 
-
-
-
-    <?php function draw_dashboard($services): void
+    <?php function draw_dashboard_sidebar(): void
     { ?>
         <main id="freelancer_dashboard" class="dashboard-container">
             <aside class="dashboard-sidebar">
-                <button class="dashboard-tab" onclick="showTab('services')">My Services</button>
-                <button class="dashboard-tab" onclick="showTab('orders')">Orders</button>
+                <button class="dashboard-tab" onclick="window.location.href='my_services.php'">My Services</button>
+                <button class="dashboard-tab" onclick="window.location.href='my_orders.php'">My Orders</button>
             </aside>
+        <?php } ?>
 
+
+
+        <?php function draw_services_section(array $services): void
+        { ?>
             <section class="dashboard-content">
                 <div id="services" class="dashboard-tab-content" style="display: block;">
-
                     <h2>My Services</h2>
                     <?php if (empty($services)): ?>
                         <p>You haven't listed any services yet.</p>
                     <?php else: ?>
                         <?php foreach ($services as $service): ?>
                             <div class="service-card" id="service-<?= $service->id ?>">
-                                <!-- View Mode -->
+                                <!-- view mode -->
                                 <div class="view-mode">
                                     <div class="view-content">
-                                        <h3><?= htmlspecialchars($service->name) ?></h3>
-                                        <p><?= htmlspecialchars($service->description) ?></p>
-                                        <p><?= $service->avgRating ?></p>
-                                        <p><strong>Price:</strong> €<?= number_format($service->price, 2) ?></p>
-                                        <p><strong>Delivery Time:</strong> <?= $service->deliveryTime ?> days</p>
-
-
-                                        <div class="service-actions">
+                                        <div>
+                                            <h3><?= htmlspecialchars($service->name) ?></h3>
+                                            <p><?= htmlspecialchars($service->description) ?></p>
+                                            <p><?= $service->avgRating ?></p>
+                                            <p><strong>Price:</strong> €<?= number_format($service->price, 2) ?></p>
+                                            <p><strong>Delivery Time:</strong> <?= $service->deliveryTime ?> days</p>
+                                        </div>
+                                        <img id="actualImage<?= $service->id ?>" src="<?= htmlspecialchars($service->imageUrl) ?>">
+                                    </div>
+                                    <div class="service-actions">
+                                        <div class="left-buttons">
                                             <button class="button edit" onclick="toggleEdit(<?= $service->id ?>)">Edit</button>
-
                                             <form action="actions/action.delete_service.php" method="post" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
                                                 <input type="hidden" name="id" value="<?= $service->id ?>">
                                                 <button type="submit" class="button danger">Delete</button>
                                             </form>
                                         </div>
+                                        <button onclick="window.location.href='service_orders.php?service_id=<?= $service->id ?>'" class="button expand">Customer Orders</button>
                                     </div>
-                                    <img src="<?= htmlspecialchars($service->imageUrl) ?>">
                                 </div>
 
-                                <!-- Edit Mode (hidden by default) -->
-                                <form class="edit-mode" action="actions/action.edit_service.php" method="post" style="display: none;">
+                                <!-- edit mode -->
+                                <form class="edit-mode" action="actions/action.edit_service.php" method="post" enctype="multipart/form-data" style="display: none;">
                                     <input type="hidden" name="id" value="<?= $service->id ?>">
                                     <label>Name: <input type="text" name="name" value="<?= htmlspecialchars($service->name) ?>" required></label><br>
                                     <label>Description: <textarea name="description"><?= htmlspecialchars($service->description) ?></textarea></label><br>
                                     <label>Price (€): <input type="number" name="price" step="0.01" value="<?= $service->price ?>" required></label><br>
                                     <label>Delivery Time (days): <input type="number" name="deliveryTime" value="<?= $service->deliveryTime ?>" required></label><br>
-
+                                    <div class="addImg">
+                                        <img id="prevImage<?= $service->id ?>" src="<?= htmlspecialchars($service->imageUrl) ?>" data-original-src="<?= htmlspecialchars($service->imageUrl) ?>">
+                                        <div class="input_image">
+                                            <input type="file" id="image<?= $service->id ?>" name="image" accept=".jpeg,.jpg,.png">
+                                        </div>
+                                    </div>
                                     <button type="submit">Save</button>
-                                    <button type="button" onclick="toggleEdit(<?= $service->id ?>)">Cancel</button>
+                                    <button type="button" onclick="toggleCancel(<?= $service->id ?>)">Cancel</button>
                                 </form>
                             </div>
-
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-
-                <div id="orders" class="dashboard-tab-content" style="display: none;">
-                    <h2>Orders</h2>
-                    <p>This section will display all orders made for your services.</p>
-                    <!-- You will load or display orders here in the future -->
-                </div>
             </section>
+        </main>
+    <?php } ?>
+
+
+
+    <?php function draw_orders_section(): void
+    { ?>
+        <section class="dashboard-content">
+            <div id="orders" class="dashboard-tab-content" style="display: block;">
+                <h2>Orders</h2>
+                <p>This section will display all orders made for your services.</p>
+                <!-- Future order display logic -->
+            </div>
+        </section>
+        </main>
+    <?php } ?>
+
+
+
+
+
+
+    <?php function draw_service_orders($service, $orders): void
+    { ?>
+        <section class="dashboard-content">
+            <h2>Orders for Service: <?= htmlspecialchars($service->name) ?></h2>
+
+            <?php if (empty($orders)): ?>
+                <p>No orders for this service yet.</p>
+            <?php else: ?>
+                <?php foreach ($orders as $order): ?>
+                    <div class="order-card">
+                        <div class="order-info">
+                            <p><strong>Customer:</strong> <?= $order->clientId ?></p>
+                            <p><strong>Ordered On:</strong> <?= htmlspecialchars($order->orderDate) ?></p>
+                            <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
+                        </div>
+
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </section>
         </main>
 
 
     <?php } ?>
+
+
 
 
 

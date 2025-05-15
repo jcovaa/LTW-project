@@ -12,6 +12,16 @@ $id = (int) $_POST['id'];
 
 $service = Service::getService($db, $id);
 
+function redirectWithError(string $message, string $location): void
+{
+    $_SESSION['error'] = $message;
+    header('Location: ' . $location);
+    exit;
+}
+
+
+$referer = $_SERVER['HTTP_REFERER'] ?? '../freelancer_dashboard.php';
+
 
 if (!$service) {
     $_SESSION['error'] = "Service not found.";
@@ -31,7 +41,33 @@ $service->description = $_POST['description'];
 $service->price = doubleval($_POST['price']);
 $service->deliveryTime = intval($_POST['deliveryTime']);
 
-// Delete the service
+
+if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $tempFileName = $_FILES['image']['tmp_name'];
+    $imageName = basename($_FILES['image']['name']);
+    $imageExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+    $allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+    if (!in_array($imageExtension, $allowedExtensions)) {
+        redirectWithError('Unsupported image format.', $referer);
+    }
+
+    $newImageName = uniqid('img_', true) . '.' . $imageExtension;
+    $uploadDir = __DIR__ . '/../images/';
+    $uploadPath = $uploadDir . $newImageName;
+
+    if (!move_uploaded_file($tempFileName, $uploadPath)) {
+        redirectWithError('Failed to upload image.', $referer);
+    }
+
+    $service->imageUrl = '../images/' . $newImageName;
+}
+// Else: don't change the imageUrl — keep the old one
+
+
+
+
+// update the service
 if ($service->updateService($db)) {
     $_SESSION['success'] = "Service updated successfully.";
 } else {
