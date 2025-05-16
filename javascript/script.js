@@ -303,14 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 });
 
-// function for tab switching on Freelancer Dashboard
-function showTab(tabName) {
-   const tabs = document.querySelectorAll('.dashboard-tab-content');
-   tabs.forEach(tab => tab.style.display = 'none');
-
-   document.getElementById(tabName).style.display = 'block';
-}
-
+// edit and cancel buttons on service management
 function toggleEdit(serviceId) {
    const card = document.getElementById(`service-${serviceId}`);
    const view = card.querySelector('.view-mode');
@@ -369,9 +362,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-   const hash = window.location.hash.substring(1);
-   if (hash === 'orders' || hash === 'services') {
-      showTab(hash);
-   }
-});

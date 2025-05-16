@@ -148,6 +148,13 @@ declare(strict_types=1);
                             <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
                         </div>
 
+                        <?php if (Session::getInstance()->isLoggedIn() && $order->status != 'complete') { ?>
+                            <button class="contact_freelancer">Chat with the Freelancer</button>
+                            <?php draw_chat_container($order->clientId) ?>
+                        <?php } ?>
+
+
+
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -191,6 +198,10 @@ declare(strict_types=1);
                             </form>
                         <?php endif; ?>
 
+                        <?php if (Session::getInstance()->isLoggedIn()) { ?>
+                            <button class="contact_freelancer">Chat with the Client</button>
+                            <?php draw_chat_container($order->clientId) ?>
+                        <?php } ?>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -213,4 +224,26 @@ declare(strict_types=1);
     </body>
 
     </html>
+<?php } ?>
+
+
+
+<?php function draw_chat_container(int $receiverId): void
+{ ?>
+    <?php if (Session::getInstance()->isLoggedIn()) { ?>
+        <section id="chat_container" class="hidden">
+            <header>
+                <h3>Chat</h3>
+                <button id="close_chat">×</button>
+            </header>
+            <div id="chat_messages">
+                <!-- Chat messages will be dynamically loaded here -->
+            </div>
+            <form id="message_form">
+                <input type="hidden" id="receiver_id" value="<?= $receiverId ?>">
+                <textarea id="message_input" placeholder="Type your message..." required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    <?php } ?>
 <?php } ?>

@@ -24,7 +24,7 @@ class Message {
             WHERE (SenderId = ? AND ReceiverId = ?) OR (SenderId = ? AND ReceiverId = ?)
             ORDER BY SentAt ASC
         ');
-        $stmt->execute([$user1, $user2, $user1, $user2]);
+        $stmt->execute([$user1, $user2, $user2, $user1]);
 
         $messages = [];
         while ($row = $stmt->fetch()) {

@@ -22,7 +22,6 @@ if (!$order) {
 $currentStatus = $order->status;
 
 
-
 $validTransitions = [
     'pending' => ['in_progress'],
     'in_progress' => ['complete']

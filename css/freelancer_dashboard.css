@@ -39,7 +39,7 @@
     border-radius: 8px;
     background-color: #fff;
     width: 75%;
-    margin: 0 auto 1.5rem auto;
+    margin-left: 1;
     padding: 1.5rem;
 }
 
@@ -237,4 +237,17 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .edit-mode button[type="button"]:hover {
     background-color: #888;
+}
+
+
+
+/* service orders */
+
+.order-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 75%;
+    margin-left: 1rem;
+    padding: 1.5rem;
 }
