@@ -6,28 +6,29 @@ declare(strict_types=1);
 
 <?php function output_header($title): void { ?>
    <!DOCTYPE html>
-<html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-      <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" href="css/login.css">
-      <link rel="stylesheet" href="css/styles.css">
-      <title><?=$title?></title>
-   </head>
-   <body>
-      <header>
-         <h1 id="logo"><a href="index.php">Title</a></h1>
-         <nav id="nav_menu">
-            <ul>
-               <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
-               <li><button onclick="window.location.href='login.php'">Login</button></li>
-               <li><button onclick="window.location.href='register.php'">Sign Up</button></li>
-            </ul>
-         </nav>
-      </header>
+   <html lang="en">
+      <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+         <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="css/login.css">
+         <link rel="stylesheet" href="css/styles.css">
+         <script src="javascript/script.js" defer></script>
+         <title><?=$title?></title>
+      </head>
+      <body>
+         <header>
+            <h1 id="logo"><a href="index.php">lancer</a></h1>
+            <nav id="nav_menu">
+               <button id="menu_toggle" class="fa fa-bars"></button>
+               <ul>
+                  <li><button onclick="window.location.href='login.php'">Login</button></li>
+                  <li><button onclick="window.location.href='register.php'">Sign Up</button></li>
+               </ul>
+            </nav>
+         </header>
 <?php } ?>
 
 <?php function draw_login_form(): void { ?>
@@ -78,8 +79,8 @@ declare(strict_types=1);
 
 <?php function output_footer(): void { ?>
    <footer>
-         <p>Name of the app</p>
-         <p>name, date</p>
+         <p>lancer</p>
+         <p>lancer, 2025</p>
       </footer>
    </body>
 </html>

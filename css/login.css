@@ -116,3 +116,28 @@ form .link a {
 form .link p a:hover {
    text-decoration: underline;
 }
+
+body > footer {
+   margin: 10px 0 0 0;
+}
+
+@media (max-width: 900px) {
+   body > header {
+      flex-wrap: wrap;
+      justify-content: space-between;
+   }
+   
+   main#authentication_page > form {
+      max-width: 90%;
+   }
+}
+
+@media (max-width: 500px) {
+   main#authentication_page > form {
+      padding: 20px 25px;
+   }
+   
+   form h1 {
+      font-size: 28px;
+   }
+}
