@@ -109,11 +109,17 @@ li, a {
 }
 
 #nav_menu li:first-child {
-   margin: 0 2em;
+   margin: 0 1em;
 }
 
 #nav_menu button:hover {
    background: #f0f0f0;
+}
+
+#nav_menu ul {
+   display: flex;
+   align-items: center;
+   gap: 0.5em;
 }
 
 /* sign up button */ 
