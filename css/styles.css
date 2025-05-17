@@ -108,10 +108,6 @@ li, a {
    font-size: var(--text-size);
 }
 
-#nav_menu li:first-child {
-   margin: 0 1em;
-}
-
 #nav_menu button:hover {
    background: #f0f0f0;
 }
@@ -119,7 +115,7 @@ li, a {
 #nav_menu ul {
    display: flex;
    align-items: center;
-   gap: 0.5em;
+   gap: 1em;
 }
 
 /* sign up button */ 
@@ -867,7 +863,7 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
    display: none;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
    body {
       width: 95%;
    }
@@ -904,6 +900,24 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
    
    #nav_menu li:first-child {
       margin: 10px 0;
+   }
+   
+   /* Make profile link match button styling */
+   #nav_menu li a {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 12px;
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: var(--nav-border-radius);
+      font-size: var(--text-size);
+      color: black;
+      cursor: pointer;
+   }
+   
+   #nav_menu li a:hover {
+      background: #f0f0f0;
    }
    
    #nav_menu button {
