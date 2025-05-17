@@ -938,6 +938,20 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
    #menu_toggle:hover {
       background: #f0f0f0;
    }
+
+   #featured_services {
+      display: none;
+   }
+
+   #services {
+      justify-content: space-between;
+      gap: 20px;
+   }
+
+   #services .service_card {
+      width: 48%;
+      min-width: 0;
+   }
 }
 
 @media (max-width: 575px) {
@@ -945,5 +959,19 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
       order: 3;
       width: 100%;
       margin: 10px 0;
+   }
+
+   #services {
+      flex-direction: column;
+      align-items: center;
+   }
+
+   #services .service_card {
+      width: 300px;
+   }
+
+   #services .service_card img {
+      width: 300px;
+      height: 170px;
    }
 }
