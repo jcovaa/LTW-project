@@ -5,6 +5,24 @@ document.querySelector('.search_bar').addEventListener('submit', function (event
    window.location.href = `index.php?query=${encodeURIComponent(query)}`;
 });
 
+/* hamburger menu script */
+document.addEventListener('DOMContentLoaded', () => {
+   const menuToggle = document.querySelector('#menu_toggle');
+   const navMenu = document.querySelector('#nav_menu');
+   
+   if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+         navMenu.classList.toggle('active');
+      });
+      
+      document.addEventListener('click', (event) => {
+         if (!navMenu.contains(event.target)) {
+            navMenu.classList.remove('active');
+         }
+      });
+   }
+});
+
 /* when the page reloads after submitting the search, the input field retains the text in the search-bar */
 document.addEventListener('DOMContentLoaded', () => {
    const urlParams = new URLSearchParams(window.location.search);

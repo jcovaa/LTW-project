@@ -26,6 +26,7 @@ declare(strict_types=1);
             <button class="fa fa-search" type="submit"></button>
          </form>
          <nav id="nav_menu">
+            <button id="menu_toggle" class="fa fa-bars"></button>
             <ul>
                <?php if (Session::getInstance()->getUser()) : ?>
                <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>

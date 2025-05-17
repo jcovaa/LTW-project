@@ -862,3 +862,74 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
       }
    }
 }
+
+#menu_toggle {
+   display: none;
+}
+
+@media (max-width: 700px) {
+   body {
+      width: 95%;
+   }
+
+   body > header {
+      flex-wrap: wrap;
+   }
+
+   #nav_menu {
+      position: relative;
+   }
+
+   #nav_menu ul {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      border-radius: 4px;
+      z-index: 100;
+      width: 200px;
+      padding: 10px;
+   }
+   
+   #nav_menu.active ul {
+      display: block;
+   }
+   
+   #nav_menu li {
+      display: block;
+      margin: 10px 0;
+   }
+   
+   #nav_menu li:first-child {
+      margin: 10px 0;
+   }
+   
+   #nav_menu button {
+      width: 100%;
+      text-align: left;
+   }
+   
+   #menu_toggle {
+      display: block;
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: var(--nav-border-radius);
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 20px;
+   }
+   
+   #menu_toggle:hover {
+      background: #f0f0f0;
+   }
+}
+
+@media (max-width: 575px) {
+   .search_bar {
+      order: 3;
+      width: 100%;
+      margin: 10px 0;
+   }
+}
