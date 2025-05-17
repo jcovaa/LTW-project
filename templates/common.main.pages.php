@@ -14,6 +14,7 @@ declare(strict_types=1);
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="css/styles.css">
+      <link rel="icon" type="image/x-icon" href="favicon.ico">
       <script src="javascript/script.js" defer></script>
       <title><?=$title ?></title>
    </head>
