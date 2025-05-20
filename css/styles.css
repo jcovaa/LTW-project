@@ -417,8 +417,9 @@ main#service_page {
 /* service description */
 #service_details .service_description img {
    width: 100%;
-   height: 400px;
-   object-fit: cover;
+   height: auto;
+   max-height: 500px;
+   object-fit: contain;
 
    border-radius: 4px;
    margin-bottom: 5px;
@@ -684,20 +685,16 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
 
 /* purchase_section */
 #purchase_section {
-   grid-column: 2;
-   grid-row: 1 / span 5;
-   align-self: start;
-
-   background-color: white;
-   border-radius: 4px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
    padding: 10px 20px;
    position: fixed;
    top: 20%;
    right: 15%;
    width: 300px;
    margin: 0;
+
+   background-color: white;
+   border-radius: 4px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 #purchase_section .price_container {
@@ -902,7 +899,6 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
       margin: 10px 0;
    }
    
-   /* Make profile link match button styling */
    #nav_menu li a {
       display: block;
       width: 100%;
@@ -952,6 +948,35 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
       width: 48%;
       min-width: 0;
    }
+
+   main#service_page {
+      grid-template-columns: 1fr;
+      width: 100%;
+
+      #service_details .service_description img {
+         max-height: 400px;
+      }
+
+      #purchase_section {
+         position: static;
+         width: 100%;
+         margin: 20px 0;
+         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+         grid-column: 1;
+      }
+
+      #chat_container {
+         position: static;
+         width: 100%;
+         margin: 20px 0;
+         height: 300px;
+         grid-column: 1;
+      }
+
+      #service_details, #ratings, #comments, #comments_list {
+         grid-column: 1;
+      }
+   }
 }
 
 @media (max-width: 575px) {
@@ -973,5 +998,9 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
    #services .service_card img {
       width: 300px;
       height: 170px;
+   }   
+
+   #service_details .service_description img {
+      max-height: 300px;
    }
 }
