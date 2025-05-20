@@ -7,6 +7,10 @@ require_once __DIR__ . '/../database/service.class.php';
 require_once __DIR__ . '/../database/session.php';
 
 $session = Session::getInstance();
+$db = getDatabaseConnection();
+$id = (int) $_POST['id'];
+
+$service = Service::getService($db, $id);
 
 function redirectWithError(string $message, string $location): void
 {
@@ -15,21 +19,29 @@ function redirectWithError(string $message, string $location): void
     exit;
 }
 
-$referer = $_SERVER['HTTP_REFERER'] ?? '../index.php';
+
+$referer = $_SERVER['HTTP_REFERER'] ?? '../freelancer_dashboard.php';
 
 
-if (!isset($_POST['name'], $_POST['description'], $_POST['category'], $_POST['delivery'], $_POST['price'])) {
-    redirectWithError('All fields are required.', $referer);
+if (!$service) {
+    $_SESSION['error'] = "Service not found.";
+    header('Location: ../freelancer_dashboard.php');
+    exit();
 }
 
-$clientId = $session->getUserId();
-$name = $_POST['name'];
-$price = $_POST['price'];
-$deliveryTime = $_POST['delivery'];
-$description = $_POST['description'];
+// verifies AGAIN if the user logged in is this service's freelancer
+if ($session->getUserId() !== $service->freelancerId) {
+    $_SESSION['error'] = "You don't have permission to update this service.";
+    header('Location: ../freelancer_dashboard.php');
+    exit();
+}
+
+$service->name = $_POST['name'];
+$service->description = $_POST['description'];
+$service->price = doubleval($_POST['price']);
+$service->deliveryTime = intval($_POST['deliveryTime']);
 
 
-$imageUrl = null;
 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $tempFileName = $_FILES['image']['tmp_name'];
     $imageName = basename($_FILES['image']['name']);
@@ -48,33 +60,19 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         redirectWithError('Failed to upload image.', $referer);
     }
 
-    $imageUrl = '../images/' . $newImageName;
+    $service->imageUrl = '../images/' . $newImageName;
+}
+// Else: don't change the imageUrl — keep the old one
+
+
+
+
+// update the service
+if ($service->updateService($db)) {
+    $_SESSION['success'] = "Service updated successfully.";
 } else {
-    redirectWithError('Image upload failed or no image uploaded.', $referer);
+    $_SESSION['error'] = "Failed to update the service.";
 }
 
-
-
-$db = getDatabaseConnection();
-$clientId = $session->getUserId();
-
-try {
-    $success = Service::addService($db, $name, $clientId, $price, $deliveryTime, $description, $imageUrl);
-
-    if ($success) {
-        $_SESSION['success'] = 'Service created successfully!';
-
-    } else {
-        $_SESSION['error'] = 'Failed to create service.';
-        
-    }
-} catch (Exception $e) {
-    $_SESSION['error'] = 'Error: ' . $e->getMessage();
-    
-}
-
-
-header('Location: ../index.php');
-exit;
-
-?>
+header('Location: ../freelancer_dashboard.php');
+exit();

@@ -1,0 +1,253 @@
+.dashboard-container {
+    display: flex;
+    min-height: 80vh;
+}
+
+.dashboard-sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+}
+
+.dashboard-tab {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    background-color: #fff;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.dashboard-tab:hover {
+    background-color: #e0e0e0;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 1.5rem;
+}
+
+/* viewmode */
+
+.view-mode {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 75%;
+    margin-left: 1;
+    padding: 1.5rem;
+}
+
+.view-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.view-content div {
+    display: block;
+    gap: 0.5rem;
+}
+
+
+.view-mode img {
+    width: 300px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Buttons container at bottom */
+.service-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Left button group */
+.left-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+/* rating */
+.service-card p:nth-child(3) {
+    font-size: var(--text-size);
+    position: relative;
+    display: inline-block;
+}
+
+.service-card p:nth-child(3)::before {
+    content: "★ ";
+    left: 0;
+    top: 0;
+    font-size: 14px;
+    color: var(--star-color);
+}
+
+/* edit button */
+.service-actions button {
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.button.edit {
+    background-color: #aaa;
+}
+
+.service-actions .button.edit:hover {
+    background-color: #888;
+}
+
+
+/* remove button */
+.service-actions .button.danger {
+    background-color: #e74c3c;
+}
+
+.service-actions .button.danger:hover {
+    background-color: #c0392b;
+
+}
+
+
+/* expand button */
+.button.expand {
+    background-color: black;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+
+/* editmode */
+
+
+.addImg {
+    display: flex;
+    align-items: center;
+    /* vertically center input with image */
+    gap: 1rem;
+    /* space between image and input */
+}
+
+.edit-mode img {
+    margin-top: 0rem;
+    margin-bottom: 1.5rem;
+    width: 300px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+
+
+/* Edit form styles */
+/* Form container */
+.edit-mode {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+/* to remove the up/down arrows*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Only make labels slightly bold */
+.edit-mode label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+/* Inputs and textarea styling */
+.edit-mode input[type="text"],
+.edit-mode input[type="number"],
+.edit-mode textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    box-sizing: border-box;
+    margin-bottom: 0.6rem;
+    /* add spacing between label+input sets */
+}
+
+/* Textarea adjustment */
+.edit-mode textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* All buttons inside form */
+.edit-mode button {
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: 10px;
+}
+
+/* Submit button */
+.edit-mode button[type="submit"] {
+    background-color: #3f87a6;
+    color: white;
+}
+
+.edit-mode button[type="submit"]:hover {
+    background-color: #326d88;
+}
+
+/* Cancel button */
+.edit-mode button[type="button"] {
+    background-color: #aaa;
+    color: white;
+}
+
+.edit-mode button[type="button"]:hover {
+    background-color: #888;
+}
+
+
+
+/* service orders */
+
+.order-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 75%;
+    margin-left: 1rem;
+    padding: 1.5rem;
+}

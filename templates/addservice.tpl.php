@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 ?>
 
+
 <?php function output_header($title): void
 { ?>
    <!DOCTYPE html>
