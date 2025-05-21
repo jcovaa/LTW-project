@@ -59,7 +59,7 @@ declare(strict_types=1);
 <?php function output_footer(): void { ?>
          <footer>
             <p>lancer</p>
-            <p>lancer ltd 2025</p>
+            <p>lancer ltd, 2025</p>
          </footer>
       </body>
    </html>
