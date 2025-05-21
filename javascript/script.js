@@ -1,88 +1,70 @@
 /* search script */
-document.addEventListener('DOMContentLoaded', () => {
-  const searchBar = document.querySelector('.search_bar');
-  if (searchBar) {
-    searchBar.addEventListener('submit', function (event) {
-      event.preventDefault();
+const searchBar = document.querySelector('.search_bar');
+if (searchBar) {
+   searchBar.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent the default form submission
       const query = document.querySelector('input[name="query"]').value;
       window.location.href = `index.php?query=${encodeURIComponent(query)}`;
-    });
-  }
-});
+   });
+}
 
 /* hamburger menu script */
-document.addEventListener('DOMContentLoaded', () => {
-   const menuToggle = document.querySelector('#menu_toggle');
-   const navMenu = document.querySelector('#nav_menu');
+const menuToggle = document.querySelector('#menu_toggle');
+const navMenu = document.querySelector('#nav_menu');
+if (menuToggle && navMenu) {
+   menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+   });
    
-   if (menuToggle) {
-      menuToggle.addEventListener('click', () => {
-         navMenu.classList.toggle('active');
-      });
-      
-      document.addEventListener('click', (event) => {
-         if (!navMenu.contains(event.target)) {
-            navMenu.classList.remove('active');
-         }
-      });
-   }
-});
+   document.addEventListener('click', (event) => {
+      if (!navMenu.contains(event.target)) {
+         navMenu.classList.remove('active');
+      }
+   });
+}
 
 /* when the page reloads after submitting the search, the input field retains the text in the search-bar */
-document.addEventListener('DOMContentLoaded', () => {
-   const urlParams = new URLSearchParams(window.location.search);
-   const query = urlParams.get('query');
-   if (query) {
-      document.querySelector('input[name="query"]').value = query;
+const urlParams = new URLSearchParams(window.location.search);   // global variable urlParams
+
+const query = urlParams.get('query');
+if (query) {
+   const queryInput = document.querySelector('input[name="query"]');
+   if (queryInput) {
+      queryInput.value = query;
    }
-});
+}
 
 /* when the page reloads after selecting the category, the input field retains the selected category*/
-document.addEventListener('DOMContentLoaded', () => {
-   const urlParams = new URLSearchParams(window.location.search);
-   const category = urlParams.get('category');
-   if (category) {
-      const radio = document.querySelector(`input[name="category"][value="${category}"]`);
-      if (radio) {
-         radio.checked = true;
-      }
+const category = urlParams.get('category');
+if (category) {
+   const radio = document.querySelector(`input[name="category"][value="${category}"]`);
+   if (radio) {
+      radio.checked = true;
    }
-});
+}
 
 /* when the page reloads after submitting the rating range, the input field retains the selected range */
-document.addEventListener('DOMContentLoaded', () => {
-   const urlParams = new URLSearchParams(window.location.search);
-   const ratingRange = urlParams.get('rating_range');
-   if (ratingRange) {
-      const radio = document.querySelector(`input[name="rating_range"][value="${ratingRange}"]`);
-      if (radio) {
-         radio.checked = true;
-      }
+const ratingRange = urlParams.get('rating_range');
+if (ratingRange) {
+   const radio = document.querySelector(`input[name="rating_range"][value="${ratingRange}"]`);
+   if (radio) {
+      radio.checked = true;
    }
-});
+}
 
 /* when the page reloads after submitting the price range, the input field retains the selected range */
-document.addEventListener('DOMContentLoaded', () => {
-   const urlParams = new URLSearchParams(window.location.search);
-   const priceRange = urlParams.get('price_range');
+const priceRange = urlParams.get('price_range');
    if (priceRange) {
       const radio = document.querySelector(`input[name="price_range"][value="${priceRange}"]`);
-      if (radio) {
-         radio.checked = true;
-      }
+   if (radio) {
+      radio.checked = true;
    }
-});
-
-/* 
-The DOMContentLoaded event fires when the HTML document has been completely parsed, 
-and all deferred scripts have downloaded and executed.
-*/
+}
 
 /* category button script */
-document.addEventListener('DOMContentLoaded', () => {
-   const categoryButton = document.querySelector('#category');
-   const dropdownMenu = document.querySelector('.category_menu');
-
+const categoryButton = document.querySelector('#category');
+const dropdownMenu = document.querySelector('.category_menu');
+if (categoryButton && dropdownMenu) {
    categoryButton.addEventListener('click', () => {
       dropdownMenu.classList.toggle('visible');
    });
@@ -93,15 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
          dropdownMenu.classList.remove('visible');
       }
    });
-});
-
-
+}
 
 /* price button script */
-document.addEventListener('DOMContentLoaded', () => {
-   const priceButton = document.querySelector('#price');
-   const priceMenu = document.querySelector('.price_menu');
-
+const priceButton = document.querySelector('#price');
+const priceMenu = document.querySelector('.price_menu');
+if (priceButton && priceMenu) {
    priceButton.addEventListener('click', () => {
       priceMenu.classList.toggle('visible');
    });
@@ -112,13 +91,12 @@ document.addEventListener('DOMContentLoaded', () => {
          priceMenu.classList.remove('visible');
       }
    });
-});
+}
 
 /* rating button script */
-document.addEventListener('DOMContentLoaded', () => {
-   const ratingButton = document.querySelector('#rating');
-   const ratingMenu = document.querySelector('.rating_menu');
-
+const ratingButton = document.querySelector('#rating');
+const ratingMenu = document.querySelector('.rating_menu');
+if (ratingButton && ratingMenu) {
    ratingButton.addEventListener('click', () => {
       ratingMenu.classList.toggle('visible');
    });
@@ -129,10 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
          ratingMenu.classList.remove('visible');
       }
    });
-});
+}
 
 /* clear button script */
-document.querySelectorAll('.clear_button').forEach(button => {
+const clearButtons = document.querySelectorAll('.clear_button');
+clearButtons.forEach(button => {
    button.addEventListener('click', () => {
       const target = button.dataset.clear;
       const radios = document.querySelectorAll(`input[name="${target}_range"]`);
@@ -140,9 +119,7 @@ document.querySelectorAll('.clear_button').forEach(button => {
    });
 });
 
-
 /* category rating filter */
-
 function applyCategoryFilter() {
    const selectedCategory = document.querySelector('input[name="category"]:checked').value;
    const urlParams = new URLSearchParams(window.location.search);
@@ -155,9 +132,6 @@ function clearCategoryFilter() {
    urlParams.delete('category');
    window.location.search = urlParams.toString();
 }
-
-
-
 
 /* rating filter script */
 function applyRatingFilter() {
@@ -188,13 +162,11 @@ function clearPriceFilter() {
 }
 
 /* Star rating system */
-document.addEventListener('DOMContentLoaded', () => {
-   const stars = document.querySelectorAll('.stars input');
-
+const stars = document.querySelectorAll('.stars input');
+if (stars) {
    stars.forEach(star => {
       star.addEventListener('change', () => {
          const starValue = parseInt(star.value);
-
 
          stars.forEach(s => {
             const label = s.nextElementSibling;
@@ -209,10 +181,9 @@ document.addEventListener('DOMContentLoaded', () => {
          });
       });
    });
-});
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-   const errorMessage = document.querySelector('.error_message');
+const errorMessage = document.querySelector('.error_message');
    const successMessage = document.querySelector('.success_message');
 
    if (errorMessage || successMessage) {
@@ -220,21 +191,17 @@ document.addEventListener('DOMContentLoaded', () => {
          if (errorMessage) errorMessage.style.display = 'none';
          if (successMessage) successMessage.style.display = 'none';
       }, 5000);
-   }
-});
-
+}
 
 /* chat script */
-document.addEventListener('DOMContentLoaded', () => {
-   const contactButton = document.querySelector('.contact_freelancer');
-   const chatContainer = document.querySelector('#chat_container');
-   const closeButton = document.querySelector('#close_chat');
-   const messageForm = document.querySelector('#message_form');
-   const messageInput = document.querySelector('#message_input');
-   const chatMessages = document.querySelector('#chat_messages');
+const contactButton = document.querySelector('.contact_freelancer');
+const chatContainer = document.querySelector('#chat_container');
+const closeButton = document.querySelector('#close_chat');
+const messageForm = document.querySelector('#message_form');
+const messageInput = document.querySelector('#message_input');
+const chatMessages = document.querySelector('#chat_messages');
 
-   if (!contactButton) return;
-
+if (contactButton && chatContainer && closeButton && messageForm && messageInput && chatMessages) {
    contactButton.addEventListener('click', () => {
       chatContainer.classList.remove('hidden');
       loadChatMessages();
@@ -317,38 +284,42 @@ document.addEventListener('DOMContentLoaded', () => {
       return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
    }
 
-   if (chatContainer) {
-      setInterval(() => {
-         if (!chatContainer.classList.contains('hidden')) {
-            loadChatMessages();
-         }
-      }, 5000);
-   }
-});
+   setInterval(() => {
+      if (!chatContainer.classList.contains('hidden')) {
+         loadChatMessages();
+      }
+   }, 5000);
+}  
 
 /* payment script */
-document.getElementById('payment_form').onsubmit = async function(e) {
-   e.preventDefault();
-   const data = {
-       service_id: document.querySelector('[name="service_id"]').value,
-       name: document.querySelector('[name="name"]').value,
-       address: document.querySelector('[name="address"]').value,
-       cc_number: document.querySelector('[name="cc_number"]').value,
-       expiry: document.querySelector('[name="expiry"]').value,
-       cvv: document.querySelector('[name="cvv"]').value
-   };
-   const response = await fetch('api/api.payment.php', {
-       method: 'POST',
-       headers: {'Content-Type': 'application/json'},
-       body: JSON.stringify(data)
-   });
-   const result = await response.json();
-   if (result.success) {
-       window.location.href = 'service.php?id=' + data.service_id;
-   } else {
-       alert(result.error || result.errors || "Payment failed.");
+const paymentForm = document.querySelector('#payment_form');
+if (paymentForm) {
+   paymentForm.onsubmit = async function(e) {
+      e.preventDefault();
+      const data = {
+         service_id: document.querySelector('[name="service_id"]').value,
+         name: document.querySelector('[name="name"]').value,
+         address: document.querySelector('[name="address"]').value,
+         cc_number: document.querySelector('[name="cc_number"]').value,
+         expiry: document.querySelector('[name="expiry"]').value,
+         cvv: document.querySelector('[name="cvv"]').value
+      };
+
+      const response = await fetch('api/api.payment.php', {
+         method: 'POST',
+         headers: {'Content-Type': 'application/json'},
+         body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (result.success) {
+         window.location.href = 'service.php?id=' + data.service_id;
+      }
+      else {
+         alert(result.error || result.errors || "Payment failed.");
+      }
    }
-};
+}
 
 // edit and cancel buttons on service management
 function toggleEdit(serviceId) {
@@ -383,9 +354,8 @@ function toggleCancel(serviceId) {
 }
 
 // this ables to preview the image when updating service
-document.addEventListener("DOMContentLoaded", () => {
-   const imageInputs = document.querySelectorAll('input[type="file"][name="image"]');
-
+const imageInputs = document.querySelectorAll('input[type="file"][name="image"]');
+if (imageInputs) {
    imageInputs.forEach(input => {
       const id = input.id.replace('image', '');
       const prev = document.getElementById('prevImage' + id);
@@ -403,4 +373,4 @@ document.addEventListener("DOMContentLoaded", () => {
          });
       }
    });
-});
+}
