@@ -326,6 +326,30 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 });
 
+/* payment script */
+document.getElementById('payment_form').onsubmit = async function(e) {
+   e.preventDefault();
+   const data = {
+       service_id: document.querySelector('[name="service_id"]').value,
+       name: document.querySelector('[name="name"]').value,
+       address: document.querySelector('[name="address"]').value,
+       cc_number: document.querySelector('[name="cc_number"]').value,
+       expiry: document.querySelector('[name="expiry"]').value,
+       cvv: document.querySelector('[name="cvv"]').value
+   };
+   const response = await fetch('api/api.payment.php', {
+       method: 'POST',
+       headers: {'Content-Type': 'application/json'},
+       body: JSON.stringify(data)
+   });
+   const result = await response.json();
+   if (result.success) {
+       window.location.href = 'service.php?id=' + data.service_id;
+   } else {
+       alert(result.error);
+   }
+};
+
 // edit and cancel buttons on service management
 function toggleEdit(serviceId) {
    const card = document.getElementById(`service-${serviceId}`);
@@ -358,7 +382,6 @@ function toggleCancel(serviceId) {
    }
 }
 
-
 // this ables to preview the image when updating service
 document.addEventListener("DOMContentLoaded", () => {
    const imageInputs = document.querySelectorAll('input[type="file"][name="image"]');
@@ -381,7 +404,3 @@ document.addEventListener("DOMContentLoaded", () => {
       }
    });
 });
-
-
-
-

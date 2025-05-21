@@ -286,7 +286,7 @@ declare(strict_types=1);
          <p>Service Price</p>
          <p><?=$service->price ?>€</p>
       </div>
-      <button class="purchase_button">Purchase Now</button>
+      <button class="purchase_button" onclick="window.location.href='payment.php?service_id=<?=$service->id ?>'">Purchase Now</button>
    </section>
 <?php } ?>
 
