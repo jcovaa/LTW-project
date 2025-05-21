@@ -21,6 +21,7 @@ $serviceId = isset($_GET['service_id']) ? intval($_GET['service_id']) : 0;
          <header>
             <h2>Payment information</h2>
          </header>
+         <div id="payment_errors" class="error-container"></div>
          <form id="payment_form">
             <input type="hidden" name="service_id" value="<?=$serviceId ?>">
             <label>

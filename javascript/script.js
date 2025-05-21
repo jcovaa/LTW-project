@@ -296,6 +296,14 @@ const paymentForm = document.querySelector('#payment_form');
 if (paymentForm) {
    paymentForm.onsubmit = async function(e) {
       e.preventDefault();
+
+      const errorContainer = document.querySelector('#payment_errors');
+      errorContainer.innerHTML = '';
+
+      document.querySelectorAll('.input-error').forEach(input => {
+         input.classList.remove('input-error');
+      });
+
       const data = {
          service_id: document.querySelector('[name="service_id"]').value,
          name: document.querySelector('[name="name"]').value,
@@ -316,7 +324,44 @@ if (paymentForm) {
          window.location.href = 'service.php?id=' + data.service_id;
       }
       else {
-         alert(result.error || result.errors || "Payment failed.");
+         errorContainer.style.display = 'block';
+
+         if (result.errors) {
+            const errorList = document.createElement('ul');
+            const errorArray = typeof result.errors === 'string' ? [result.errors] : result.errors;
+
+            errorArray.forEach(error => {
+               const li = document.createElement('li');
+               li.textContent = error;
+               errorList.appendChild(li);
+
+               if (error.includes('name')) {
+                  document.querySelector('[name="name"]').classList.add('input-error');
+               }
+               if (error.includes('address')) {
+                  document.querySelector('[name="address"]').classList.add('input-error');
+               }
+               if (error.includes('credit card')) {
+                  document.querySelector('[name="cc_number"]').classList.add('input-error');
+               }
+               if (error.includes('expiry')) {
+                  document.querySelector('[name="expiry"]').classList.add('input-error');
+               }
+               if (error.includes('CVV')) {
+                  document.querySelector('[name="cvv"]').classList.add('input-error');
+               }
+            });
+
+            errorContainer.appendChild(errorList);
+         }
+         else if (result.error) {
+            errorContainer.textContent = result.error;
+         }
+         else {
+            errorContainer.textContent = "Payment failed. Please try again.";
+         }
+
+         errorContainer.scrollIntoView({behavior: 'smooth'});
       }
    }
 }
