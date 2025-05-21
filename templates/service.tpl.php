@@ -12,7 +12,7 @@ declare(strict_types=1);
             <?php foreach ($categories as $category) { ?>
                <li>
                   <label>
-                     <input type="radio" name="category" value="<?= $category->id ?>" onchange="applyCategoryFilter()"> <?= $category->name ?>
+                     <input type="radio" name="category" value="<?= $category->id ?>" onchange="applyCategoryFilter()"> <?= htmlspecialchars($category->name) ?>
                   </label>
                </li>
             <?php } ?>
@@ -97,10 +97,10 @@ declare(strict_types=1);
       <div class="service_info">
          <div class="profile">
             <img src="images/default_profile.png" alt="Profile Picture"> 
-            <p><?=$service->freelancerName ?></p>
+            <p><?=htmlspecialchars($service->freelancerName) ?></p>
          </div>
-         <a href="service.php?id=<?=$service->id ?>"><?=$service->name ?></a>
-         <p><?=$service->avgRating ?></p>
+         <a href="service.php?id=<?=$service->id ?>"><?=htmlspecialchars($service->name) ?></a>
+         <p><?=htmlspecialchars((string)$service->avgRating) ?></p>
          <p>Price: €<?=number_format($service->price, 2) ?></p>
       </div>
    </article>
@@ -167,7 +167,7 @@ declare(strict_types=1);
 <?php function draw_service_categories(array $categories): void { ?>
    <ul id="service_categories">
       <?php foreach ($categories as $category) { ?>
-         <li><?=$category->name ?></li>
+         <li><?=htmlspecialchars($category->name) ?></li>
       <?php } ?>
    </ul>
 <?php } ?>
@@ -175,15 +175,15 @@ declare(strict_types=1);
 <?php function draw_service_details(Service $service): void { ?>
    <section id="service_details">
       <header>
-         <h2><?=$service->name ?></h2>
+         <h2><?=htmlspecialchars($service->name) ?></h2>
       </header>
       <div class="seller_info">
          <img src="images/default_profile.png" alt="Profile Picture"> 
-         <p><?=$service->freelancerName ?></p>
+         <p><?=htmlspecialchars($service->freelancerName) ?></p>
       </div>
       <div class="service_description">
          <img src="<?= htmlspecialchars($service->imageUrl) ?>" alt="service image">
-         <p><?=$service->description ?></p>
+         <p><?=htmlspecialchars($service->description) ?></p>
       </div>
    </section>
 <?php } ?>
@@ -197,12 +197,12 @@ declare(strict_types=1);
          <h3>Reviews</h3>
       </header>
       <div class="reviews_count">
-         <p><?= $ratingsData['totalReviews'] ?> reviews</p>
+         <p><?= htmlspecialchars((string)$ratingsData['totalReviews']) ?> reviews</p>
          <div class="overall_rating">
             <?php for ($i = 1; $i <= 5; $i++) { ?>
                <span class="star"><?= $i <= $ratingsData['overallRating'] ? '★' : '☆' ?></span>
             <?php } ?>
-            <p><?= $ratingsData['overallRating'] ?></p>
+            <p><?= htmlspecialchars((string)$ratingsData['overallRating']) ?></p>
          </div>
       </div>
       <div class="rating_bars">
@@ -212,7 +212,7 @@ declare(strict_types=1);
                <div class="progress_container">
                   <div class="progress-fill" style="width: <?= $ratingsData['percentages'][$i] ?>%;"></div>
                </div>
-               <p class="rating_count"><?= $ratingsData['ratingCounts'][$i] ?></p>
+               <p class="rating_count"><?= htmlspecialchars((string)$ratingsData['ratingCounts'][$i]) ?></p>
             </div>
          <?php } ?>
       </div>
@@ -226,12 +226,12 @@ declare(strict_types=1);
       </header>
       
       <?php if(isset($_SESSION['error'])): ?>
-        <div class="error_message"><?= $_SESSION['error'] ?></div>
+        <div class="error_message"><?= htmlspecialchars($_SESSION['error']) ?></div>
         <?php unset($_SESSION['error']); ?>
       <?php endif; ?>
       
       <?php if(isset($_SESSION['success'])): ?>
-        <div class="success_message"><?= $_SESSION['success'] ?></div>
+        <div class="success_message"><?= htmlspecialchars($_SESSION['success']) ?></div>
         <?php unset($_SESSION['success']); ?>
       <?php endif; ?>
       
@@ -267,14 +267,14 @@ declare(strict_types=1);
          <article class="comment">
             <header>
                <img src="images/default_profile.png" alt="Profile Picture"> 
-               <p><?= $comment->clientName ?></p>
+               <p><?= htmlspecialchars($comment->clientName) ?></p>
             </header>
             <div class="rating">
                <?php for ($i = 1; $i <= 5; $i++): ?>
                   <span class="star"><?= $i <= $comment->rating ? '★' : '☆' ?></span>
                <?php endfor; ?>
             </div>
-            <p class="comment_text"><?= $comment->comment ?></p>
+            <p class="comment_text"><?= htmlspecialchars($comment->comment) ?></p>
          </article>
       <?php } ?>
    </section>
@@ -284,7 +284,7 @@ declare(strict_types=1);
    <section id="purchase_section">
       <div class="price_container">
          <p>Service Price</p>
-         <p><?=$service->price ?>€</p>
+         <p><?=htmlspecialchars((string)$service->price) ?>€</p>
       </div>
       <button class="purchase_button" onclick="window.location.href='payment.php?service_id=<?=$service->id ?>'">Purchase Now</button>
    </section>

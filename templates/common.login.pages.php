@@ -16,7 +16,7 @@ declare(strict_types=1);
          <link rel="stylesheet" href="css/login.css">
          <link rel="stylesheet" href="css/styles.css">
          <script src="javascript/script.js" defer></script>
-         <title><?=$title?></title>
+         <title><?=htmlspecialchars($title) ?></title>
       </head>
       <body>
          <header>

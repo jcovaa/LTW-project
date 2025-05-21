@@ -87,9 +87,9 @@ declare(strict_types=1);
                                         <div>
                                             <h3><?= htmlspecialchars($service->name) ?></h3>
                                             <p><?= htmlspecialchars($service->description) ?></p>
-                                            <p><?= $service->avgRating ?></p>
+                                            <p><?= htmlspecialchars((string)$service->avgRating) ?></p>
                                             <p><strong>Price:</strong> €<?= number_format($service->price, 2) ?></p>
-                                            <p><strong>Delivery Time:</strong> <?= $service->deliveryTime ?> days</p>
+                                            <p><strong>Delivery Time:</strong> <?= htmlspecialchars((string)$service->deliveryTime) ?> days</p>
                                         </div>
                                         <img id="actualImage<?= $service->id ?>" src="<?= htmlspecialchars($service->imageUrl) ?>">
                                     </div>
@@ -110,8 +110,8 @@ declare(strict_types=1);
                                     <input type="hidden" name="id" value="<?= $service->id ?>">
                                     <label>Name: <input type="text" name="name" value="<?= htmlspecialchars($service->name) ?>" required></label><br>
                                     <label>Description: <textarea name="description"><?= htmlspecialchars($service->description) ?></textarea></label><br>
-                                    <label>Price (€): <input type="number" name="price" step="0.01" value="<?= $service->price ?>" required></label><br>
-                                    <label>Delivery Time (days): <input type="number" name="deliveryTime" value="<?= $service->deliveryTime ?>" required></label><br>
+                                    <label>Price (€): <input type="number" name="price" step="0.01" value="<?= htmlspecialchars((string)$service->price) ?>" required></label><br>
+                                    <label>Delivery Time (days): <input type="number" name="deliveryTime" value="<?= htmlspecialchars((string)$service->deliveryTime) ?>" required></label><br>
                                     <div class="addImg">
                                         <img id="prevImage<?= $service->id ?>" src="<?= htmlspecialchars($service->imageUrl) ?>" data-original-src="<?= htmlspecialchars($service->imageUrl) ?>">
                                         <div class="input_image">
@@ -143,7 +143,7 @@ declare(strict_types=1);
                     <div class="order-card">
                         <div class="order-info">
                             <h3><?= htmlspecialchars($order->serviceName) ?></h3>
-                            <p><strong>Freelancer:</strong> <?= $order->freelancerName ?></p>
+                            <p><strong>Freelancer:</strong> <?= htmlspecialchars($order->freelancerName) ?></p>
                             <p><strong>Ordered On:</strong> <?= htmlspecialchars($order->orderDate) ?></p>
                             <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
                         </div>
@@ -178,7 +178,7 @@ declare(strict_types=1);
                 <?php foreach ($orders as $order): ?>
                     <div class="order-card">
                         <div class="order-info">
-                            <p><strong>Customer:</strong> <?= $order->clientName ?></p>
+                            <p><strong>Customer:</strong> <?= htmlspecialchars($order->clientName) ?></p>
                             <p><strong>Ordered On:</strong> <?= htmlspecialchars($order->orderDate) ?></p>
                             <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
                         </div>
