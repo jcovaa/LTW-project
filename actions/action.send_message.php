@@ -8,6 +8,8 @@ $session = Session::getInstance();
 
 header('Content-Type: application/json');
 
+
+
 if (!$session->isLoggedIn()) {
    echo json_encode(['success' => false, 'error' => 'You must be logged in to send messages']);
    exit;

@@ -20,6 +20,7 @@ $ratingsData = Review::getRatingsData($db, $service->id);
 $comments = Review::getServiceReviews($db, $service->id);
 
 output_header("Service", $session);
+draw_messages();
 draw_service_categories($categories);
 draw_service_page($service, $ratingsData, $comments);
 output_footer();

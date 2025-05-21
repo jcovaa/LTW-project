@@ -19,7 +19,7 @@ declare(strict_types=1);
    </head>
    <body>
       <header>
-         <h1 id="logo"><a href="index.php">Title</a></h1>
+         <h1 id="logo"><a href="index.php">lancer</a></h1>
          <form class="search_bar" action="search.php" method="get">
             <input type="text" name="query" placeholder="Search...">
             <button class="fa fa-search" type="submit"></button>

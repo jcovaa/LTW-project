@@ -5,7 +5,7 @@ declare(strict_types=1);
 ?>
 
 
-<?php function output_header($title): void
+<?php function output_header_($title): void
 { ?>
    <!DOCTYPE html>
    <html lang="en">
@@ -24,7 +24,7 @@ declare(strict_types=1);
 
    <body>
       <header>
-         <h1 id="logo"><a href="index.php">Title</a></h1>
+         <h1 id="logo"><a href="index.php">lancer</a></h1>
       </header>
    <?php } ?>
 
@@ -32,9 +32,10 @@ declare(strict_types=1);
    { ?>
       <main id="form_page">
          <form action="actions/action.create_service.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
             <h1>Add your service</h1>
             <div class="input_box">
-               <input type="text" placeholder="Service Name"  name="name" required>
+               <input type="text" placeholder="Service Name" name="name" required>
             </div>
             <div class="input_box">
                <textarea placeholder='Description (20-1000 characters)' name="description" maxlength='1000' minlength='20'></textarea>
@@ -65,15 +66,3 @@ declare(strict_types=1);
          </form>
       </main>
    <?php } ?>
-
-
-   <?php function output_footer(): void
-   { ?>
-      <footer>
-         <p>Name of the app</p>
-         <p>name, date</p>
-      </footer>
-   </body>
-
-   </html>
-<?php } ?>

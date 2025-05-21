@@ -7,6 +7,14 @@ require_once __DIR__ . '/../database/service.class.php';
 require_once __DIR__ . '/../database/session.php';
 
 $session = Session::getInstance();
+
+if (!$session->validateCSRFToken($_POST['csrf'] ?? '')) {
+    $session->addMessage('error', 'Invalid CSRF token. Please try again.');
+    header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');
+    exit();
+}
+
+
 $db = getDatabaseConnection();
 $id = (int) $_POST['id'];
 
@@ -14,25 +22,25 @@ $service = Service::getService($db, $id);
 
 function redirectWithError(string $message, string $location): void
 {
-    $_SESSION['error'] = $message;
+    Session::getInstance()->addMessage('error', $message);
     header('Location: ' . $location);
     exit;
 }
 
 
-$referer = $_SERVER['HTTP_REFERER'] ?? '../freelancer_dashboard.php';
+$referer = $_SERVER['HTTP_REFERER'] ?? '/';
 
 
 if (!$service) {
-    $_SESSION['error'] = "Service not found.";
-    header('Location: ../freelancer_dashboard.php');
+    $session->addMessage('error', "Service not found.");
+    header('Location: ' . $referer);
     exit();
 }
 
 // verifies AGAIN if the user logged in is this service's freelancer
 if ($session->getUserId() !== $service->freelancerId) {
-    $_SESSION['error'] = "You don't have permission to update this service.";
-    header('Location: ../freelancer_dashboard.php');
+    $session->addMessage('error', "You don't have permission to update this service.");
+    header('Location: ' . $referer);
     exit();
 }
 
@@ -69,10 +77,10 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 
 // update the service
 if ($service->updateService($db)) {
-    $_SESSION['success'] = "Service updated successfully.";
+    $session->addMessage('success', "Service updated successfully.");
 } else {
-    $_SESSION['error'] = "Failed to update the service.";
+    $session->addMessage('error', "Failed to update the service.");
 }
 
-header('Location: ../freelancer_dashboard.php');
+header('Location: ' . $referer);
 exit();

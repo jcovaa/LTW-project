@@ -8,14 +8,20 @@ require_once __DIR__ . '/../database/session.php';
 
 $session = Session::getInstance();
 
+$referer = $_SERVER['HTTP_REFERER'] ?? '../index.php';
+
+if (!$session->validateCSRFToken($_POST['csrf'] ?? '')) {
+    $session->addMessage('error', 'Invalid CSRF token. Please try again.');
+    header('Location: ' . $referer);
+    exit();
+}
+
 function redirectWithError(string $message, string $location): void
 {
     $_SESSION['error'] = $message;
     header('Location: ' . $location);
     exit;
 }
-
-$referer = $_SERVER['HTTP_REFERER'] ?? '../index.php';
 
 
 if (!isset($_POST['name'], $_POST['description'], $_POST['category'], $_POST['delivery'], $_POST['price'])) {

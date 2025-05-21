@@ -7,6 +7,7 @@ require_once __DIR__ . '/database/order.class.php';
 require_once __DIR__ . '/database/session.php';
 
 require_once __DIR__ . '/templates/freelancer_dashboard.tpl.php';
+require_once __DIR__ . '/templates/common.main.pages.php';
 
 
 
@@ -18,7 +19,8 @@ $orders = Order::getOrdersByClient($db, $clientId);
 
 
 
-output_header("Freelancer Dashboard", $session);
+output_header_dashboard("Freelancer Dashboard", $session);
+draw_messages();
 draw_dashboard_sidebar();
 draw_orders_section($orders);
 output_footer();

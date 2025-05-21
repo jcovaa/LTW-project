@@ -7,6 +7,13 @@ require_once __DIR__ . '/../database/service.class.php';
 require_once __DIR__ . '/../database/session.php';
 
 $session = Session::getInstance();
+
+if (!$session->validateCSRFToken($_POST['csrf'] ?? '')) {
+    $session->addMessage('error', 'Invalid CSRF token. Please try again.');
+    header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');
+    exit();
+}
+
 $db = getDatabaseConnection();
 $id = (int) $_POST['id'];
 
@@ -14,25 +21,25 @@ $service = Service::getService($db, $id);
 
 
 if (!$service) {
-    $_SESSION['error'] = "Service not found.";
-    header('Location: ../freelancer_dashboard.php');
+    $session->addMessage('error', "Service not found.");
+    header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');
     exit();
 }
 
 // verifies AGAIN if the user logged in is this service's freelancer
 if ($session->getUserId() !== $service->freelancerId) {
-    $_SESSION['error'] = "You don't have permission to delete this service.";
-    header('Location: ../freelancer_dashboard.php');
+    $session->addMessage('error', "You don't have permission to delete this service.");
+    header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');
     exit();
 }
 
 // Delete the service
 if ($service->deleteService($db)) {
-    $_SESSION['success'] = "Service deleted successfully.";
+    $session->addMessage('success', "Service deleted successfully.");
 } else {
-    $_SESSION['error'] = "Failed to delete the service.";
+    $session->addMessage('error', "Failed to delete the service.");
 }
 
-header('Location: ../freelancer_dashboard.php');
+header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');
 exit();
 

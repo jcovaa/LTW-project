@@ -7,6 +7,13 @@ require_once __DIR__ . '/../database/order.class.php';
 require_once __DIR__ . '/../database/session.php';
 
 $session = Session::getInstance();
+
+if (!$session->validateCSRFToken($_POST['csrf'] ?? '')) {
+    $session->addMessage('error', 'Invalid CSRF token. Please try again.');
+    header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');
+    exit();
+}
+
 $db = getDatabaseConnection();
 
 $orderId = intval($_POST['order_id']);

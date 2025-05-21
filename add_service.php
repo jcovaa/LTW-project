@@ -2,13 +2,16 @@
 
 declare(strict_types = 1);
 require_once 'templates/addservice.tpl.php';
+require_once 'templates/common.main.pages.php';
 require_once __DIR__ . '/database/connection.db.php';
 require_once __DIR__ . '/database/category.class.php';
+require_once __DIR__ . '/database/session.php';
 
 $db = getDatabaseConnection();
 $categories = Category::getCategories($db);
 
-output_header("Add Service");
+output_header_("Add Service");
+draw_messages();
 draw_service_form($categories);
 output_footer();
 

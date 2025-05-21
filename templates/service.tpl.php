@@ -225,19 +225,11 @@ declare(strict_types=1);
          <h3>Comments</h3>
       </header>
       
-      <?php if(isset($_SESSION['error'])): ?>
-        <div class="error_message"><?= $_SESSION['error'] ?></div>
-        <?php unset($_SESSION['error']); ?>
-      <?php endif; ?>
-      
-      <?php if(isset($_SESSION['success'])): ?>
-        <div class="success_message"><?= $_SESSION['success'] ?></div>
-        <?php unset($_SESSION['success']); ?>
-      <?php endif; ?>
       
       <?php if (Session::getInstance()->isLoggedIn()): ?>
       <article id="comment_form">
          <form action="actions/action.submit_review.php" method="post">
+            <input type="hidden" name="csrf" value="<?=Session::getInstance()->getCSRFToken()?>">
             <input type="hidden" name="service_id" value="<?= $serviceId ?>">
             <div class="star_rating">
                <p>Your Rating:</p>

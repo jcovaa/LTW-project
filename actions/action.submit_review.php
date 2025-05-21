@@ -7,13 +7,18 @@ require_once __DIR__ . '/../database/session.php';
 
 $session = Session::getInstance();
 
+
 function redirectWithError(string $message, string $location): void {
-   $_SESSION['error'] = $message;
+   Session::getInstance()->addMessage('error', $message);
    header('Location: ' . $location);
    exit;
 }
 
 $referer = $_SERVER['HTTP_REFERER'] ?? '../index.php';
+
+if (!$session->validateCSRFToken($_POST['csrf'] ?? '')) {
+   redirectWithError('Invalid CSRF token.', $referer);
+}
 
 if (!$session->isLoggedIn()) {
    redirectWithError('You must be logged in to submit a review.', $referer);
@@ -44,12 +49,12 @@ try {
    $success = Review::addReview($db, $serviceId, $clientId, $rating, $comment);
     
    if ($success) {
-      $_SESSION['success'] = 'Your review has been submitted successfully!';
+      $session->addMessage('success', 'Your review has been submitted successfully!');
    } else {
-      $_SESSION['error'] = 'Failed to submit review.';
+      $session->addMessage('error', 'Failed to submit review.');
    }
 } catch (Exception $e) {
-   $_SESSION['error'] = 'Error: ' . $e->getMessage();
+   $session->addMessage('error', 'Error: ' . $e->getMessage());
 }
 
 header('Location: ../service.php?id=' . $serviceId);

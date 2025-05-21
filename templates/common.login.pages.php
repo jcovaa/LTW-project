@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 ?>
 
-<?php function output_header($title): void { ?>
+<?php function output_header_($title): void { ?>
    <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -19,14 +19,7 @@ declare(strict_types=1);
    </head>
    <body>
       <header>
-         <h1 id="logo"><a href="index.php">Title</a></h1>
-         <nav id="nav_menu">
-            <ul>
-               <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
-               <li><button onclick="window.location.href='login.php'">Login</button></li>
-               <li><button onclick="window.location.href='register.php'">Sign Up</button></li>
-            </ul>
-         </nav>
+         <h1 id="logo"><a href="index.php">lancer</a></h1>
       </header>
 <?php } ?>
 
@@ -35,7 +28,7 @@ declare(strict_types=1);
       <form action="../actions/action.login.php" method="POST">
          <h1>Login</h1>
          <div class="input_box">
-            <input type="text" name="email" placeholder="Email" required>
+            <input type="text" name="email" placeholder="Email" required>  
             <i class='bx bxs-user'></i>
          </div>
          <div class="input_box">   
@@ -75,12 +68,3 @@ declare(strict_types=1);
       </form>
    </main>
 <?php } ?>
-
-<?php function output_footer(): void { ?>
-   <footer>
-         <p>Name of the app</p>
-         <p>name, date</p>
-      </footer>
-   </body>
-</html>
-<?php } ?>   
