@@ -13,6 +13,7 @@ $serviceId = isset($_GET['service_id']) ? intval($_GET['service_id']) : 0;
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="css/payment.css">
+      <script src="javascript/script.js" defer></script>
       <title>Payment</title>
    </head>
    <body>
@@ -24,7 +25,7 @@ $serviceId = isset($_GET['service_id']) ? intval($_GET['service_id']) : 0;
             <input type="hidden" name="service_id" value="<?=$serviceId ?>">
             <label>
                Name on Card:
-               <input type="text" name="name" required pattern="[a-zA-Z\s]{2,}">
+               <input type="text" name="name" required>
             </label>
             <label>
                Address:
@@ -32,15 +33,15 @@ $serviceId = isset($_GET['service_id']) ? intval($_GET['service_id']) : 0;
             </label>
             <label>
                Credit Card Number:
-               <input type="text" name="cc_number" required pattern="\d{13,19}">
+               <input type="text" name="cc_number" required>
             </label>
             <label>
                Expiry Date (MM/YY):
-               <input type="text" name="expiry" required pattern="(0[1-9]|1[0-2])\/\d{2}">
+               <input type="text" name="expiry" required>
             </label>
             <label>
                Security Code (CVV):
-               <input type="text" name="cvv" required pattern="\d{3,4}">
+               <input type="text" name="cvv" required>
             </label>
             <button type="submit" name="action" value="confirm">Confirm Payment</button>
          </form>

@@ -346,7 +346,7 @@ document.getElementById('payment_form').onsubmit = async function(e) {
    if (result.success) {
        window.location.href = 'service.php?id=' + data.service_id;
    } else {
-       alert(result.error);
+       alert(result.error || result.errors || "Payment failed.");
    }
 };
 
