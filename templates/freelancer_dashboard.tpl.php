@@ -69,9 +69,9 @@ declare(strict_types=1);
                                     <div>
                                         <h3><?= htmlspecialchars($service->name) ?></h3>
                                         <p><?= htmlspecialchars($service->description) ?></p>
-                                        <p><?= $service->avgRating ?></p>
+                                        <p><?= htmlspecialchars((string)$service->avgRating) ?></p>
                                         <p><strong>Price:</strong> €<?= number_format($service->price, 2) ?></p>
-                                        <p><strong>Delivery Time:</strong> <?= $service->deliveryTime ?> days</p>
+                                        <p><strong>Delivery Time:</strong> <?= htmlspecialchars((string)$service->deliveryTime) ?> days</p>
                                     </div>
                                     <img id="actualImage<?= $service->id ?>" src="<?= htmlspecialchars($service->imageUrl) ?>">
                                 </div>
@@ -79,7 +79,7 @@ declare(strict_types=1);
                                     <div class="left-buttons">
                                         <button class="button edit" onclick="toggleEdit(<?= $service->id ?>)">Edit</button>
                                         <form action="actions/action.delete_service.php" method="post" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
-                                            <input type="hidden" name="csrf" value="<?=Session::getInstance()->getCSRFToken()?>">
+                                            <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
                                             <input type="hidden" name="id" value="<?= $service->id ?>">
                                             <button type="submit" class="button danger">Delete</button>
                                         </form>
@@ -90,12 +90,12 @@ declare(strict_types=1);
 
                             <!-- edit mode -->
                             <form class="edit-mode" action="actions/action.edit_service.php" method="post" enctype="multipart/form-data" style="display: none;">
-                                <input type="hidden" name="csrf" value="<?=Session::getInstance()->getCSRFToken()?>">
+                                <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
                                 <input type="hidden" name="id" value="<?= $service->id ?>">
                                 <label>Name: <input type="text" name="name" value="<?= htmlspecialchars($service->name) ?>" required></label><br>
                                 <label>Description: <textarea name="description"><?= htmlspecialchars($service->description) ?></textarea></label><br>
-                                <label>Price (€): <input type="number" name="price" step="0.01" value="<?= $service->price ?>" required></label><br>
-                                <label>Delivery Time (days): <input type="number" name="deliveryTime" value="<?= $service->deliveryTime ?>" required></label><br>
+                                <label>Price (€): <input type="number" name="price" step="0.01" value="<?= htmlspecialchars((string)$service->price) ?>" required></label><br>
+                                <label>Delivery Time (days): <input type="number" name="deliveryTime" value="<?= htmlspecialchars((string)$service->deliveryTime) ?>" required></label><br>
                                 <div class="addImg">
                                     <img id="prevImage<?= $service->id ?>" src="<?= htmlspecialchars($service->imageUrl) ?>" data-original-src="<?= htmlspecialchars($service->imageUrl) ?>">
                                     <div class="input_image">
@@ -126,7 +126,7 @@ declare(strict_types=1);
                     <div class="order-card">
                         <div class="order-info">
                             <h3><?= htmlspecialchars($order->serviceName) ?></h3>
-                            <p><strong>Freelancer:</strong> <?= $order->freelancerName ?></p>
+                            <p><strong>Freelancer:</strong> <?= htmlspecialchars($order->freelancerName) ?></p>
                             <p><strong>Ordered On:</strong> <?= htmlspecialchars($order->orderDate) ?></p>
                             <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
                         </div>
@@ -135,9 +135,6 @@ declare(strict_types=1);
                             <button class="contact_freelancer">Chat with the Freelancer</button>
                             <?php draw_chat_container($order->clientId) ?>
                         <?php } ?>
-
-
-
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -161,7 +158,7 @@ declare(strict_types=1);
                 <?php foreach ($orders as $order): ?>
                     <div class="order-card">
                         <div class="order-info">
-                            <p><strong>Customer:</strong> <?= $order->clientName ?></p>
+                            <p><strong>Customer:</strong> <?= htmlspecialchars($order->clientName) ?></p>
                             <p><strong>Ordered On:</strong> <?= htmlspecialchars($order->orderDate) ?></p>
                             <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
                         </div>
@@ -169,14 +166,12 @@ declare(strict_types=1);
                             <?php if ($order->status === 'pending'): ?>
                                 <!-- Freelancer can mark as in progress -->
                                 <form method="POST" action="actions/action.change_order_status.php">
-                                    <input type="hidden" name="csrf" value="<?=Session::getInstance()->getCSRFToken()?>">
                                     <input type="hidden" name="order_id" value="<?= $order->orderId ?>">
                                     <input type="hidden" name="new_status" value="in_progress">
                                     <button class="status_button" type="submit">Start Order</button>
                                 </form>
                             <?php elseif ($order->status === 'in_progress'): ?>
                                 <form method="POST" action="actions/action.change_order_status.php">
-                                    <input type="hidden" name="csrf" value="<?=Session::getInstance()->getCSRFToken()?>">
                                     <input type="hidden" name="order_id" value="<?= $order->orderId ?>">
                                     <input type="hidden" name="new_status" value="complete">
                                     <button class="status_button" type="submit">Mark as Complete</button>
@@ -200,22 +195,22 @@ declare(strict_types=1);
 
 
 
-<?php function draw_chat_container(int $receiverId): void
-{ ?>
-    <?php if (Session::getInstance()->isLoggedIn()) { ?>
-        <section id="chat_container" class="hidden">
-            <header>
-                <h3>Chat</h3>
-                <button id="close_chat">×</button>
-            </header>
-            <div id="chat_messages">
-                <!-- Chat messages will be dynamically loaded here -->
-            </div>
-            <form id="message_form">
-                <input type="hidden" id="receiver_id" value="<?= $receiverId ?>">
-                <textarea id="message_input" placeholder="Type your message..." required></textarea>
-                <button type="submit">Send</button>
-            </form>
-        </section>
+    <?php function draw_chat_container(int $receiverId): void
+    { ?>
+        <?php if (Session::getInstance()->isLoggedIn()) { ?>
+            <section id="chat_container" class="hidden">
+                <header>
+                    <h3>Chat</h3>
+                    <button id="close_chat">×</button>
+                </header>
+                <div id="chat_messages">
+                    <!-- Chat messages will be dynamically loaded here -->
+                </div>
+                <form id="message_form">
+                    <input type="hidden" id="receiver_id" value="<?= $receiverId ?>">
+                    <textarea id="message_input" placeholder="Type your message..." required></textarea>
+                    <button type="submit">Send</button>
+                </form>
+            </section>
+        <?php } ?>
     <?php } ?>
-<?php } ?>

@@ -19,7 +19,7 @@ declare(strict_types=1);
       <link rel="stylesheet" href="css/styles.css">
       <link rel="stylesheet" href="css/add_service.css">
 
-      <title><?= $title ?></title>
+      <title><?= htmlspecialchars($title) ?></title>
    </head>
 
    <body>
@@ -44,7 +44,7 @@ declare(strict_types=1);
             <div class="custom-select">
                <select id="category" name="category" required>
                   <?php foreach ($categories as $category) { ?>
-                     <option value="<?= $category->id ?>"><?= $category->name ?></option>
+                     <option value="<?= $category->id ?>"><?= htmlspecialchars($category->name) ?></option>
                   <?php } ?>
                </select>
             </div>

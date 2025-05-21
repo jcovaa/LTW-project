@@ -17,7 +17,11 @@ declare(strict_types=1);
       <link rel="stylesheet" href="css/styles.css">
       <link rel="icon" type="image/x-icon" href="favicon.ico">
       <script src="javascript/script.js" defer></script>
+<<<<<<< HEAD
       <title><?= $title ?></title>
+=======
+      <title><?=htmlspecialchars($title) ?></title>
+>>>>>>> a9bd319e620a2b0e2d52ba865a244b5257819db2
    </head>
 
    <body>
@@ -28,6 +32,7 @@ declare(strict_types=1);
             <button class="fa fa-search" type="submit"></button>
          </form>
          <nav id="nav_menu">
+            <button id="menu_toggle" class="fa fa-bars"></button>
             <ul>
                <?php if ($session->getUser()) : ?>
                   <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
@@ -38,7 +43,7 @@ declare(strict_types=1);
             </ul>
          </nav>
       </header>
-   <?php } ?>
+<?php } ?>
 
    
 <?php function draw_messages() { ?>

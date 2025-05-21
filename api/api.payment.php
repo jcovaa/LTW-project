@@ -3,12 +3,11 @@ declare(strict_types = 1);
 
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/database/session.php';
-require_once __DIR__ . '/database/connection.php';
+require_once __DIR__ . '/../database/session.php';
+require_once __DIR__ . '/../database/connection.db.php';
 
 /* REST API METHOD */ 
 
-session_start();
 $db = getDatabaseConnection();
 $session = Session::getInstance();
 
@@ -24,19 +23,19 @@ $serviceId = intval($data['service_id'] ?? 0);
 $clientId = $session->getUserId();
 $name = trim($data['name'] ?? '');
 $address = trim($data['address'] ?? '');
-$cc_number = preg_replace('/\s+/', '', $data['cc_number'] ?? '');
+$cc_number = $data['cc_number'] ?? '';
 $expiry = $data['expiry'] ?? '';
 $cvv = $data['cvv'] ?? '';
 
 $errors = [];
 
-if (!preg_match('/^[a-zA-Z\s]{2,}$/', $name)) {
+if (!preg_match('/[a-zA-Z]/', $name)) {
    $errors[] = "Invalid name.";
 }
 if (empty($address)) {
    $errors[] = "Address is required.";
 }
-if (!preg_match('/^\d{13,19}$/', $cc_number)) {
+if (!preg_match('/^\d{16}$/', $cc_number)) {
    $errors[] = "Invalid credit card number.";
 }
 if (!preg_match('/^(0[1-9]|1[0-2])\/\d{2}$/', $expiry)) {
