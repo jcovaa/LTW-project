@@ -7,6 +7,8 @@ $session = Session::getInstance();
 $serviceId = isset($_GET['service_id']) ? intval($_GET['service_id']) : 0;
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
    <head>

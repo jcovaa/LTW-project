@@ -750,7 +750,9 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
    background-color: var(--secondary-box-color);
 }
 
-/* chat section */
+
+
+/* chat section  */
 #chat_container {
    position: fixed;
    bottom: 30px;
@@ -864,6 +866,7 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
       }
    }
 }
+
 
 /* session messages */
 

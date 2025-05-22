@@ -17,11 +17,7 @@ declare(strict_types=1);
       <link rel="stylesheet" href="css/styles.css">
       <link rel="icon" type="image/x-icon" href="favicon.ico">
       <script src="javascript/script.js" defer></script>
-<<<<<<< HEAD
-      <title><?= $title ?></title>
-=======
       <title><?=htmlspecialchars($title) ?></title>
->>>>>>> a9bd319e620a2b0e2d52ba865a244b5257819db2
    </head>
 
    <body>

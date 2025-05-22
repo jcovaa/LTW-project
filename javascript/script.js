@@ -193,7 +193,10 @@ const errorMessage = document.querySelector('.error_message');
       }, 5000);
 }
 
-/* chat script */
+
+
+
+/* chat script */ 
 const contactButton = document.querySelector('.contact_freelancer');
 const chatContainer = document.querySelector('#chat_container');
 const closeButton = document.querySelector('#close_chat');
@@ -206,7 +209,7 @@ if (contactButton && chatContainer && closeButton && messageForm && messageInput
       chatContainer.classList.remove('hidden');
       loadChatMessages();
    });
-
+ 
    closeButton.addEventListener('click', () => {
       chatContainer.classList.add('hidden');
    });
@@ -290,6 +293,8 @@ if (contactButton && chatContainer && closeButton && messageForm && messageInput
       }
    }, 5000);
 }  
+
+
 
 /* payment script */
 const paymentForm = document.querySelector('#payment_form');

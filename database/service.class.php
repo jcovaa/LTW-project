@@ -15,9 +15,22 @@ class Service
    public float $avgRating;
    public $categoryIds = array();
    public string $imageUrl;
+   public ?string $promotionExpiry;
 
-   public function __construct(int $id, string $name, string $description, float $price, int $deliveryTime, bool $isPromoted, int $freelancerId, string $freelancerName, float $avgRating, string $imageUrl, $categoryIds)
-   {
+   public function __construct(
+      int $id,
+      string $name,
+      string $description,
+      float $price,
+      int $deliveryTime,
+      bool $isPromoted,
+      int $freelancerId,
+      string $freelancerName,
+      float $avgRating,
+      string $imageUrl,
+      $categoryIds,
+      ?string $promotionExpiry = null
+   ) {
       $this->id = $id;
       $this->name = $name;
       $this->description = $description;
@@ -29,11 +42,13 @@ class Service
       $this->avgRating = $avgRating;
       $this->categoryIds = $categoryIds;
       $this->imageUrl = $imageUrl;
+      $this->promotionExpiry = $promotionExpiry;
    }
 
 
 
-   public static function addService(PDO $db, $name, $clientId, $price, $deliveryTime, $description, $imageUrl) {
+   public static function addService(PDO $db, $name, $clientId, $price, $deliveryTime, $description, $imageUrl)
+   {
       $stmt = $db->prepare('
          INSERT INTO Service(Name, FreelancerId, Price, DeliveryTime, Description, IsPromoted, ImageUrl)
          Values (?,?,?,?,?,0,?)
@@ -42,7 +57,8 @@ class Service
    }
 
 
-   public function updateService(PDO $db) {
+   public function updateService(PDO $db)
+   {
       $stmt = $db->prepare('
          Update Service
          SET Name = ?, Price = ?, DeliveryTime = ?, Description = ?, ImageUrl = ?
@@ -73,6 +89,7 @@ class Service
          Service.Price, 
          Service.DeliveryTime, 
          Service.IsPromoted,
+         Service.PromotionExpiry,
          Service.ImageURL,
          User.UserId as FreelancerId,
          User.Name as FreelancerName
@@ -95,11 +112,13 @@ class Service
          $service['FreelancerName'],
          self::getAverageRatingForService($db, $id),
          (string)($service['ImageURL']),
-         self::getServiceCategories($db, $id)
+         self::getServiceCategories($db, $id),
+         $service['PromotionExpiry'] ?? null
       );
    }
 
-   public static function getAllServices(PDO $db): array {
+   public static function getAllServices(PDO $db): array
+   {
       $stmt = $db->prepare('
          SELECT 
             Service.ServiceId,
@@ -108,6 +127,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.PromotionExpiry,
             Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
@@ -120,7 +140,8 @@ class Service
       return self::buildServicesArray($db, $stmt);
    }
 
-   public static function getNServices(PDO $db, int $count): array {
+   public static function getNServices(PDO $db, int $count): array
+   {
       $stmt = $db->prepare('
          SELECT 
             Service.ServiceId,
@@ -129,6 +150,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.PromotionExpiry,
             Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
@@ -153,6 +175,7 @@ class Service
             Service.Price, 
             Service.DeliveryTime, 
             Service.IsPromoted,
+            Service.PromotionExpiry,
             Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
@@ -166,35 +189,30 @@ class Service
       return self::buildServicesArray($db, $stmt);
    }
 
-   public static function getPromotedServices(PDO $db): array {
-      $stmt = $db->prepare('
-         SELECT 
-            Service.ServiceId, 
-            Service.Name, 
-            Service.Description, 
-            Service.Price, 
-            Service.DeliveryTime, 
-            Service.IsPromoted,
-            Service.ImageURL,
-            User.UserId as FreelancerId, 
-            User.Name as FreelancerName
-         FROM Service
-         JOIN User ON Service.FreelancerID = User.UserId
-         WHERE Service.IsPromoted = ?
-         LIMIT 4
-      ');
-    
-   $stmt->execute([1]);
-
-   return self::buildServicesArray($db, $stmt);
-   }
-
-
-   public static function getServiceByCategoryId(PDO $db, int $categoryId): array {
+     public static function getPromotedServices(PDO $db): array
+   {
       $stmt = $db->prepare('
          SELECT 
             Service.ServiceId, Service.Name, Service.Description, Service.Price, 
-            Service.DeliveryTime, Service.IsPromoted, Service.ImageURL,
+            Service.DeliveryTime, Service.IsPromoted, Service.PromotionExpiry, Service.ImageURL,
+            User.UserId as FreelancerId, User.Name as FreelancerName
+         FROM Service
+         JOIN User ON Service.FreelancerID = User.UserId
+         WHERE Service.IsPromoted = 1 AND Service.PromotionExpiry > CURRENT_TIMESTAMP
+         LIMIT 4
+      ');
+      $stmt->execute();
+      return self::buildServicesArray($db, $stmt);
+   }
+
+
+
+   public static function getServiceByCategoryId(PDO $db, int $categoryId): array
+   {
+      $stmt = $db->prepare('
+         SELECT 
+            Service.ServiceId, Service.Name, Service.Description, Service.Price, 
+            Service.DeliveryTime, Service.IsPromoted, Service.PromotionExpiry,Service.ImageURL,
             User.UserId as FreelancerId, User.Name as FreelancerName
          FROM Service
          JOIN ServiceCategory ON Service.ServiceId = ServiceCategory.ServiceId
@@ -202,32 +220,30 @@ class Service
          WHERE ServiceCategory.CategoryId = ?
       ');
       $stmt->execute([$categoryId]);
-    
+
       return self::buildServicesArray($db, $stmt);
    }
 
 
-
-   private static function buildServicesArray(PDO $db, PDOStatement $stmt): array {
+private static function buildServicesArray(PDO $db, PDOStatement $stmt): array {
       $services = [];
-    
       while ($row = $stmt->fetch()) {
          $id = $row['ServiceId'];
          $services[] = new Service(
-         $id,
-         $row['Name'],
-         $row['Description'],
-         floatval($row['Price']),
-         intval($row['DeliveryTime']),
-         boolval($row['IsPromoted']),
-         $row['FreelancerId'],
-         $row['FreelancerName'],
-         self::getAverageRatingForService($db, $id),
-         (string)($row['ImageURL']),
-         self::getServiceCategories($db, $id)
-      );
+            $id,
+            $row['Name'],
+            $row['Description'],
+            floatval($row['Price']),
+            intval($row['DeliveryTime']),
+            boolval($row['IsPromoted']),
+            $row['FreelancerId'],
+            $row['FreelancerName'],
+            self::getAverageRatingForService($db, $id),
+            (string)($row['ImageURL']),
+            self::getServiceCategories($db, $id),
+            $row['PromotionExpiry'] ?? null
+         );
       }
-    
       return $services;
    }
 
@@ -251,7 +267,8 @@ class Service
    }
 
 
-   private static function getAverageRatingForService(PDO $db, int $id) {
+   private static function getAverageRatingForService(PDO $db, int $id)
+   {
       $stmt = $db->prepare('
          SELECT AVG(Rating) as AvgRating
          FROM Review
@@ -263,7 +280,8 @@ class Service
       return $result && $result['AvgRating'] !== null ? round(floatval($result['AvgRating']), 1) : 0.0;   // result may be false or there may not exist any review
    }
 
-   public static function searchServices(PDO $db, string $query): array {
+   public static function searchServices(PDO $db, string $query): array
+   {
       $stmt = $db->prepare('
          SELECT * 
          FROM Service 
@@ -274,7 +292,8 @@ class Service
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
    }
 
-   public static function filterServicesByRating(PDO $db, int $minRating, int $maxRating): array {
+   public static function filterServicesByRating(PDO $db, int $minRating, int $maxRating): array
+   {
       $stmt = $db->prepare('
          SELECT
             Service.ServiceId,
@@ -283,6 +302,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.PromotionExpiry
             Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName,
@@ -299,7 +319,8 @@ class Service
       return self::buildServicesArray($db, $stmt);
    }
 
-   public static function filterServicesByPrice(PDO $db, float $minPrice, float $maxPrice): array {
+   public static function filterServicesByPrice(PDO $db, float $minPrice, float $maxPrice): array
+   {
       $stmt = $db->prepare('
          SELECT
             Service.ServiceId,
@@ -308,6 +329,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.PromotionExpiry
             Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName,
@@ -321,7 +343,8 @@ class Service
       return self::buildServicesArray($db, $stmt);
    }
 
-   public static function filterServices(PDO $db, array $filters): array {
+   public static function filterServices(PDO $db, array $filters): array
+   {
       $query = '
          SELECT
             Service.ServiceId,
@@ -330,6 +353,7 @@ class Service
             Service.Price,
             Service.DeliveryTime,
             Service.IsPromoted,
+            Service.PromotionExpiry
             Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName
@@ -357,8 +381,7 @@ class Service
          if ($filters['price_range'] === '>500') {
             $conditions[] = 'Service.Price > ?';
             $params[] = 500;
-         }
-         else {
+         } else {
             [$minPrice, $maxPrice] = explode('-', $filters['price_range']);
             $conditions[] = 'Service.Price BETWEEN ? AND ?';
             $params[] = (float)$minPrice;
@@ -377,6 +400,26 @@ class Service
 
       return self::buildServicesArray($db, $stmt);
    }
-}
 
-?>
+
+   public function promoteService(PDO $db, int $days = 7): bool
+   {
+      $promotionEnd = (new DateTime())->modify("+$days days")->format('Y-m-d H:i:s');
+
+      $stmt = $db->prepare('
+      UPDATE Service 
+      SET IsPromoted = 1, PromotionExpiry = ?
+      WHERE ServiceId = ?
+   ');
+
+      return $stmt->execute([$promotionEnd, $this->id]);
+   }
+
+   public static function cleanupExpiredPromotions(PDO $db): void
+   {
+      $stmt = $db->prepare('UPDATE Service SET IsPromoted = 0, PromotionExpiry = NULL WHERE PromotionExpiry <= CURRENT_TIMESTAMP');
+      $stmt->execute(); 
+   }
+
+ 
+}

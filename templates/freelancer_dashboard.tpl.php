@@ -76,14 +76,22 @@ declare(strict_types=1);
                                     <img id="actualImage<?= $service->id ?>" src="<?= htmlspecialchars($service->imageUrl) ?>">
                                 </div>
                                 <div class="service-actions">
-                                    <div class="left-buttons">
-                                        <button class="button edit" onclick="toggleEdit(<?= $service->id ?>)">Edit</button>
-                                        <form action="actions/action.delete_service.php" method="post" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                                    <button class="button edit" onclick="toggleEdit(<?= $service->id ?>)">Edit</button>
+                                    <form action="actions/action.delete_service.php" method="post" onsubmit="return confirm('Are you sure you want to delete this service?');" style="display:inline;">
+                                        <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
+                                        <input type="hidden" name="id" value="<?= $service->id ?>">
+                                        <button type="submit" class="button danger">Delete</button>
+                                    </form>
+
+                                    <?php if (!$service->isPromoted || strtotime($service->promotionExpiry) < time()): ?>
+                                        <form action="actions/action.promote_service.php" method="post">
                                             <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
                                             <input type="hidden" name="id" value="<?= $service->id ?>">
-                                            <button type="submit" class="button danger">Delete</button>
+                                            <button type="submit" class="button feature">Promote (7 days)</button>
                                         </form>
-                                    </div>
+                                    <?php else: ?>
+                                        <p class="promoted">Promoted until <?= date('Y-m-d', strtotime($service->promotionExpiry)) ?></p>
+                                    <?php endif; ?>
                                     <button onclick="window.location.href='service_orders.php?service_id=<?= $service->id ?>'" class="button expand">Customer Orders</button>
                                 </div>
                             </div>

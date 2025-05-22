@@ -42,6 +42,7 @@ CREATE TABLE Service (
     DeliveryTime INTEGER,   -- in days
     Description NVARCHAR(2000),
     IsPromoted BOOLEAN DEFAULT 0,
+    PromotionExpiry DATETIME,
     ImageURL NVARCHAR(80),
     FOREIGN KEY (ImageUrl) REFERENCES Image(ImageUrl),
     FOREIGN KEY (FreelancerID) REFERENCES User(UserId)

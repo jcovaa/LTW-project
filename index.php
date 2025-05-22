@@ -11,6 +11,8 @@ require_once __DIR__ . '/database/category.class.php';
 
 $db = getDatabaseConnection();
 
+Service::cleanupExpiredPromotions($db);
+
 $services = Service::getAllServices($db);   // can later be getNServices to limit number of services
 $featuredServices = Service::getPromotedServices($db);
 $session =  Session::getInstance();
