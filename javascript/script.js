@@ -383,7 +383,7 @@ function toggleEdit(serviceId) {
    const view = card.querySelector('.view-mode');
    const edit = card.querySelector('.edit-mode');
 
-   view.style.display = view.style.display === 'none' ? 'flex' : 'none';
+   view.style.display = view.style.display === 'none' ? 'grid' : 'none';
    edit.style.display = edit.style.display === 'block' ? 'none' : 'block';
 }
 
@@ -392,7 +392,7 @@ function toggleCancel(serviceId) {
    const view = card.querySelector('.view-mode');
    const edit = card.querySelector('.edit-mode');
 
-   view.style.display = view.style.display === 'none' ? 'flex' : 'none';
+   view.style.display = view.style.display === 'none' ? 'grid' : 'none';
    edit.style.display = edit.style.display === 'block' ? 'none' : 'block';
 
 
