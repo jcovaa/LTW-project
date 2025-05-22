@@ -19,8 +19,14 @@ class User
 
     public static function create(PDO $db, $name, $username, $email, $password)
     {
+        $options = ['cost' => 12];
         $stmt = $db->prepare('INSERT INTO User (Name, Username, Email, Password) VALUES (?, ?, ?, ?)');
-        return $stmt->execute([$name, $username, $email, sha1($password)]);
+        return $stmt->execute([ 
+            $name, 
+            $username, 
+            $email, 
+            password_hash($password, PASSWORD_DEFAULT, $options)
+        ]);
     }
 
 
@@ -70,20 +76,22 @@ class User
     static function getUserWithPassword(PDO $db, string $email, string $password): ?User
     {
         $stmt = $db->prepare('
-        SELECT UserId, Username, Name, Email
+        SELECT *
         FROM User 
-        WHERE lower(email) = ? AND password = ?
+        WHERE lower(email) = ?;
       ');
 
-        $stmt->execute(array(strtolower($email), sha1($password)));
+        $stmt->execute([strtolower($email)]);
 
         if ($user = $stmt->fetch()) {
-            return new User(
-                $user['UserId'],
-                $user['Name'],
-                $user['Username'],
-                $user['Email'],
-            );
+            if (password_verify($password, $user['Password'])) {
+                return new User(
+                    $user['UserId'],
+                    $user['Name'],
+                    $user['Username'],
+                    $user['Email'],
+                );
+            }
         }
 
         return null;

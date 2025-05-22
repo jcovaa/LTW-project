@@ -16,6 +16,7 @@ class Service
    public $categoryIds = array();
    public string $imageUrl;
    public ?string $promotionExpiry;
+   public ?string $freelancerImageUrl;
 
    public function __construct(
       int $id,
@@ -29,7 +30,8 @@ class Service
       float $avgRating,
       string $imageUrl,
       $categoryIds,
-      ?string $promotionExpiry = null
+      ?string $promotionExpiry = null,
+      ?string $freelancerImageUrl = null
    ) {
       $this->id = $id;
       $this->name = $name;
@@ -43,6 +45,7 @@ class Service
       $this->categoryIds = $categoryIds;
       $this->imageUrl = $imageUrl;
       $this->promotionExpiry = $promotionExpiry;
+      $this->freelancerImageUrl = $freelancerImageUrl;
    }
 
 
@@ -92,7 +95,8 @@ class Service
          Service.PromotionExpiry,
          Service.ImageURL,
          User.UserId as FreelancerId,
-         User.Name as FreelancerName
+         User.Name as FreelancerName,
+         User.ImageUrl as FreelancerImageUrl
       FROM Service
       JOIN User ON Service.FreelancerID = User.UserId
       WHERE Service.ServiceId = ?
@@ -113,7 +117,8 @@ class Service
          self::getAverageRatingForService($db, $id),
          (string)($service['ImageURL']),
          self::getServiceCategories($db, $id),
-         $service['PromotionExpiry'] ?? null
+         $service['PromotionExpiry'] ?? null,
+         $service['FreelancerImageUrl'] ?? null
       );
    }
 
@@ -130,7 +135,8 @@ class Service
             Service.PromotionExpiry,
             Service.ImageURL,
             User.UserId as FreelancerId,
-            User.Name as FreelancerName
+            User.Name as FreelancerName,
+            User.ImageUrl as FreelancerImageUrl
          FROM Service
          JOIN User ON Service.FreelancerID = User.UserId
       ');
@@ -153,7 +159,8 @@ class Service
             Service.PromotionExpiry,
             Service.ImageURL,
             User.UserId as FreelancerId,
-            User.Name as FreelancerName
+            User.Name as FreelancerName,
+            User.ImageUrl as FreelancerImageUrl
          FROM Service
          JOIN User ON Service.FreelancerID = User.UserId
          LIMIT ?
@@ -178,7 +185,8 @@ class Service
             Service.PromotionExpiry,
             Service.ImageURL,
             User.UserId as FreelancerId,
-            User.Name as FreelancerName
+            User.Name as FreelancerName,
+            User.ImageUrl as FreelancerImageUrl
          FROM Service
          JOIN User ON Service.FreelancerID = User.UserId
          WHERE User.UserID = ?
@@ -195,7 +203,7 @@ class Service
          SELECT 
             Service.ServiceId, Service.Name, Service.Description, Service.Price, 
             Service.DeliveryTime, Service.IsPromoted, Service.PromotionExpiry, Service.ImageURL,
-            User.UserId as FreelancerId, User.Name as FreelancerName
+            User.UserId as FreelancerId, User.Name as FreelancerName, User.ImageUrl as FreelancerImageUrl
          FROM Service
          JOIN User ON Service.FreelancerID = User.UserId
          WHERE Service.IsPromoted = 1 AND Service.PromotionExpiry > CURRENT_TIMESTAMP
@@ -213,7 +221,7 @@ class Service
          SELECT 
             Service.ServiceId, Service.Name, Service.Description, Service.Price, 
             Service.DeliveryTime, Service.IsPromoted, Service.PromotionExpiry,Service.ImageURL,
-            User.UserId as FreelancerId, User.Name as FreelancerName
+            User.UserId as FreelancerId, User.Name as FreelancerName, User.ImageUrl as FreelancerImageUrl
          FROM Service
          JOIN ServiceCategory ON Service.ServiceId = ServiceCategory.ServiceId
          JOIN User ON Service.FreelancerID = User.UserId
@@ -241,7 +249,8 @@ private static function buildServicesArray(PDO $db, PDOStatement $stmt): array {
             self::getAverageRatingForService($db, $id),
             (string)($row['ImageURL']),
             self::getServiceCategories($db, $id),
-            $row['PromotionExpiry'] ?? null
+            $row['PromotionExpiry'] ?? null,
+            $row['FreelancerImageUrl'] ?? null
          );
       }
       return $services;
@@ -306,6 +315,7 @@ private static function buildServicesArray(PDO $db, PDOStatement $stmt): array {
             Service.ImageURL,
             User.UserId as FreelancerId,
             User.Name as FreelancerName,
+            User.ImageUrl as FreelancerImageUrl,
             AVG(Review.Rating) as AvgRating
          FROM Service
          JOIN User ON Service.FreelancerID = User.UserId
@@ -332,7 +342,8 @@ private static function buildServicesArray(PDO $db, PDOStatement $stmt): array {
             Service.PromotionExpiry
             Service.ImageURL,
             User.UserId as FreelancerId,
-            User.Name as FreelancerName,
+            User.ImageUrl as FreelancerImageUrl,
+            User.Name as FreelancerName
          FROM Service
          JOIN User ON Service.FreelancerID = User.UserId
          WHERE Service.Price BETWEEN ? AND ?
@@ -356,7 +367,8 @@ private static function buildServicesArray(PDO $db, PDOStatement $stmt): array {
             Service.PromotionExpiry
             Service.ImageURL,
             User.UserId as FreelancerId,
-            User.Name as FreelancerName
+            User.Name as FreelancerName, 
+            User.ImageUrl as FreelancerImageUrl
          FROM Service
          JOIN User ON Service.FreelancerID = User.UserId
          LEFT JOIN Review ON Service.ServiceId = Review.ServiceId

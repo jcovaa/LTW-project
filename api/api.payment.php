@@ -1,15 +1,26 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 header('Content-Type: application/json');
 
 require_once __DIR__ . '/../database/session.php';
 require_once __DIR__ . '/../database/connection.db.php';
 
-/* REST API METHOD */ 
+/* REST API METHOD */
 
 $db = getDatabaseConnection();
 $session = Session::getInstance();
+$data = json_decode(file_get_contents('php://input'), true);
+
+error_log("Expected CSRF: " . $_SESSION['csrf']);
+error_log("Received CSRF: " . ($data['csrf'] ?? 'NONE'));
+
+if (!$session->validateCSRFToken($data['csrf'] ?? '')) {
+   http_response_code(403);
+   echo json_encode(['error' => 'Invalid CSRF token']);
+   exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
    http_response_code(405);
@@ -17,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
    exit();
 }
 
-$data = json_decode(file_get_contents('php://input'), true);
-
+$type = $data['type'] ?? 'order';
 $serviceId = intval($data['service_id'] ?? 0);
 $clientId = $session->getUserId();
 $name = trim($data['name'] ?? '');
@@ -54,14 +64,33 @@ if ($errors) {
    exit();
 }
 
-$stmt = $db->prepare('
-   INSERT INTO Order_ (ClientId, ServiceId, Status)
-   VALUES (?, ?, ?)
-');
 
-$stmt->execute([$clientId, $serviceId, 'pending']);
+if ($type === 'order') {
+   $stmt = $db->prepare('
+      INSERT INTO Order_ (ClientId, ServiceId, Status)
+      VALUES (?, ?, ?)
+   ');
 
-echo json_encode(['success' => true]);
-exit();
+   $stmt->execute([$clientId, $serviceId, 'pending']);
 
-?>
+   echo json_encode(['success' => true]);
+   exit();
+} elseif ($type === 'promotion') {
+   require_once __DIR__ . '/../database/service.class.php';
+
+   $service = Service::getService($db, $serviceId);
+   if (!$service) {
+      http_response_code(404);
+      echo json_encode(['error' => 'Service not found']);
+      exit();
+   }
+
+   $service->promoteService($db);
+   $session->addMessage('success', "Service promoted successfully.");
+   echo json_encode(['success' => true]);
+   exit();
+} else {
+   http_response_code(400);
+   echo json_encode(['error' => 'Invalid transaction type']);
+   exit();
+}

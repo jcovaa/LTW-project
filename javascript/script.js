@@ -15,7 +15,7 @@ if (menuToggle && navMenu) {
    menuToggle.addEventListener('click', () => {
       navMenu.classList.toggle('active');
    });
-   
+
    document.addEventListener('click', (event) => {
       if (!navMenu.contains(event.target)) {
          navMenu.classList.remove('active');
@@ -54,8 +54,8 @@ if (ratingRange) {
 
 /* when the page reloads after submitting the price range, the input field retains the selected range */
 const priceRange = urlParams.get('price_range');
-   if (priceRange) {
-      const radio = document.querySelector(`input[name="price_range"][value="${priceRange}"]`);
+if (priceRange) {
+   const radio = document.querySelector(`input[name="price_range"][value="${priceRange}"]`);
    if (radio) {
       radio.checked = true;
    }
@@ -184,19 +184,19 @@ if (stars) {
 }
 
 const errorMessage = document.querySelector('.error_message');
-   const successMessage = document.querySelector('.success_message');
+const successMessage = document.querySelector('.success_message');
 
-   if (errorMessage || successMessage) {
-      setTimeout(() => {
-         if (errorMessage) errorMessage.style.display = 'none';
-         if (successMessage) successMessage.style.display = 'none';
-      }, 5000);
+if (errorMessage || successMessage) {
+   setTimeout(() => {
+      if (errorMessage) errorMessage.style.display = 'none';
+      if (successMessage) successMessage.style.display = 'none';
+   }, 5000);
 }
 
 
 
 
-/* chat script */ 
+/* chat script */
 const contactButton = document.querySelector('.contact_freelancer');
 const chatContainer = document.querySelector('#chat_container');
 const closeButton = document.querySelector('#close_chat');
@@ -209,7 +209,7 @@ if (contactButton && chatContainer && closeButton && messageForm && messageInput
       chatContainer.classList.remove('hidden');
       loadChatMessages();
    });
- 
+
    closeButton.addEventListener('click', () => {
       chatContainer.classList.add('hidden');
    });
@@ -229,19 +229,19 @@ if (contactButton && chatContainer && closeButton && messageForm && messageInput
          },
          body: `receiver_id=${receiverId}&message=${encodeURIComponent(message)}`
       })
-      .then(response => response.json())
-      .then(data => {
-         if (data.success) {
-            addMessageToChat('sent', message, new Date().toLocaleTimeString());
-            messageInput.value = '';
-         }
-         else {
-            alert('Error sending message. Please try again.');
-         }
-      })
-      .catch(error => {
-         console.error('Error:', error);
-      });
+         .then(response => response.json())
+         .then(data => {
+            if (data.success) {
+               addMessageToChat('sent', message, new Date().toLocaleTimeString());
+               messageInput.value = '';
+            }
+            else {
+               alert('Error sending message. Please try again.');
+            }
+         })
+         .catch(error => {
+            console.error('Error:', error);
+         });
    });
 
    function loadChatMessages() {
@@ -284,7 +284,7 @@ if (contactButton && chatContainer && closeButton && messageForm && messageInput
 
    function formatDateTime(dateTimeStr) {
       const date = new Date(dateTimeStr);
-      return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
    }
 
    setInterval(() => {
@@ -292,14 +292,14 @@ if (contactButton && chatContainer && closeButton && messageForm && messageInput
          loadChatMessages();
       }
    }, 5000);
-}  
+}
 
 
 
 /* payment script */
 const paymentForm = document.querySelector('#payment_form');
 if (paymentForm) {
-   paymentForm.onsubmit = async function(e) {
+   paymentForm.onsubmit = async function (e) {
       e.preventDefault();
 
       const errorContainer = document.querySelector('#payment_errors');
@@ -310,23 +310,29 @@ if (paymentForm) {
       });
 
       const data = {
+         type: document.querySelector('[name="type"]').value,
          service_id: document.querySelector('[name="service_id"]').value,
          name: document.querySelector('[name="name"]').value,
          address: document.querySelector('[name="address"]').value,
          cc_number: document.querySelector('[name="cc_number"]').value,
          expiry: document.querySelector('[name="expiry"]').value,
-         cvv: document.querySelector('[name="cvv"]').value
+         cvv: document.querySelector('[name="cvv"]').value,
+         csrf: document.querySelector('[name="csrf"]').value,
       };
 
       const response = await fetch('api/api.payment.php', {
          method: 'POST',
-         headers: {'Content-Type': 'application/json'},
+         headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
       });
 
       const result = await response.json();
       if (result.success) {
-         window.location.href = 'service.php?id=' + data.service_id;
+         if (data.type === 'promotion') {
+            window.location.href = 'my_services.php';
+         } else {
+            window.location.href = 'service.php?id=' + data.service_id;
+         }
       }
       else {
          errorContainer.style.display = 'block';
@@ -366,7 +372,7 @@ if (paymentForm) {
             errorContainer.textContent = "Payment failed. Please try again.";
          }
 
-         errorContainer.scrollIntoView({behavior: 'smooth'});
+         errorContainer.scrollIntoView({ behavior: 'smooth' });
       }
    }
 }

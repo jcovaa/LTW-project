@@ -5,6 +5,7 @@ require_once __DIR__ . '/database/session.php';
 
 $session = Session::getInstance();
 $serviceId = isset($_GET['service_id']) ? intval($_GET['service_id']) : 0;
+$type = $_GET['type'] ?? 'order';
 ?>
 
 
@@ -25,7 +26,9 @@ $serviceId = isset($_GET['service_id']) ? intval($_GET['service_id']) : 0;
          </header>
          <div id="payment_errors" class="error-container"></div>
          <form id="payment_form">
+            <input type="hidden" name="csrf" value="<?= $session->getCSRFToken() ?>">
             <input type="hidden" name="service_id" value="<?=$serviceId ?>">
+            <input type="hidden" name="type" value="<?= htmlspecialchars($type) ?>">
             <label>
                Name on Card:
                <input type="text" name="name" required>

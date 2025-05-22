@@ -61,14 +61,14 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     }
 
     $newImageName = uniqid('img_', true) . '.' . $imageExtension;
-    $uploadDir = __DIR__ . '/../images/';
+    $uploadDir = __DIR__ . '/../images/services/';
     $uploadPath = $uploadDir . $newImageName;
 
     if (!move_uploaded_file($tempFileName, $uploadPath)) {
         redirectWithError('Failed to upload image.', $referer);
     }
 
-    $service->imageUrl = '../images/' . $newImageName;
+    $service->imageUrl = '../images/services/' . $newImageName;
 }
 // Else: don't change the imageUrl — keep the old one
 
