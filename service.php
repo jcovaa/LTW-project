@@ -12,7 +12,6 @@ require_once __DIR__ . '/database/session.php';
 
 $db = getDatabaseConnection();
 
-
 $session =  Session::getInstance();
 $service = Service::getService($db, intval($_GET['id']));
 $categories = Category::getServiceCategories($db, $service->id);

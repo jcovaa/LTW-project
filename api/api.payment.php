@@ -13,8 +13,8 @@ $db = getDatabaseConnection();
 $session = Session::getInstance();
 $data = json_decode(file_get_contents('php://input'), true);
 
-error_log("Expected CSRF: " . $_SESSION['csrf']);
-error_log("Received CSRF: " . ($data['csrf'] ?? 'NONE'));
+
+
 
 if (!$session->validateCSRFToken($data['csrf'] ?? '')) {
    http_response_code(403);
@@ -71,10 +71,11 @@ if ($type === 'order') {
       VALUES (?, ?, ?)
    ');
 
-   $stmt->execute([$clientId, $serviceId, 'pending']);
+   $stmt->execute([$clientId, $serviceId, 'Pending']);
 
    echo json_encode(['success' => true]);
    exit();
+
 } elseif ($type === 'promotion') {
    require_once __DIR__ . '/../database/service.class.php';
 
@@ -86,6 +87,7 @@ if ($type === 'order') {
    }
 
    $service->promoteService($db);
+
    $session->addMessage('success', "Service promoted successfully.");
    echo json_encode(['success' => true]);
    exit();

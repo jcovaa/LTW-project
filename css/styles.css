@@ -170,6 +170,7 @@ nav#filter_section {
    .dropdown {
       position: relative;
       display: inline-block;
+      z-index: 2;    /* maior que o z index do rating the um service, caso contrario aparecia o rating por cima */
 
       .dropdown_menu {
          display: none;
@@ -299,6 +300,7 @@ nav#filter_section {
 
             font-size: 14;
             color: var(--star-color);
+            z-index: 1;
          }
       }
 

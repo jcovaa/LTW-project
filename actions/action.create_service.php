@@ -33,6 +33,7 @@ $name = $_POST['name'];
 $price = $_POST['price'];
 $deliveryTime = $_POST['delivery'];
 $description = $_POST['description'];
+$category = $_POST['category'];
 
 
 $imageUrl = null;
@@ -72,19 +73,17 @@ try {
     $success = Service::addService($db, $name, $clientId, $price, $deliveryTime, $description, $imageUrl);
 
     if ($success) {
+        $serviceId = $db->lastInsertId();
+        $stmt = $db->prepare('INSERT INTO ServiceCategory (ServiceId, CategoryId) VALUES (?, ?)');
+        $stmt->execute([$serviceId, $category]);
         $_SESSION['success'] = 'Service created successfully!';
-
     } else {
         $_SESSION['error'] = 'Failed to create service.';
-        
     }
 } catch (Exception $e) {
     $_SESSION['error'] = 'Error: ' . $e->getMessage();
-    
 }
 
 
 header('Location: ../index.php');
 exit;
-
-?>

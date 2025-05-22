@@ -98,7 +98,6 @@ declare(strict_types=1);
       </a>
       <div class="service_info">
          <div class="profile">
-           
             <img src="<?= htmlspecialchars($service->freelancerImageUrl) ?>" alt="Profile Picture">
             <p><?= htmlspecialchars($service->freelancerName) ?></p>
          </div>
@@ -195,9 +194,9 @@ declare(strict_types=1);
    </section>
 <?php } ?>
 
-<?php function draw_ratings_section(array $ratingsData): void
+<?php function draw_ratings_section(array $ratingsData, $service): void
 { ?>
-   <?php if (Session::getInstance()->isLoggedIn()) { ?>
+   <?php if (Session::getInstance()->isLoggedIn() && (Session::getInstance()->getUserId() !== $service->freelancerId)) { ?>
       <button class="contact_freelancer">Chat with the Freelancer</button>
    <?php } ?>
    <section id="ratings">
@@ -234,11 +233,11 @@ declare(strict_types=1);
          <h3>Comments</h3>
       </header>
 
-      <?php if (Session::getInstance()->isLoggedIn()): ?>
+      <?php if (Session::getInstance()->isLoggedIn() && (Session::getInstance()->getUserId() !== $service->freelancerId)): ?>
          <article id="comment_form">
             <form action="actions/action.submit_review.php" method="post">
                <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
-               <input type="hidden" name="service_id" value="<?= $service->serviceId?>">
+               <input type="hidden" name="service_id" value="<?= $service->serviceId ?>">
                <div class="star_rating">
                   <p>Your Rating:</p>
                   <div class="stars">
@@ -258,24 +257,28 @@ declare(strict_types=1);
                <button type="submit" class="submit_comment">Submit Review</button>
             </form>
          </article>
-      <?php else: ?>
+      <?php elseif (!Session::getInstance()->isLoggedIn()): ?>
          <p class="login_prompt">Please <a href="login.php">log in</a> to write a review.</p>
       <?php endif; ?>
    </section>
    <section id="comments_list">
-      <?php foreach ($comments as $comment) { ?>
-         <article class="comment">
-            <header>
-               <img src="<?= htmlspecialchars($service->freelancerImageUrl) ?>" alt="Profile Picture">
-               <p><?= htmlspecialchars($comment->clientName) ?></p>
-            </header>
-            <div class="rating">
-               <?php for ($i = 1; $i <= 5; $i++): ?>
-                  <span class="star"><?= $i <= $comment->rating ? '★' : '☆' ?></span>
-               <?php endfor; ?>
-            </div>
-            <p class="comment_text"><?= htmlspecialchars($comment->comment) ?></p>
-         </article>
+      <?php if (!empty($comments)) { ?>
+         <?php foreach ($comments as $comment) { ?>
+            <article class="comment">
+               <header>
+                  <img src="<?= htmlspecialchars($service->freelancerImageUrl) ?>" alt="Profile Picture">
+                  <p><?= htmlspecialchars($comment->clientName) ?></p>
+               </header>
+               <div class="rating">
+                  <?php for ($i = 1; $i <= 5; $i++): ?>
+                     <span class="star"><?= $i <= $comment->rating ? '★' : '☆' ?></span>
+                  <?php endfor; ?>
+               </div>
+               <p class="comment_text"><?= htmlspecialchars($comment->comment) ?></p>
+            </article>
+         <?php } ?>
+      <?php } else { ?>
+         <p class="no_comments">No reviews yet.</p>
       <?php } ?>
    </section>
 <?php } ?>
@@ -316,9 +319,11 @@ declare(strict_types=1);
    <main id="service_page">
       <?php
       draw_service_details($service);
-      draw_ratings_section($ratingsData);
+      draw_ratings_section($ratingsData, $service);
       draw_comments_section($comments, $service);
-      draw_purchase_section($service);
+      if (Session::getInstance()->getUserId() !== $service->freelancerId) {
+         draw_purchase_section($service);
+      }
       draw_chat_container($service->freelancerId);
       ?>
    </main>
