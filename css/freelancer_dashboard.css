@@ -9,6 +9,7 @@
     padding: 1rem;
     border-right: 1px solid #ddd;
     flex-shrink: 0;
+    margin-bottom: 20px;
 }
 
 .dashboard-tab {

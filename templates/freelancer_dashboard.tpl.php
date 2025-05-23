@@ -18,7 +18,7 @@ declare(strict_types=1);
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/freelancer_dashboard.css">
         <script src="javascript/script.js" defer></script>
-        <title>My Web Page</title>
+        <title><?=htmlspecialchars($title) ?></title>
     </head>
 
     <body>
