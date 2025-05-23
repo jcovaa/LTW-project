@@ -237,7 +237,7 @@ declare(strict_types=1);
          <article id="comment_form">
             <form action="actions/action.submit_review.php" method="post">
                <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
-               <input type="hidden" name="service_id" value="<?= $service->serviceId ?>">
+               <input type="hidden" name="service_id" value="<?= $service->id ?>">
                <div class="star_rating">
                   <p>Your Rating:</p>
                   <div class="stars">
