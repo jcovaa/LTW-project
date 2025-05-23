@@ -188,6 +188,13 @@ h2 {
     /* vertically center input with image */
     gap: 1rem;
     /* space between image and input */
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.input_image {
+    width: 100%;
+    margin-top: 0.5rem;
 }
 
 .edit-mode img {
@@ -214,6 +221,8 @@ h2 {
     padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 8px;
+    width: 90%;
+    margin-left: 1rem;
 }
 
 
@@ -363,6 +372,20 @@ input[type="number"]::-webkit-inner-spin-button {
         margin: 10px 0;
     }
 
+    /* edit service */
+    .edit-mode {
+        width: 90%;
+    }
+
+    .edit-mode textarea {
+        min-height: 100px;
+    }
+
+    .edit-mode button {
+        padding: 10px 16px;
+        font-size: 1rem;
+    }
+
     /* my orders */
     .order-card {
         width: 90%;
@@ -398,6 +421,41 @@ input[type="number"]::-webkit-inner-spin-button {
         width: 95%;
         margin-left: 0;
         padding: 1rem;
+    }
+
+    /* edit service */
+    .edit-mode {
+        width: 95%;
+        margin-left: 0;
+        padding: 12px;
+    }
+
+    .addImg {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .edit-mode img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .edit-mode button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        margin-right: 0;
+        padding: 12px;
+    }
+
+    .edit-mode label {
+        font-size: 1rem;
+    }
+
+    .edit-mode input[type="text"], .edit-mode input[type="number"], .edit-mode textarea {
+        padding: 12px;
+        font-size: 1rem;
     }
 
     /* my orders */
