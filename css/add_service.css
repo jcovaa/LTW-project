@@ -46,7 +46,7 @@ form .input_box {
    margin: 30px 0;
 }
 
-.input_box input {
+main#form_page .input_box input {
    width: 100%;
    height: 100%;
    position: relative;
@@ -59,16 +59,6 @@ form .input_box {
    font-size: 16px;
    color: black;
 }
-
-.input_box textarea {
-   height: auto;
-   /* Allows the textarea to adjust height based on content */
-   resize: vertical;
-   /* Enables vertical resizing */
-   border-radius: 20px;
-   /* Optional: Adjusts border radius for textarea */
-}
-
 
 .input_box input::placeholder {
    color: grey;
@@ -83,7 +73,7 @@ form .input_box {
    font-size: 20px;
 }
 
-form button {
+main#form_page form button {
    position: relative;
    margin: 10px;
    width: 100%;

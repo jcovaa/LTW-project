@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 ?>
 
-
-<?php function output_header_($title): void
+<?php function output_header_($title, $session): void
 { ?>
    <!DOCTYPE html>
    <html lang="en">
@@ -18,15 +17,30 @@ declare(strict_types=1);
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="css/styles.css">
       <link rel="stylesheet" href="css/add_service.css">
-
+      <script src="javascript/script.js" defer></script>
       <title><?= htmlspecialchars($title) ?></title>
    </head>
 
    <body>
       <header>
          <h1 id="logo"><a href="index.php">lancer</a></h1>
+         <form class="search_bar" action="search.php" method="get">
+            <input type="text" name="query" placeholder="Search...">
+            <button class="fa fa-search" type="submit"></button>
+         </form>
+         <nav id="nav_menu">
+            <button id="menu_toggle" class="fa fa-bars"></button>
+            <ul>
+               <?php if ($session->getUser()) : ?>
+                  <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
+                  <li><button onclick="window.location.href='my_services.php'">Dashboard</button>
+                  <?php endif; ?>
+                  <?php if ($session->getUser()) drawLogoutForm($session);
+                  else drawLoginForm(); ?>
+            </ul>
+         </nav>
       </header>
-   <?php } ?>
+<?php } ?>
 
    <?php function draw_service_form($categories): void
    { ?>
