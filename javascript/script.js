@@ -430,3 +430,92 @@ if (imageInputs) {
       }
    });
 }
+
+/* dashboard chat script */
+
+document.querySelectorAll('.contact_freelancer2').forEach(button => {
+   button.addEventListener('click', () => {
+      const chatContainer = button.closest('.order-card').querySelector('.chat_container2');
+      const receiverId = button.dataset.receiverId;
+
+      chatContainer.classList.remove('hidden');
+      loadChatMessages(chatContainer, receiverId);
+   });
+});
+
+document.querySelectorAll('.close_chat').forEach(closeBtn => {
+   closeBtn.addEventListener('click', () => {
+      closeBtn.closest('.chat_container2').classList.add('hidden');
+   });
+});
+
+document.querySelectorAll('.message_form').forEach(form => {
+   form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const chatContainer = form.closest('.chat_container2');
+      const messageInput = form.querySelector('.message_input');
+      const chatMessages = chatContainer.querySelector('.chat_messages');
+      const receiverId = form.querySelector('.receiver_id').value;
+
+      const message = messageInput.value.trim();
+      if (!message) return;
+
+      fetch('actions/action.send_message.php', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+         },
+         body: `receiver_id=${receiverId}&message=${encodeURIComponent(message)}`
+      })
+         .then(response => response.json())
+         .then(data => {
+            if (data.success) {
+               addMessageToChat(chatMessages, 'sent', message, new Date().toLocaleTimeString());
+               messageInput.value = '';
+            } else {
+               alert('Error sending message. Please try again.');
+            }
+         })
+         .catch(console.error);
+   });
+});
+
+function loadChatMessages(chatContainer, receiverId) {
+   const chatMessages = chatContainer.querySelector('.chat_messages');
+
+   fetch(`actions/action.get_messages.php?receiver_id=${receiverId}`)
+      .then(response => response.json())
+      .then(data => {
+         chatMessages.innerHTML = '';
+         data.messages.forEach(msg => {
+            const type = msg.senderId == data.currentUserId ? 'sent' : 'received';
+            addMessageToChat(chatMessages, type, msg.content, formatDateTime(msg.sentAt));
+         });
+         chatMessages.scrollTop = chatMessages.scrollHeight;
+      })
+      .catch(console.error);
+}
+
+function addMessageToChat(chatMessages, type, content, time) {
+   const messageElement = document.createElement('article');
+   messageElement.classList.add('message', type);
+
+   const messageContent = document.createElement('div');
+   messageContent.textContent = content;
+
+   const messageTime = document.createElement('div');
+   messageTime.classList.add('message_time');
+   messageTime.textContent = time;
+
+   messageElement.appendChild(messageContent);
+   messageElement.appendChild(messageTime);
+   
+   chatMessages.appendChild(messageElement);
+   chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function formatDateTime(dateTimeStr) {
+   const date = new Date(dateTimeStr);
+   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}

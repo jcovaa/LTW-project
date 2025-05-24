@@ -137,8 +137,8 @@ declare(strict_types=1);
                         </div>
 
                         <?php if (Session::getInstance()->isLoggedIn() && $order->status != 'complete') { ?>
-                            <button class="contact_freelancer">Chat with the Freelancer</button>
-                            <?php draw_chat_container($order->clientId) ?>
+                            <button class="contact_freelancer2">Chat with the Freelancer</button>
+                            <?php draw_chat_container($order->freelancerId) ?>
                         <?php } ?>
                     </div>
                 <?php endforeach; ?>
@@ -184,7 +184,7 @@ declare(strict_types=1);
                             <?php endif; ?>
 
                             <?php if (Session::getInstance()->isLoggedIn()) { ?>
-                                <button class="contact_freelancer">Chat with the Client</button>
+                                <button class="contact_freelancer2" data-receiver-id="<?= $order->clientId ?>">Chat with the Client</button>
                                 <?php draw_chat_container($order->clientId) ?>
                             <?php } ?>
                         </div>
@@ -203,17 +203,17 @@ declare(strict_types=1);
     <?php function draw_chat_container(int $receiverId): void
     { ?>
         <?php if (Session::getInstance()->isLoggedIn()) { ?>
-            <section id="chat_container" class="hidden">
+            <section class="chat_container2 hidden">
                 <header>
                     <h3>Chat</h3>
-                    <button id="close_chat">×</button>
+                    <button class="close_chat">×</button>
                 </header>
-                <div id="chat_messages">
+                <div class="chat_messages">
                     <!-- Chat messages will be dynamically loaded here -->
                 </div>
-                <form id="message_form">
-                    <input type="hidden" id="receiver_id" value="<?= $receiverId ?>">
-                    <textarea id="message_input" placeholder="Type your message..." required></textarea>
+                <form class="message_form">
+                    <input type="hidden" class="receiver_id" value="<?= $receiverId ?>">
+                    <textarea class="message_input" placeholder="Type your message..." required></textarea>
                     <button type="submit">Send</button>
                 </form>
             </section>

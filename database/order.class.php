@@ -6,6 +6,7 @@ class Order
 {
     public int $orderId;
     public int $clientId;
+    public int $freelancerId;
     public int $serviceId;
     public string $status;
     public string $orderDate;
@@ -13,7 +14,7 @@ class Order
     public string $clientName;
     public string $freelancerName;
 
-    public function __construct(int $orderId, int $clientId, int $serviceId, string $status, string $orderDate, string $clientName, string $serviceName, string $freelancerName)
+    public function __construct(int $orderId, int $clientId, int $serviceId, string $status, string $orderDate, string $clientName, string $serviceName, string $freelancerName, int $freelancerId)
     {
         $this->orderId = $orderId;
         $this->clientId = $clientId;
@@ -23,6 +24,7 @@ class Order
         $this->clientName = $clientName;
         $this->serviceName = $serviceName;
         $this->freelancerName = $freelancerName;
+        $this->freelancerId = $freelancerId;
     }
 
     public static function getOrder(PDO $db, int $id)
@@ -32,6 +34,7 @@ class Order
                 C.Name AS clientName, 
                 S.Name AS serviceName, 
                 F.Name AS freelancerName
+                S.FreelancerId AS freelancerId
             FROM "Order_" O
             JOIN User C ON O.ClientId = C.UserId
             JOIN Service S ON O.ServiceId = S.ServiceId
@@ -52,7 +55,8 @@ class Order
             $order['OrderDate'],
             $order['clientName'],
             $order['serviceName'],
-            $order['freelancerName']
+            $order['freelancerName'],
+            $order['freelancerId']
         );
     }
 
@@ -62,14 +66,15 @@ class Order
             SELECT O.*, 
                 C.Name AS clientName, 
                 S.Name AS serviceName, 
-                F.Name AS freelancerName
+                F.Name AS freelancerName,
+                S.FreelancerId AS freelancerId
             FROM "Order_" O
             JOIN User C ON O.ClientId = C.UserId
             JOIN Service S ON O.ServiceId = S.ServiceId
             JOIN User F ON S.FreelancerID = F.UserId
             WHERE O.ClientId = ?
             ORDER BY O.OrderDate DESC
-');
+    ');
         $stmt->execute([$clientId]);
 
         $orders = [];
@@ -82,7 +87,8 @@ class Order
                 $order['OrderDate'],
                 $order['clientName'],
                 $order['serviceName'],
-                $order['freelancerName']
+                $order['freelancerName'],
+                $order['freelancerId']
             );
         }
 
@@ -95,7 +101,8 @@ class Order
         SELECT O.*, 
             C.Name AS clientName, 
             S.Name AS serviceName, 
-            F.Name AS freelancerName
+            F.Name AS freelancerName,
+            S.FreelancerId AS freelancerId
         FROM "Order_" O
         JOIN User C ON O.ClientId = C.UserId
         JOIN Service S ON O.ServiceId = S.ServiceId
@@ -115,7 +122,8 @@ class Order
                 $order['OrderDate'],
                 $order['clientName'],
                 $order['serviceName'],
-                $order['freelancerName']
+                $order['freelancerName'],
+                $order['freelancerId']
             );
         }
 

@@ -436,7 +436,7 @@ main#service_page {
 }
 
 /* chat button */
-.contact_freelancer,
+.contact_freelancer, .contact_freelancer2,
 .submit_comment,
 #purchase_section .purchase_button {
    background-color: var(--primary-box-color);
@@ -452,7 +452,7 @@ main#service_page {
 }
 
 /* Button specific styles */
-.contact_freelancer {
+.contact_freelancer, .contact_freelancer2 {
    padding: 12px 24px;
    grid-column: 1;
    margin-bottom: 10px;
