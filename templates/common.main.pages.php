@@ -63,14 +63,14 @@ declare(strict_types=1);
       <li>
          <form action="../actions/action.logout.php" method="post" style="display: inline;">
             <input type="hidden" name="csrf" value="<?=$session->getCSRFToken()?>">
-            <button type="submit">Logout</button>
+            <button type="submit">Log Out</button>
          </form>
       </li>
    <?php } ?>
 
    <?php function drawLoginForm()
    { ?>
-      <li><button onclick="window.location.href='login.php'">Login</button></li>
+      <li><button onclick="window.location.href='login.php'">Log In</button></li>
       <li><button onclick="window.location.href='register.php'">Sign Up</button></li>
    <?php } ?>
 

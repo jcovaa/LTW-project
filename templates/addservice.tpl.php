@@ -64,10 +64,10 @@ declare(strict_types=1);
             </div>
 
             <div class="input_box">
-               <input type="text" placeholder="Estimated Delivery Time" name="delivery" required>
+               <input type="text" placeholder="Estimated Delivery Time (days)" name="delivery" required>
             </div>
             <div class="input_box">
-               <input type="text" placeholder="Price" name="price" required>
+               <input type="text" placeholder="Price (EUR)" name="price" required>
             </div>
 
             <div class="input_image">
