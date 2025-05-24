@@ -49,6 +49,13 @@ class Session
         return isset($_SESSION["user"]);
     }
 
+    public function isAdmin(): bool {
+        if (!$this->isLoggedIn()) return false;
+
+        $db = getDatabaseConnection();
+        return Admin::isAdmin($db, $this->getUserId());
+    }
+
     public function getUserId(): ?int
     {
         $user = $this->getUser();
