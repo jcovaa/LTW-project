@@ -435,8 +435,9 @@ main#service_page {
    margin-bottom: 5px;
 }
 
+
 /* chat button */
-.contact_freelancer, .contact_freelancer2,
+.contact_freelancer,
 .submit_comment,
 #purchase_section .purchase_button {
    background-color: var(--primary-box-color);
@@ -452,7 +453,7 @@ main#service_page {
 }
 
 /* Button specific styles */
-.contact_freelancer, .contact_freelancer2 {
+.contact_freelancer {
    padding: 12px 24px;
    grid-column: 1;
    margin-bottom: 10px;
@@ -755,7 +756,7 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
 
 
 /* chat section  */
-#chat_container {
+.chat_container {
    position: fixed;
    bottom: 30px;
    right: 15%;
@@ -801,7 +802,7 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
       }
    }
 
-   #chat_messages {
+   .chat_messages {
       flex: 1;
       overflow-y: auto;
       padding: 10px;
@@ -915,6 +916,13 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
    display: none;
 }
 
+/* added this here to fix chat button position */
+.chat-wrapper {
+   grid-column: 1;
+}
+
+
+
 @media (max-width: 900px) {
    body {
       width: 95%;
@@ -1020,7 +1028,7 @@ to the left due to row-reverse) get highlighted by label.star:hover ~ label.star
          grid-column: 1;
       }
 
-      #chat_container {
+      .chat_container {
          position: static;
          width: 100%;
          margin: 20px 0;

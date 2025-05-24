@@ -7,10 +7,10 @@ declare(strict_types=1);
 
 <?php function output_header_dashboard($title, $session): void
 { ?>
-   <!DOCTYPE html>
-   <html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-   <head>
+    <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
@@ -18,29 +18,29 @@ declare(strict_types=1);
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/freelancer_dashboard.css">
         <script src="javascript/script.js" defer></script>
-        <title><?=htmlspecialchars($title) ?></title>
+        <title><?= htmlspecialchars($title) ?></title>
     </head>
 
-   <body>
-      <header>
-         <h1 id="logo"><a href="index.php">lancer</a></h1>
-         <form class="search_bar" action="search.php" method="get">
-            <input type="text" name="query" placeholder="Search...">
-            <button class="fa fa-search" type="submit"></button>
-         </form>
-         <nav id="nav_menu">
-            <button id="menu_toggle" class="fa fa-bars"></button>
-            <ul>
-               <?php if ($session->getUser()) : ?>
-                  <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
-                  <li><button onclick="window.location.href='my_services.php'">Dashboard</button>
-                  <?php endif; ?>
-                  <?php if ($session->getUser()) drawLogoutForm($session);
-                  else drawLoginForm(); ?>
-            </ul>
-         </nav>
-      </header>
-<?php } ?>
+    <body>
+        <header>
+            <h1 id="logo"><a href="index.php">lancer</a></h1>
+            <form class="search_bar" action="search.php" method="get">
+                <input type="text" name="query" placeholder="Search...">
+                <button class="fa fa-search" type="submit"></button>
+            </form>
+            <nav id="nav_menu">
+                <button id="menu_toggle" class="fa fa-bars"></button>
+                <ul>
+                    <?php if ($session->getUser()) : ?>
+                        <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
+                        <li><button onclick="window.location.href='my_services.php'">Dashboard</button>
+                        <?php endif; ?>
+                        <?php if ($session->getUser()) drawLogoutForm($session);
+                        else drawLoginForm(); ?>
+                </ul>
+            </nav>
+        </header>
+    <?php } ?>
 
 
 
@@ -137,8 +137,7 @@ declare(strict_types=1);
                         </div>
 
                         <?php if (Session::getInstance()->isLoggedIn() && $order->status != 'complete') { ?>
-                            <button class="contact_freelancer2">Chat with the Freelancer</button>
-                            <?php draw_chat_container($order->freelancerId) ?>
+                            <?php draw_chat_container($order->freelancerId, "Freelancer") ?>
                         <?php } ?>
                     </div>
                 <?php endforeach; ?>
@@ -184,8 +183,7 @@ declare(strict_types=1);
                             <?php endif; ?>
 
                             <?php if (Session::getInstance()->isLoggedIn()) { ?>
-                                <button class="contact_freelancer2" data-receiver-id="<?= $order->clientId ?>">Chat with the Client</button>
-                                <?php draw_chat_container($order->clientId) ?>
+                                <?php draw_chat_container($order->clientId, "Client") ?>
                             <?php } ?>
                         </div>
                     </div>
@@ -199,23 +197,26 @@ declare(strict_types=1);
 
 
 
-
-    <?php function draw_chat_container(int $receiverId): void
+    <?php function draw_chat_container(int $receiverId, string $receiver): void
     { ?>
         <?php if (Session::getInstance()->isLoggedIn()) { ?>
-            <section class="chat_container2 hidden">
-                <header>
-                    <h3>Chat</h3>
-                    <button class="close_chat">×</button>
-                </header>
-                <div class="chat_messages">
-                    <!-- Chat messages will be dynamically loaded here -->
-                </div>
-                <form class="message_form">
-                    <input type="hidden" class="receiver_id" value="<?= $receiverId ?>">
-                    <textarea class="message_input" placeholder="Type your message..." required></textarea>
-                    <button type="submit">Send</button>
-                </form>
-            </section>
+            <div class="chat-wrapper" data-receiver-id="<?= $receiverId ?>">
+                <button class="contact_freelancer">Chat with the <?= $receiver ?></button>
+
+                <section class="chat_container hidden">
+                    <header>
+                        <h3>Chat</h3>
+                        <button class="close_chat">×</button>
+                    </header>
+                    <div class="chat_messages">
+                        <!-- Chat messages will be dynamically loaded here -->
+                    </div>
+                    <form class="message_form">
+                        <input type="hidden" class="receiver_id" value="<?= $receiverId ?>">
+                        <textarea class="message_input" placeholder="Type your message..." required></textarea>
+                        <button type="submit">Send</button>
+                    </form>
+                </section>
+            </div>
         <?php } ?>
     <?php } ?>

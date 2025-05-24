@@ -196,9 +196,7 @@ declare(strict_types=1);
 
 <?php function draw_ratings_section(array $ratingsData, $service): void
 { ?>
-   <?php if (Session::getInstance()->isLoggedIn() && (Session::getInstance()->getUserId() !== $service->freelancerId)) { ?>
-      <button class="contact_freelancer">Chat with the Freelancer</button>
-   <?php } ?>
+
    <section id="ratings">
       <header>
          <h3>Reviews</h3>
@@ -296,21 +294,26 @@ declare(strict_types=1);
 
 <?php function draw_chat_container(int $freelancerId): void
 { ?>
-   <?php if (Session::getInstance()->isLoggedIn()) { ?>
-      <section id="chat_container" class="hidden">
-         <header>
-            <h3>Chat</h3>
-            <button id="close_chat">×</button>
-         </header>
-         <div id="chat_messages">
-            <!-- Chat messages will be dynamically loaded here -->
+   <?php if (Session::getInstance()->isLoggedIn() && (Session::getInstance()->getUserId() !== $freelancerId)) { ?>
+      <div class="chat-wrapper" data-receiver-id="<?= $freelancerId ?>">
+         <div>
+            <button class="contact_freelancer">Chat with the Freelancer</button>
          </div>
-         <form id="message_form">
-            <input type="hidden" id="receiver_id" value="<?= $freelancerId ?>">
-            <textarea id="message_input" placeholder="Type your message..." required></textarea>
-            <button type="submit">Send</button>
-         </form>
-      </section>
+         <section class="chat_container hidden">
+            <header>
+               <h3>Chat</h3>
+               <button class="close_chat">×</button>
+            </header>
+            <div class="chat_messages">
+               <!-- Chat messages will be dynamically loaded here -->
+            </div>
+            <form class="message_form">
+               <input type="hidden" class="receiver_id" value="<?= $freelancerId ?>">
+               <textarea class="message_input" placeholder="Type your message..." required></textarea>
+               <button type="submit">Send</button>
+            </form>
+         </section>
+      </div>
    <?php } ?>
 <?php } ?>
 
@@ -319,15 +322,12 @@ declare(strict_types=1);
    <main id="service_page">
       <?php
       draw_service_details($service);
+      draw_chat_container($service->freelancerId);
       draw_ratings_section($ratingsData, $service);
       draw_comments_section($comments, $service);
       if (Session::getInstance()->getUserId() !== $service->freelancerId) {
          draw_purchase_section($service);
       }
-      draw_chat_container($service->freelancerId);
       ?>
    </main>
 <?php } ?>
-
-
-
