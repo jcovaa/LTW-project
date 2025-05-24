@@ -30,8 +30,8 @@ $currentStatus = $order->status;
 
 
 $validTransitions = [
-    'pending' => ['in_progress'],
-    'in_progress' => ['complete']
+    'Pending' => ['In Progress'],
+    'In Progress' => ['Complete']
 ];
 
 if (!isset($validTransitions[$currentStatus]) || !in_array($newStatus, $validTransitions[$currentStatus])) {

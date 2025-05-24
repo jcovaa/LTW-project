@@ -33,7 +33,7 @@ class Order
             SELECT O.*, 
                 C.Name AS clientName, 
                 S.Name AS serviceName, 
-                F.Name AS freelancerName
+                F.Name AS freelancerName,
                 S.FreelancerId AS freelancerId
             FROM "Order_" O
             JOIN User C ON O.ClientId = C.UserId

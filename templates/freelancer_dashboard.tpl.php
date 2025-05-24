@@ -167,17 +167,19 @@ declare(strict_types=1);
                             <p><strong>Status:</strong> <?= htmlspecialchars($order->status) ?></p>
                         </div>
                         <div class="order button">
-                            <?php if ($order->status === 'pending'): ?>
+                            <?php if ($order->status === 'Pending'): ?>
                                 <!-- Freelancer can mark as in progress -->
                                 <form method="POST" action="actions/action.change_order_status.php">
+                                    <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
                                     <input type="hidden" name="order_id" value="<?= $order->orderId ?>">
-                                    <input type="hidden" name="new_status" value="in_progress">
+                                    <input type="hidden" name="new_status" value="In Progress">
                                     <button class="status_button" type="submit">Start Order</button>
                                 </form>
-                            <?php elseif ($order->status === 'in_progress'): ?>
+                            <?php elseif ($order->status === 'In Progress'): ?>
                                 <form method="POST" action="actions/action.change_order_status.php">
+                                    <input type="hidden" name="csrf" value="<?= Session::getInstance()->getCSRFToken() ?>">
                                     <input type="hidden" name="order_id" value="<?= $order->orderId ?>">
-                                    <input type="hidden" name="new_status" value="complete">
+                                    <input type="hidden" name="new_status" value="Complete">
                                     <button class="status_button" type="submit">Mark as Complete</button>
                                 </form>
                             <?php endif; ?>
