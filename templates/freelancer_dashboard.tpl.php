@@ -50,6 +50,9 @@ declare(strict_types=1);
             <aside class="dashboard-sidebar">
                 <button class="dashboard-tab" onclick="window.location.href='my_services.php'">My Services</button>
                 <button class="dashboard-tab" onclick="window.location.href='my_orders.php'">My Orders</button>
+                <?php if ($session->isAdmin()): ?>
+                    <button class="dashboard-tab" onclick="window.location.href='admin_dashboard.php'">Admin Panel</button>
+                <?php endif; ?>
             </aside>
         <?php } ?>
 
