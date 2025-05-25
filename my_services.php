@@ -18,7 +18,7 @@ $services = Service::getFreelancerServices($db, $freelancerId);
 
 output_header_dashboard("Freelancer Dashboard", $session);
 draw_messages();
-draw_dashboard_sidebar();
+draw_dashboard_sidebar($session);
 draw_services_section($services);
 output_footer();
 

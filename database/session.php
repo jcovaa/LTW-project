@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 require_once(__DIR__ . '/../database/user.class.php');
+require_once __DIR__ . '/connection.db.php';
+require_once __DIR__ . '/admin.class.php';
 
 
 class Session
@@ -47,6 +49,13 @@ class Session
     public function isLoggedIn(): bool
     {
         return isset($_SESSION["user"]);
+    }
+
+    public function isAdmin(): bool {
+        if (!$this->isLoggedIn()) return false;
+
+        $db = getDatabaseConnection();
+        return Admin::isAdmin($db, $this->getUserId());
     }
 
     public function getUserId(): ?int

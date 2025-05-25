@@ -31,6 +31,22 @@ class Admin
 
         return $admins;
     }
+
+    public static function elevateToAdmin(PDO $db, int $userId): bool
+    {
+        $stmt = $db->prepare('INSERT INTO Admin (UserId) VALUES (?)');
+        try {
+            return $stmt->execute([$userId]);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function createCategory(PDO $db, string $name): bool
+    {
+        $stmt = $db->prepare('INSERT INTO Category (Name) VALUES (?)');
+        return $stmt->execute([$name]);
+    }
 }
 
 

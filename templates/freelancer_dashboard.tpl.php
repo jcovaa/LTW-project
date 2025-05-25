@@ -44,12 +44,15 @@ declare(strict_types=1);
 
 
 
-    <?php function draw_dashboard_sidebar(): void
+    <?php function draw_dashboard_sidebar($session): void
     { ?>
         <main id="freelancer_dashboard" class="dashboard-container">
             <aside class="dashboard-sidebar">
                 <button class="dashboard-tab" onclick="window.location.href='my_services.php'">My Services</button>
                 <button class="dashboard-tab" onclick="window.location.href='my_orders.php'">My Orders</button>
+                <?php if ($session->isAdmin()): ?>
+                    <button class="dashboard-tab" onclick="window.location.href='admin_dashboard.php'">Admin Panel</button>
+                <?php endif; ?>
             </aside>
         <?php } ?>
 

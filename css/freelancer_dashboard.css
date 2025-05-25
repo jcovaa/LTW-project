@@ -34,8 +34,6 @@
     background-color: #e0e0e0;
 }
 
-
-
 .dashboard-content h2 {
     margin: 0 !important;
     padding-left: 1rem;
@@ -143,7 +141,6 @@ h2 {
 .service-actions .button.edit:hover {
     background-color: #888;
 }
-
 
 /* remove button */
 .service-actions .button.danger {
@@ -346,7 +343,6 @@ input[type="number"]::-webkit-inner-spin-button {
     background-color: #888;
 }
 
-
 .order.button {
     display: flex;
     justify-content: space-between;
@@ -354,6 +350,144 @@ input[type="number"]::-webkit-inner-spin-button {
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 0.5rem;
+}
+
+/* admin dashboard */
+.admin-section {
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin: 0 1rem 1.5rem 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 90%;
+}
+
+.admin-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: #333;
+    font-size: 1.4rem;
+}
+
+/* Table styles */
+.admin-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.admin-section th {
+    color: #333;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px;
+}
+
+.admin-section td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* Form styles */
+.admin-section form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.admin-section input[type="text"] {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+/* Button styles */
+.admin-section button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.admin-section button.elevate_user {
+    background-color: #4CAF50;
+    
+}
+
+.admin-section button.elevate_user:hover {
+    background-color: #45a049;
+}
+
+.admin-section form button.demote_user {
+    background-color: #e74c3c;
+}
+
+.admin-section form button.demote_user:hover {
+    background-color: #c0392b;
+}
+
+.admin-section form button.add_category {
+    background-color: #3d82a0;
+}
+
+.admin-section form button.add_category:hover {
+    background-color: #326d88;
+}
+
+/* Category list styles */
+.admin-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-section ul li {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+}
+
+.admin-section ul li:last-child {
+    border-bottom: none;
+}
+
+/* Message display */
+#success_message, #error_message {
+    padding: 12px 15px;
+    margin: 0 1rem 1.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    width: 90%;
+}
+
+#success_message {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 4px;
+
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+#error_message {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 4px;
+
+    background-color: #ffecec;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
 @media (max-width: 1100px) {
@@ -421,6 +555,34 @@ input[type="number"]::-webkit-inner-spin-button {
 
     .contact_freelancer, .contact_freelancer2 {
         width: 100%;
+    }
+
+    /* admin dashboard */
+    .admin-section {
+        width: 95%;
+    }
+
+    .admin-section form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-section input[type="text"] {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #success_message, #error_message {
+        width: 95%;
+    }
+    
+    .admin-section table {
+        font-size: 0.9rem;
+    }
+    
+    .admin-section td, .admin-section th {
+        padding: 10px 8px;
     }
 }
 
@@ -493,7 +655,30 @@ input[type="number"]::-webkit-inner-spin-button {
     .order-info p {
         font-size: 0.9rem;
     }
+
+    /* admin dashboard */
+    .admin-section {
+        width: 95%;
+        margin-left: 0;
+        padding: 1rem;
+    }
+    
+    .admin-section th:nth-child(2), 
+    .admin-section td:nth-child(2) {
+        display: none; /* Hide email column on very small screens */
+    }
+    
+    .admin-section button {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .admin-section form {
+        width: 100%;
+    }
+    
+    #success_message, #error_message {
+        width: 95%;
+        margin-left: 0;
+    }
 }
-
-
-
