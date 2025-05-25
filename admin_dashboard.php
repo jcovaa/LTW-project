@@ -27,5 +27,5 @@ $categories = Category::getCategories($db);
 
 output_header_admin("Admin Dashboard", $session);
 draw_dashboard_sidebar();
-draw_admin_panel($users, $categories);
+draw_admin_panel($users, $categories, $session);
 output_footer();

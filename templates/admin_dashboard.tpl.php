@@ -70,7 +70,7 @@ declare(strict_types=1);
 <?php } ?>
 
 
-<?php function draw_admin_panel(array $users, array $categories): void
+<?php function draw_admin_panel(array $users, array $categories, Session $session): void
 { ?>
     <section class="dashboard-content">
         <h2>Admin Panel</h2>
@@ -92,6 +92,7 @@ declare(strict_types=1);
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user): ?>
+                        <?php if ($user->id === $session->getUser()->id) continue; ?>
                         <tr>
                             <td><?=htmlspecialchars($user->username)?></td>
                             <td><?=htmlspecialchars($user->email)?></td>

@@ -16,6 +16,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="css/styles.css">
       <link rel="stylesheet" href="css/add_service.css">
+      <link rel="stylesheet" href="css/profile.css">
       <link rel="icon" type="image/x-icon" href="favicon.ico">
       <script src="javascript/script.js" defer></script>
       <title><?=htmlspecialchars($title) ?></title>
@@ -42,26 +43,20 @@
       </header>
 <?php } ?>
 
-<?php function draw_profile_sidebar(): void { ?>
-    <nav id="sidebar_menu" class="nav_menu">
-        <ul>
-            <li><a href="/edit_profile.php">Edit Profile</a></li>
-        </ul>
-    </nav>
-<?php } ?>
-
 <?php function draw_profile(User $user): void { ?>
-   <div class="profile-container">
-      <div class="profile-sidebar">
-         <img class="profile-pic" src="<?= htmlspecialchars($user->imageUrl) ?>" alt="Profile Picture">
-         <div class="username"><?= htmlspecialchars($user->name) ?></div>
-      </div>
+   <main>
+      <div class="profile-container">
+         <div class="profile-card">
+            <img class="profile-pic" src="<?= htmlspecialchars($user->imageUrl) ?>" alt="Profile Picture">
+            <h2 class="username"><?= htmlspecialchars($user->name) ?></h2>
+            <p class="welcome-message">Welcome, <?= htmlspecialchars($user->name) ?>!</p>
 
-      <div class="profile-section">
-         <h1>Welcome, <?= htmlspecialchars($user->name) ?>!</h1>
+            <a href="/edit_profile.php" class="profile-button">Edit Profile</a>
+         </div>
       </div>
-   </div>
+   </main>
 <?php } ?>
+
 
 <?php function draw_profile_edit(User $user, Session $session): void { ?>
    <main id="form_page">
