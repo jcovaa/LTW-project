@@ -8,6 +8,13 @@ require_once __DIR__ . '/../database/session.php';
 $session = Session::getInstance();
 $db = getDatabaseConnection();
 
+if (!$session->validateCSRFToken($_POST['csrf'] ?? '')) {
+    $session->addMessage('error', 'Invalid CSRF token. Please try again.');
+    header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '/');
+    exit();
+}
+
+
 // check if you're logged in AND an admin
 if (!$session->isLoggedIn() || !Admin::isAdmin($db, $session->getUserId())) {
     http_response_code(403);

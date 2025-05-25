@@ -421,6 +421,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .admin-section button.elevate_user {
     background-color: #4CAF50;
+    
 }
 
 .admin-section button.elevate_user:hover {

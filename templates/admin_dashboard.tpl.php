@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-declare(strict_types=1); 
+declare(strict_types=1);
 
 ?>
 
@@ -19,7 +19,7 @@ declare(strict_types=1);
         <link rel="stylesheet" href="css/freelancer_dashboard.css">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <script src="javascript/script.js" defer></script>
-        <title><?=htmlspecialchars($title)?></title>
+        <title><?= htmlspecialchars($title) ?></title>
     </head>
 
     <body>
@@ -30,7 +30,7 @@ declare(strict_types=1);
                 <button class="fa fa-search" type="submit"></button>
             </form>
             <nav id="nav_menu">
-            <button id="menu_toggle" class="fa fa-bars"></button>
+                <button id="menu_toggle" class="fa fa-bars"></button>
                 <ul>
                     <?php if ($session->getUser()) : ?>
                         <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
@@ -41,110 +41,91 @@ declare(strict_types=1);
                 </ul>
             </nav>
         </header>
-<?php } ?>
+    <?php } ?>
 
 
-<?php function drawLogoutForm($session)
-{ ?>
-    <li><a href="profile.php"><?= htmlspecialchars($session->getUser()->username) ?></a></li>
-    <li>
-        <form action="../actions/action.logout.php" method="post" style="display: inline;">
-            <button type="submit">Logout</button>
-        </form>
-    </li>
-<?php } ?>
-
-<?php function drawLoginForm()
-{ ?>
-    <li><button onclick="window.location.href='login.php'">Login</button></li>
-    <li><button onclick="window.location.href='register.php'">Sign Up</button></li>
-<?php } ?>
 
 
-<?php function draw_dashboard_sidebar(): void
-{ ?>
-    <main id="freelancer_dashboard" class="dashboard-container">
-        <aside class="dashboard-sidebar">
-            <button class="dashboard-tab" onclick="window.location.href='my_services.php'">My Services</button>
-            <button class="dashboard-tab" onclick="window.location.href='my_orders.php'">My Orders</button>
-            <button class="dashboard-tab" onclick="window.location.href='admin_dashboard.php'">Admin Panel</button>
-        </aside>
-<?php } ?>
+
+    <?php function draw_dashboard_sidebar(): void
+    { ?>
+        <main id="freelancer_dashboard" class="dashboard-container">
+            <aside class="dashboard-sidebar">
+                <button class="dashboard-tab" onclick="window.location.href='my_services.php'">My Services</button>
+                <button class="dashboard-tab" onclick="window.location.href='my_orders.php'">My Orders</button>
+                <button class="dashboard-tab" onclick="window.location.href='admin_dashboard.php'">Admin Panel</button>
+            </aside>
+        <?php } ?>
 
 
-<?php function draw_admin_panel(array $users, array $categories, Session $session): void
-{ ?>
-    <section class="dashboard-content">
-        <h2>Admin Panel</h2>
-        
-        <div id="success_message" style="display: none;"></div>
-        <div id="error_message" style="display: none;"></div>
+        <?php function draw_admin_panel(array $users, array $categories, Session $session, $db): void
+        { ?>
+            <section class="dashboard-content">
+                <h2>Admin Panel</h2>
 
-        <!-- Promote/Demote users -->
-        <section class="admin-section">
-            <h3>Manage Users</h3>
-            <table class="w3-table w3-bordered">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Promote</th>
-                        <th>Demote</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user): ?>
-                        <?php if ($user->id === $session->getUser()->id) continue; ?>
-                        <tr>
-                            <td><?=htmlspecialchars($user->username)?></td>
-                            <td><?=htmlspecialchars($user->email)?></td>
-                            <td>
-                                <form action="actions/action.elevate_user.php" method="post">
-                                    <input type="hidden" name="user_id" value="<?=$user->id?>">
-                                    <button class="elevate_user" type="submit">Elevate</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="actions/action.demote_admin.php" method="post">
-                                    <input type="hidden" name="user_id" value="<?=$user->id?>">
-                                    <button class="demote_user" type="submit">Demote</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach;?>
-                </tbody>
-            </table>
-        </section>
+                <div id="success_message" style="display: none;"></div>
+                <div id="error_message" style="display: none;"></div>
 
-         <!-- add Category -->
-        <section class="admin-section">
-            <h3>Add Category</h3>
-            <form action="actions/action.create_category.php" method="post">
-                <input type="text" name="category_name" placeholder="New category name" required>
-                <button class="add_category" type="submit">Add</button>
-            </form>
-        </section>
-
-        <!-- existing Categories -->
-        <section class="admin-section">
-            <h3>Existing Categories</h3>
-            <ul>
-                <?php foreach ($categories as $category): ?>
-                    <li><?= htmlspecialchars($category->name) ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </section>
-    </section>
-</main> <!-- close main opened in sidebar -->
-<?php } ?>
+                <!-- Promote/Demote users -->
+                <section class="admin-section">
+                    <h3>Manage Users</h3>
+                    <table class="w3-table w3-bordered">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Promote</th>
+                                <th>Demote</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($users as $user): ?>
+                                <?php if ($user->id === $session->getUser()->id) continue; ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($user->username) ?></td>
+                                    <td><?= htmlspecialchars($user->email) ?></td>
 
 
-<?php function output_footer(): void
-{ ?>
-    <footer>
-        <p>Name of the app</p>
-        <p>name, date</p>
-    </footer>
-    </body>
-    </html>
-<?php } ?>
+                                    <td>
+                                        <form action="actions/action.elevate_user.php" method="post">
+                                            <input type="hidden" name="csrf" value="<?= $session->getCSRFToken() ?>">
+                                            <input type="hidden" name="user_id" value="<?= $user->id ?>">
+                                            <button class="elevate_user" type="submit">Elevate</button>
+                                        </form>
+                                    </td>
+
+                                    <td>
+                                        <form action="actions/action.demote_admin.php" method="post">
+                                            <input type="hidden" name="csrf" value="<?= $session->getCSRFToken() ?>">
+                                            <input type="hidden" name="user_id" value="<?= $user->id ?>">
+                                            <button class="demote_user" type="submit">Demote</button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- add Category -->
+                <section class="admin-section">
+                    <h3>Add Category</h3>
+                    <form action="actions/action.create_category.php" method="post">
+                        <input type="text" name="category_name" placeholder="New category name" required>
+                        <button class="add_category" type="submit">Add</button>
+                    </form>
+                </section>
+
+                <!-- existing Categories -->
+                <section class="admin-section">
+                    <h3>Existing Categories</h3>
+                    <ul>
+                        <?php foreach ($categories as $category): ?>
+                            <li><?= htmlspecialchars($category->name) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </section>
+            </section>
+        </main> <!-- close main opened in sidebar -->
+    <?php } ?>
