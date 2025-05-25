@@ -12,12 +12,6 @@ $session = Session::getInstance();
 $db = getDatabaseConnection();
 
 if (!$session->isLoggedIn() || !$session->isAdmin()) {
-    #temp
-    var_dump($session->isLoggedIn());
-    var_dump($session->getUserId());
-    var_dump($session->isAdmin());
-    #temp
-    exit;
     header('Location: index.php');
     exit;
 }

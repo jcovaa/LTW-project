@@ -350,6 +350,7 @@ body>footer {
 body > footer > p {
    font-family: "Poppins", sans-serif;
    margin-top: 1em;
+   margin-bottom: 2em;
 }
 
 body>footer :last-child {
