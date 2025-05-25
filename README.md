@@ -37,5 +37,5 @@
 
 ## Credentials
 
-- admin/p4s5w0rd
-- johndoe/1234
+- joao1@mail.com/123 (Admin)
+- mauricio@gmail.com/123456 (User)
