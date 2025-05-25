@@ -11,7 +11,7 @@ $db = getDatabaseConnection();
 $session =  Session::getInstance();
 $user = User::getUser($db, $session->getUserId());
 
-output_header("Profile", $session);
+output_header_profile("My Profile", $session);
 draw_profile_sidebar();
 draw_profile($user);
 output_footer();

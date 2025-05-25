@@ -25,7 +25,7 @@ if (!$session->isLoggedIn() || !$session->isAdmin()) {
 $users = User::getUsers($db, 100);
 $categories = Category::getCategories($db);
 
-output_header("Admin Dashboard", $session);
+output_header_admin("Admin Dashboard", $session);
 draw_dashboard_sidebar();
 draw_admin_panel($users, $categories);
 output_footer();

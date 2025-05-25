@@ -15,7 +15,7 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" href="css/styles.css">
-      <link rel="stylesheet" href="css/freelancer_dashboard.css">
+      <link rel="stylesheet" href="css/add_service.css">
       <link rel="icon" type="image/x-icon" href="favicon.ico">
       <script src="javascript/script.js" defer></script>
       <title><?=htmlspecialchars($title) ?></title>
@@ -51,37 +51,43 @@
 <?php } ?>
 
 <?php function draw_profile(User $user): void { ?>
-   <div class="profile">
-   <div class="profile-header">
-      <img src="<?= htmlspecialchars($user->imageUrl) ?>" alt="Profile Picture" class="profile-picture">
-      <div class="profile-info">
-         <div class="profile-name"><?= htmlspecialchars($user->name) ?></div>
+   <div class="profile-container">
+      <div class="profile-sidebar">
+         <img class="profile-pic" src="<?= htmlspecialchars($user->imageUrl) ?>" alt="Profile Picture">
+         <div class="username"><?= htmlspecialchars($user->name) ?></div>
       </div>
-   </div>
+
+      <div class="profile-section">
+         <h1>Welcome, <?= htmlspecialchars($user->name) ?>!</h1>
+      </div>
    </div>
 <?php } ?>
 
 <?php function draw_profile_edit(User $user, Session $session): void { ?>
-<main id="profile_form">
-  <form action="actions/action.edit_profile.php" method="post" enctype="multipart/form-data">
-    <h1>Edit Profile</h1>
-    <input type="hidden" name="csrf" value="<?= $session->getCSRFToken() ?>">
+   <main id="form_page">
+      <form action="actions/action.edit_profile.php" method="post" enctype="multipart/form-data">
+         <input type="hidden" name="csrf" value="<?=htmlspecialchars($session->getCSRFToken())?>">
+         <h1>Edit Profile</h1>
 
-    <div class="input_box">   
-      <input type="text" name="name" placeholder="Name" required value="<?=htmlspecialchars($user->name)?>">
-    </div>
-    <div class="input_box">  
-      <input type="text" name="username" placeholder="Username" required value="<?=htmlspecialchars($user->username)?>">
-    </div>         
-    <div class="input_image">
-      <p>Profile Picture</p>
-      <input type="file" name="profile_picture" accept=".jpeg,.jpg,.png">
-    </div>
+         <div class="input_box">
+            <input id="name" type="text" name="name" placeholder="Name" required value="<?=htmlspecialchars($user->name)?>">
+         </div>
 
-    <button type="submit">Save</button>
-  </form>
-</main>
-<?php } ?>      
+         <div class="input_box">
+            <input id="username" type="text" name="username" placeholder="Username" required value="<?=htmlspecialchars($user->username)?>">
+         </div>
+
+         <div class="input_image">
+            <input id="profile_picture" type="file" name="profile_picture" accept=".jpeg,.jpg,.png">
+         </div>
+
+         <button type="submit">Save</button>
+         <button type="reset">Reset</button>
+      </form>
+   </main>
+<?php } ?>
+
+    
 
 
 

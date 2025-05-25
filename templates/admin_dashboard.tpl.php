@@ -5,7 +5,7 @@ declare(strict_types=1);
 ?>
 
 
-<?php function output_header($title, $session): void
+<?php function output_header_admin($title, $session): void
 { ?>
     <!DOCTYPE html>
     <html lang="en">

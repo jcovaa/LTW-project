@@ -15,7 +15,7 @@ body {
 
 /* form general styles */
 body>main#form_page {
-   margin: auto 0;
+   /*margin: auto 0;*/
    margin-bottom: 3rem;
    display: flex;
    justify-content: center;

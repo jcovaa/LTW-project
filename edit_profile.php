@@ -13,8 +13,7 @@ $db = getDatabaseConnection();
 $session = Session::getInstance();
 $user = User::getUser($db, $session->getUserId());
 
-output_header("Edit Profile", $session);
-draw_profile_sidebar();
+output_header_profile("Edit Profile", $session);
 draw_profile_edit($user, $session);
 output_footer();
 
