@@ -265,14 +265,14 @@ declare(strict_types=1);
             <article class="comment">
                <header>
                   <img src="<?= htmlspecialchars($service->freelancerImageUrl) ?>" alt="Profile Picture">
-                  <p><?= htmlspecialchars($comment->clientName) ?></p>
+                  <p><?=$comment->clientName ?></p>
                </header>
                <div class="rating">
                   <?php for ($i = 1; $i <= 5; $i++): ?>
                      <span class="star"><?= $i <= $comment->rating ? '★' : '☆' ?></span>
                   <?php endfor; ?>
                </div>
-               <p class="comment_text"><?= htmlspecialchars($comment->comment) ?></p>
+               <p class="comment_text"><?=$comment->comment ?></p>
             </article>
          <?php } ?>
       <?php } else { ?>
