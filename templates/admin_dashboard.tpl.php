@@ -99,13 +99,13 @@ declare(strict_types=1);
                             <td>
                                 <form action="actions/action.elevate_user.php" method="post">
                                     <input type="hidden" name="user_id" value="<?=$user->id?>">
-                                    <button class="w3-button w3-green" type="submit">Elevate</button>
+                                    <button class="elevate_user" type="submit">Elevate</button>
                                 </form>
                             </td>
                             <td>
                                 <form action="actions/action.demote_admin.php" method="post">
                                     <input type="hidden" name="user_id" value="<?=$user->id?>">
-                                    <button class="w3-button w3-red" type="submit">Demote</button>
+                                    <button class="demote_user" type="submit">Demote</button>
                                 </form>
                             </td>
                         </tr>
@@ -119,7 +119,7 @@ declare(strict_types=1);
             <h3>Add Category</h3>
             <form action="actions/action.create_category.php" method="post">
                 <input type="text" name="category_name" placeholder="New category name" required>
-                <button class="w3-button w3-blue add-category-button" type="submit">Add</button>
+                <button class="add_category" type="submit">Add</button>
             </form>
         </section>
 
