@@ -36,7 +36,7 @@ if (empty($name) || empty($username)) {
 }
 
 // profile picture upload
-$imagePath = $user->imageUrl; // default to current
+$imagePath = $user->imageUrl; 
 if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
     $uploadDir = '../images/profiles/';
     $fileTmp = $_FILES['profile_picture']['tmp_name'];

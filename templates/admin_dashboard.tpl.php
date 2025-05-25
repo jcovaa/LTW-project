@@ -17,8 +17,9 @@ declare(strict_types=1);
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/freelancer_dashboard.css">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
         <script src="javascript/script.js" defer></script>
-        <title><?=$title?></title>
+        <title><?=htmlspecialchars($title)?></title>
     </head>
 
     <body>
@@ -29,6 +30,7 @@ declare(strict_types=1);
                 <button class="fa fa-search" type="submit"></button>
             </form>
             <nav id="nav_menu">
+            <button id="menu_toggle" class="fa fa-bars"></button>
                 <ul>
                     <?php if ($session->getUser()) : ?>
                         <li><button onclick="window.location.href='add_service.php'">Add a service</button></li>
