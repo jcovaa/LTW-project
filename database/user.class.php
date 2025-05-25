@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+#declare(strict_types=1);
 
 class User
 {
@@ -8,13 +8,17 @@ class User
     public string $name;
     public string $username;
     public string $email;
+    public string $imageUrl;
 
-    public function __construct(int $id, string $name, string $username, string $email)
+    
+
+    public function __construct(int $id, string $name, string $username, string $email, string $imageUrl)
     {
         $this->id = $id;
         $this->name = $name;
         $this->username = $username;
         $this->email = $email;
+        $this->imageUrl = $imageUrl;
     }
 
     public static function create(PDO $db, $name, $username, $email, $password)
@@ -47,6 +51,7 @@ class User
                 $user['Name'],
                 $user['Username'],
                 $user['Email'],
+                $user['ImageUrl']
             );
         };
 
@@ -68,7 +73,8 @@ class User
             $user['UserId'],
             $user['Name'],
             $user['Username'],
-            $user['Email']
+            $user['Email'],
+            $user['ImageUrl']
         );
     }
 
@@ -90,6 +96,7 @@ class User
                     $user['Name'],
                     $user['Username'],
                     $user['Email'],
+                    $user['ImageUrl']
                 );
             }
         }

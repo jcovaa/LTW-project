@@ -44,7 +44,7 @@ declare(strict_types=1);
 
 
 
-    <?php function draw_dashboard_sidebar(): void
+    <?php function draw_dashboard_sidebar($session): void
     { ?>
         <main id="freelancer_dashboard" class="dashboard-container">
             <aside class="dashboard-sidebar">
