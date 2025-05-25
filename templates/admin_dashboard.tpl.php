@@ -74,6 +74,9 @@ declare(strict_types=1);
 { ?>
     <section class="dashboard-content">
         <h2>Admin Panel</h2>
+        
+        <div id="success_message" style="display: none;"></div>
+        <div id="error_message" style="display: none;"></div>
 
         <!-- Promote/Demote users -->
         <section class="admin-section">
