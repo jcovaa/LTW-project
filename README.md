@@ -37,5 +37,5 @@
 
 ## Credentials
 
-- joao1@mail.com/123 (Admin)
+- admin@gmail.com/password (Admin)
 - mauricio@gmail.com/123456 (User)
