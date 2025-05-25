@@ -1,5 +1,5 @@
 <?php
-#declare(strict_types=1);
+declare(strict_types=1);
 
 require_once __DIR__ . '/../database/connection.db.php';
 require_once __DIR__ . '/../database/admin.class.php';
@@ -31,7 +31,6 @@ if (!isset($_POST['user_id'])) {
 }
 
 $targetUserId = intval($_POST['user_id']);
-//$db = getDatabaseConnection();
 
 // check if targetted user is an admin already
 if (Admin::isAdmin($db, $targetUserId)) {
