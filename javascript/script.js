@@ -193,11 +193,6 @@ if (errorMessage || successMessage) {
    }, 5000);
 }
 
-
-
-
-
-
 /* payment script */
 const paymentForm = document.querySelector('#payment_form');
 if (paymentForm) {
@@ -423,4 +418,44 @@ function formatDateTime(dateTimeStr) {
    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
+/* Admin dashboard script */
+const adminForms = document.querySelectorAll('form[action="actions/action.elevate_user.php"], form[action="actions/action.demote_admin.php"]');
+if (adminForms) {
+   adminForms.forEach(form => {
+      form.addEventListener('submit', function(e) {
+         e.preventDefault();
+         const formData = new FormData(this);
+         const actionUrl = this.getAttribute('action');
+          
+         fetch(actionUrl, {
+            method: 'POST',
+            body: formData
+         })
+         .then(response => response.json())
+         .then(data => {
+            if (data.error) {
+               showNotification('error_message', data.error);
+            } 
+            else if (data.message) {
+               showNotification('success_message', data.message);
+            }
+         })
+         .catch(error => {
+            showNotification('error_message', 'An error occurred: ' + error.message);
+         });
+      });
+   });
+}
 
+function showNotification(elementId, message) {
+   const notification = document.getElementById(elementId);
+   if (notification) {
+      notification.textContent = message;
+      notification.style.display = 'block';
+       
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+         notification.style.display = 'none';
+      }, 5000);
+   }
+}
