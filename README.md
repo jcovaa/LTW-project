@@ -34,8 +34,3 @@
 
 ## Running
     php -S localhost:9000
-
-## Credentials
-
-- admin@gmail.com/password (Admin)
-- mauricio@gmail.com/123456 (User)
